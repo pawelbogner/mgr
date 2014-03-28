@@ -1,6 +1,6 @@
 
 emax=0.01;
-kmax=100;
+kmax=200;
 e=emax+1;
 k=1; %iterator
 r=3;
@@ -9,12 +9,13 @@ n=10;
 a=0.730; %platform geometric parameter
 q0=[0, 0, a*pi/2, zeros(1,2), 0, 0, 0, 0, 0]';
 s=6;
-lambda=repmat([1, 0, 0]', [2 1]);
-%lambda=repmat([0.5, 0.01, 0.01, 0.001, 0.001, 0.0001, 0.0001]', [4 1]);
+%lambda=repmat([5, 1, 1]', [2 1]);
+%lambda=[5 10 1 1 1 -5 10 -1 -1 -1]';
+lambda=repmat([0.5, 0.01, 0.01, 0.001, 0.001]', [2 1]);
 T=4;
 y_d = [10 0 pi/2 ]';
 
-gamma=0.05;
+gamma=1;
 e_tab=zeros(1, kmax);
 while norm(e)>emax && k<kmax
     % tutaj trzeba pocalkowac rownanie z x i ksi
@@ -29,8 +30,11 @@ while norm(e)>emax && k<kmax
     C=sfun_C(x);
     J=[C*Ksi];
     JP = mp_inverse(J);
-    lambda= lambda - gamma*JP*e;
-    e_tab(k)=norm(e);
+    delta=JP*e;
+    lambda= lambda - gamma*delta;
+    [delta lambda]
+    enorm=norm(e)
+    e_tab(k)=enorm;
     k=k+1    
 end
 
