@@ -11,7 +11,8 @@ q0=[0, 0, a*pi/2, zeros(1,2), 0, 0, 0, 0, 0]';
 s=6;
 %lambda=repmat([5, 1, 1]', [2 1]);
 %lambda=[5 10 1 1 1 -5 10 -1 -1 -1]';
-lambda=repmat([0.5, 0.01, 0.01, 0.001, 0.001]', [2 1]);
+%lambda=repmat([0.5, 0.01, 0.01, 0.001, 0.001]', [2 1]);
+lambda=[50 0 0 50]';
 T=4;
 y_d = [10 0 pi/2 ]';
 
@@ -35,7 +36,9 @@ while norm(e)>emax && k<kmax
     [delta lambda]
     enorm=norm(e)
     e_tab(k)=enorm;
-    k=k+1    
+    k=k+1
+    plot(x_ksi(:,1), x_ksi(:,2));
+    pause;
 end
 
 plot(e_tab);    

@@ -1,4 +1,4 @@
-function [s14, s23, s12, s34] = calc_slips(x)
+function s = calc_slips(x)
 N=size(x, 1);
 s14=zeros(1,N);
 s23=zeros(1,N);
@@ -18,3 +18,5 @@ for i=1:N
   s12(i)=H(3,:)*x(i,6:10)';
   s34(i)=H(4,:)*x(i,6:10)';
 end
+
+s=[s14', s23', s12', s34'];
