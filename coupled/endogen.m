@@ -12,11 +12,11 @@ s=6;
 %lambda=repmat([5, 1, 1]', [2 1]);
 %lambda=[5 10 1 1 1 -5 10 -1 -1 -1]';
 %lambda=repmat([0.5, 0.01, 0.01, 0.001, 0.001]', [2 1]);
-lambda=[50 0 0 50]';
+lambda=[10, 100, 100, -1, -1, 10, -100, -100, 1, 1]';
 T=4;
 y_d = [10 0 pi/2 ]';
 
-gamma=1;
+gamma=0.05;
 e_tab=zeros(1, kmax);
 while norm(e)>emax && k<kmax
     % tutaj trzeba pocalkowac rownanie z x i ksi
@@ -37,8 +37,11 @@ while norm(e)>emax && k<kmax
     enorm=norm(e)
     e_tab(k)=enorm;
     k=k+1
-    plot(x_ksi(:,1), x_ksi(:,2));
-    pause;
+%     plot(x_ksi(:,1), x_ksi(:,2));
+%     axis equal
+%     pause;
 end
-
+plot(x_ksi(:,1), x_ksi(:,2));
+axis equal
+figure
 plot(e_tab);    

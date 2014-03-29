@@ -5,8 +5,8 @@ x_two=sym('x_two', [n 1]);
 x=[x_one; x_two];
 m=2;
 %u=sym('u', [m 1]);
-%s=m*(2*2+1);
-s=4;
+s=m*(2*2+1);
+
 lam=sym('lam', [s 1]);
 syms t;
 
@@ -68,12 +68,12 @@ P = [Q11   0     Q13/a   0       0;
  N4=(mp/4+mw)*gr;
  
 % \epsilon and \tau coefficients
- eps1=30;
- eps2=30;
- eps3=30;
- eps4=30;
- tau1=30;
- tau2=30;
+ eps1=0.01;
+ eps2=0.01;
+ eps3=0.01;
+ eps4=0.01;
+ tau1=100;
+ tau2=100;
  
 % R coefficients
  R14=-(eps1*N1 + eps4*N4)*s14;
@@ -90,9 +90,8 @@ P = [Q11   0     Q13/a   0       0;
  
  %% Ps matrix --- control function base matrix
 omega=2*pi/T;
-P_vec1=[1 sin(omega*t) cos(omega*t)];
-P_vec2=[1];
-P_s=blkdiag(P_vec1, P_vec2);
+P_vec1=[1 sin(omega*t) cos(omega*t) sin(omega*2*t) cos(omega*2*t)];
+P_s=blkdiag(P_vec1, P_vec1);
 
  %% control system
  B=[zeros(2, 3) eye(2)]';
