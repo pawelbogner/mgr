@@ -12,8 +12,8 @@ s=6;
 %lambda=repmat([5, 1, 1]', [2 1]);
 %lambda=[5 10 1 1 1 -5 10 -1 -1 -1]';
 %lambda=repmat([0.5, 0.01, 0.01, 0.001, 0.001]', [2 1]);
-lambda=[10, 100, 100, -1, -1, 10, -100, -100, 1, 1]';
-T=4;
+lambda=[1, 0.1, 0.1, 0.01, 0.01, 1, 0.1, 0.1, 0.01, 0.01]';
+T=20;
 y_d = [10 0 pi/2 ]';
 
 gamma=0.05;
@@ -37,11 +37,33 @@ while norm(e)>emax && k<kmax
     enorm=norm(e)
     e_tab(k)=enorm;
     k=k+1
+%     figure(1);
 %     plot(x_ksi(:,1), x_ksi(:,2));
 %     axis equal
+%     s=calc_slips(x_ksi(:,1:10));
+%     figure(2);
+%     subplot(2, 2, 1);
+%     plot(t, s(:,1));
+%     subplot(2, 2, 2);
+%     plot(t, s(:,2));
+%     subplot(2, 2, 3);
+%     plot(t, s(:,3));
+%     subplot(2, 2, 4);
+%     plot(t, s(:,4));
 %     pause;
 end
-plot(x_ksi(:,1), x_ksi(:,2));
-axis equal
+figure(1);
+    plot(x_ksi(:,1), x_ksi(:,2));
+    axis equal
+    s=calc_slips(x_ksi(:,1:10));
+figure(2);
+    subplot(2, 2, 1);
+    plot(t, s(:,1));
+    subplot(2, 2, 2);
+    plot(t, s(:,2));
+    subplot(2, 2, 3);
+    plot(t, s(:,3));
+    subplot(2, 2, 4);
+    plot(t, s(:,4));
 figure
-plot(e_tab);    
+    plot(e_tab);    

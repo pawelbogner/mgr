@@ -11,18 +11,18 @@ lam=sym('lam', [s 1]);
 syms t;
 
 %%parameters
-a=1.1;
-b=0.75/2;
-R=0.2;
-mp=40;  
-mw=1;
+a=0.730;
+b=0.530;
+R=0.127;
+mp=21.107;  
+mw=2.380;
 Iw11=0.015;
 Iw33=0.009;
 Ip33=1.991;
 ap1=0.377;
 ap2=0;
 gr=9.81;
-T=4;
+T=20;
 
 %% Q elements
 Q11=mp+4*mw;
@@ -68,18 +68,13 @@ P = [Q11   0     Q13/a   0       0;
  N4=(mp/4+mw)*gr;
  
 % \epsilon and \tau coefficients
- eps1=0.01;
- eps2=0.01;
- eps3=0.01;
- eps4=0.01;
- tau1=0.03;
- tau2=0.03;
+ epstau=sym('epstau', [8 1]);
  
 % R coefficients
- R14=-(eps1*N1 + eps4*N4)*s14;
- R23=-(eps2*N2 + eps3*N3)*s23;
- R12=-(tau1*N1 + tau1*N2)*s12;
- R34=-(tau2*N3 + tau2*N4)*s34;
+ R14=-(epstau(1)*N1 + epstau(4)*N4)*s14;
+ R23=-(epstau(2)*N2 + epstau(3)*N3)*s23;
+ R12=-(epstau(5)*N1 + epstau(6)*N2)*s12;
+ R34=-(epstau(7)*N3 + epstau(8)*N4)*s34;
  
  F14=R14*H(1,:)'/norm(H(1,:));
  F23=R23*H(2,:)'/norm(H(2,:));
@@ -111,5 +106,5 @@ matlabFunction(P_s, 'file', 'sfun_P', 'vars', t);
  %% generation of A_lin and f
 f=[x_two; P\(-D+F)];
 A_lin=jacobian(f+ g*P_s*lam, x);
-matlabFunction(f, 'file', 'sfun_f', 'vars', {x});
-matlabFunction(A_lin, 'file', 'sfun_A', 'vars', {x});
+matlabFunction(f, 'file', 'sfun_f', 'vars', {x, epstau});
+matlabFunction(A_lin, 'file', 'sfun_A', 'vars', {x, epstau});
