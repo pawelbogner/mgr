@@ -65,5 +65,5 @@ figure(2);
     plot(t, s(:,3));
     subplot(2, 2, 4);
     plot(t, s(:,4));
-figure
+figure(3);
     plot(e_tab);    
