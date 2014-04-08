@@ -1,10 +1,10 @@
-function [xout] = ode_run(lambdas)
+function [tout, xout] = ode_run(lambdas)
 
 opt = odeset('Events', @event);
 
 tstart=0;
 tfinal=4;
-x0=[0; 0; pi/2; zeros(5,1); zeros(8*18,1)];
+x0=[0; 0; pi/2; zeros(5,1); zeros(8*2*3,1)];
 
 tout=tstart;
 xout=x0';
@@ -23,7 +23,7 @@ while tout(end) < tfinal
     
     %f= @(t,x) ode_function(t, x, skids, lambdas);
     [t,x,te,xe,ie] = ode45(odefcn, [tstart, tfinal], x0, opt);
-    ie
+    %ie
     tlen=length(t);
     tout=[tout; t(2:end)];
     xout=[xout; x(2:end,:)];
@@ -54,8 +54,10 @@ while tout(end) < tfinal
     Afcn=str2func(['sfun_A' int2str(skid_index)]);
     counter=counter+1;
     
-    disp('bylo przelaczenie');
-    [counter tstart]
-    plot(xout(:,1), xout(:,2))
+    %disp('bylo przelaczenie');
+    %[counter tstart]
+    %plot(xout(:,1), xout(:,2))
     
 end
+
+

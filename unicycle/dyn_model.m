@@ -8,10 +8,10 @@ gr=9.81;
 
 T=4;
 
-epss=30;
-taus=50;
-epsd=0.01;
-taud=0.03;
+epss=1;
+taus=3;
+epsd=0.1;
+taud=0.3;
 
 n=4;
 m=2;
@@ -20,7 +20,7 @@ q=sym('q', [n 1]);
 qd=sym('qd', [n 1]);
 x=[q; qd];
 syms t;
-s=m*(2*4+1);
+s=m*(2*1+1);
 lam=sym('lam', [s 1]);
 
 %% inertia matrix
@@ -30,8 +30,8 @@ M=diag([m, m, Iph, Ith]);
 B=[zeros(2,2); eye(2)];
 
 %% pfaffian matrix
-H=[sin(q(3)) cos(q(3)) 0  0;
-   cos(q(3)) sin(q(3)) 0 -R];
+H=[sin(q(3)) -cos(q(3)) 0  0;
+   cos(q(3))  sin(q(3)) 0 -R];
 
 %% slips
 s1=H(1,:)*qd;
@@ -51,7 +51,7 @@ F3=R1d*H(1,:)'/norm(H(1,:))+R2d*H(2,:)'/norm(H(2,:));
 
 %% Ps matrix --- control function base matrix
 omega=2*pi/T;
-P_vec=[1 sin(omega*t) cos(omega*t) sin(2*omega*t) cos(2*omega*t) sin(3*omega*t) cos(3*omega*t) sin(4*omega*t) cos(4*omega*t)];
+P_vec=[1 sin(omega*t) cos(omega*t)];
 P_s=blkdiag(P_vec, P_vec);
 
 %% output function
