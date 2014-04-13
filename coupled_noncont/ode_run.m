@@ -5,7 +5,7 @@ opt = odeset('Events', @event);
 tstart=0;
 tfinal=4;
 %x0=[0; 0; 0.730*pi/2; zeros(7,1)]; %% dim Ksi= n*m*s
-x0=[0; 0; 0.730*pi/2; zeros(7,1); zeros(10*2*3,1)];
+x0=[0; 0; 0.730*pi/2; zeros(7,1); zeros(10*2*7,1)];
 
 tout=tstart;
 xout=x0';
@@ -21,7 +21,7 @@ while tout(end) < tfinal
     odefcn=@(t,x) [sfun_f(x(1:10), epstau)+sfun_g(x(1:10))*sfun_P(t)*lambdas; reshape(sfun_A(x(1:10), epstau)*reshape(x(11:end), 10, [])+sfun_B(x(1:10))*sfun_P(t), [], 1)];
     
     %f= @(t,x) ode_function(t, x, skids, lambdas);
-    [t,x,te,xe,ie] = ode15s(odefcn, [tstart, tfinal], x0, opt);
+    [t,x,te,xe,ie] = ode45(odefcn, [tstart, tfinal], x0, opt);
     tlen=length(t);
     tout=[tout; t(2:end)];
     xout=[xout; x(2:end,:)];
@@ -37,7 +37,7 @@ while tout(end) < tfinal
         if ie(k)<=4 %skid start
             epstau(ie(k))=30;
         else %skid end
-            epstau(ie(k)-4)=0.01;
+            epstau(ie(k)-4)=0.1;
         end
     end
     %tutaj robimy przelaczanie

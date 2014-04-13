@@ -5,7 +5,7 @@ x_two=sym('x_two', [n 1]);
 x=[x_one; x_two];
 m=2;
 %u=sym('u', [m 1]);
-s=m*(2*1+1);
+s=m*(2*3+1);
 lam=sym('lam', [s 1]);
 syms t;
 taueps=sym('taueps', [4 1]);
@@ -90,12 +90,12 @@ P = [Q11   0     Q13/a   0       0;
  
  %% Ps matrix --- control function base matrix
 omega=2*pi/T;
-P_vec=[1 sin(omega*t) cos(omega*t)];
+P_vec=[1 sin(omega*t) cos(omega*t) sin(2*omega*t) cos(2*omega*t) sin(3*omega*t) cos(3*omega*t)];
 P_s=blkdiag(P_vec, P_vec);
 
  %% control system
  B=[zeros(2, 3) eye(2)]';
-g=[zeros(5,2); (1/R)*P\B];
+g=[zeros(5,2); (1/R)*inv(P)*B];
 B_lin=g;
 
 %% output function
@@ -109,7 +109,7 @@ matlabFunction(P_s, 'file', 'sfun_P', 'vars', t);
 
 
  %% generation of A_lin and f
-f=[x_two; P\(-D+F)];
+f=[x_two; inv(P)*(-D+F)];
 A_lin=jacobian(f+ g*P_s*lam, x);
 matlabFunction(f, 'file', 'sfun_f', 'vars', {x, taueps});
 matlabFunction(A_lin, 'file', 'sfun_A', 'vars', {x, taueps});
