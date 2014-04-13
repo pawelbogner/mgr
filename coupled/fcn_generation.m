@@ -35,14 +35,14 @@ Q13 = -mp*(ap1*sin(x(3)./a) + ap2*cos(x(3)./a)) - 2*mw*a*sin(x(3)./a);
 Q23 =  mp*(ap1*cos(x(3)./a) - ap2*sin(x(3)./a)) + 2*mw*a*cos(x(3)./a);
 
 %% P matrix
-P = [Q11    0      Q13./a   0        0;
-     0      Q22    Q23./a   0        0;
-     Q13./a Q23./a Q33./a.^2 0        0;
-     0      0      0        Q44./R.^2 0;
-     0      0      0        0        Q55./R.^2];
+P = [Q11    0      Q13./a      0           0;
+     0      Q22    Q23./a      0           0;
+     Q13./a Q23./a Q33./(a.^2) 0           0;
+     0      0      0           Q44./(R.^2) 0;
+     0      0      0           0           Q55./(R.^2)];
  
  %% D matrix
- D = x(8).^2./a.^2*([-Q23; Q13; 0; 0; 0]);
+ D = ((x(8).^2)./(a.^2)).*([-Q23; Q13; 0; 0; 0]);
  
  %% H matrix
   
@@ -64,13 +64,10 @@ P = [Q11    0      Q13./a   0        0;
   
  %% F vector
 % N forces
- N1=(mp/4+mw)*gr;
- N2=(mp/4+mw)*gr;
- N3=(mp/4+mw)*gr;
- N4=(mp/4+mw)*gr;
- 
-% \epsilon and \tau coefficients
-% epstau=sym('epstau', [8 1]);
+ N1=((mp/4)+mw)*gr;
+ N2=((mp/4)+mw)*gr;
+ N3=((mp/4)+mw)*gr;
+ N4=((mp/4)+mw)*gr;
  
 % R coefficients
  R14=-(1*N1 + 1*N4)*s14;
@@ -91,13 +88,17 @@ P = [Q11    0      Q13./a   0        0;
  F=F14+F23+F12+F34;
  
  %% Ps matrix --- control function base matrix
-omega=2*pi/T_h;
+omega=2*3.141592653589793/T_h;
 P_s=[1 sin(omega*t) cos(omega*t) sin(omega*2*t) cos(omega*2*t) sin(omega*3*t) cos(omega*3*t) 0 0 0 0 0 0 0;
      0 0 0 0 0 0 0 1 sin(omega*t) cos(omega*t) sin(omega*2*t) cos(omega*2*t) sin(omega*3*t) cos(omega*3*t)];
 
  %% control system
- B=[zeros(3, 2); eye(2)];
-g=[zeros(5,2); (1/R)*inv(P)*B];
+ B=[0 0;
+    0 0;
+    0 0;
+    1 0;
+    0 1];
+g=[zeros(5,2); inv(P)*B./R];
 %B_lin=g;
 
 %% output function

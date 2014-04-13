@@ -9,8 +9,8 @@ gr=9.81;
 T=4;
 
 epss=1;
-taus=3;
-epsd=0.1;
+taus=10;
+epsd=0.5;
 taud=0.3;
 
 n=4;
