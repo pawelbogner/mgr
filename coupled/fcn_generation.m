@@ -99,20 +99,20 @@ P_s=[1 sin(omega*t) cos(omega*t) sin(omega*2*t) cos(omega*2*t) sin(omega*3*t) co
     1 0;
     0 1];
 g=[zeros(5,2); inv(P)*B./R];
-%B_lin=g;
+B_lin=g;
 
 %% output function
-%k=[x(1); x(2); x(3)./a];
-%C_lin=jacobian(k, x);
-%matlabFunction(k, 'file', 'sfun_k', 'vars', {x});
-%matlabFunction(B_lin, 'file', 'sfun_B', 'vars', {x});
-%matlabFunction(C_lin, 'file', 'sfun_C', 'vars', {x});
+k=[x(1); x(2); x(3)./a];
+C_lin=jacobian(k, x);
+matlabFunction(k, 'file', 'sfun_k', 'vars', {x});
+matlabFunction(B_lin, 'file', 'sfun_B', 'vars', {x});
+matlabFunction(C_lin, 'file', 'sfun_C', 'vars', {x});
 matlabFunction(g, 'file', 'sfun_g', 'vars', {x});
 matlabFunction(P_s, 'file', 'sfun_P', 'vars', {t});
 
 
  %% generation of A_lin and f
 f=[x(6:10); inv(P)*(-D+F)];
-%A_lin=jacobian(f+ g*P_s*lam, x);
+A_lin=jacobian(f+ g*P_s*lam, x);
 matlabFunction(f, 'file', 'sfun_f', 'vars', {x});
-%matlabFunction(A_lin, 'file', 'sfun_A', 'vars', {x, epstau});
+matlabFunction(A_lin, 'file', 'sfun_A', 'vars', {x});

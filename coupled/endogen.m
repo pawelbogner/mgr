@@ -8,11 +8,10 @@ global n;
 n=10;
 a=0.730; %platform geometric parameter
 q0=[0, 0, a*pi/2, zeros(1,2), 0, 0, 0, 0, 0]';
-s=6;
 %lambda=repmat([5, 1, 1]', [2 1]);
 %lambda=[5 10 1 1 1 -5 10 -1 -1 -1]';
-%lambda=repmat([0.5, 0.01, 0.01, 0.001, 0.001]', [2 1]);
-lambda=[1, 0.1, 0.1, 0.01, 0.01, 1, 0.1, 0.1, 0.01, 0.01]';
+lambda=repmat([0.5, 0.01, 0.01, 0.001, 0.001, 0.0001, 0.0001]', [2 1]);
+%lambda=[1, 0.1, 0.1, 0.01, 0.01, 1, 0.1, 0.1, 0.01, 0.01]';
 T=20;
 y_d = [10 0 pi/2 ]';
 
@@ -54,9 +53,8 @@ while norm(e)>emax && k<kmax
 end
 figure(1);
     plot(x_ksi(:,1), x_ksi(:,2));
-    axis equal
-    s=calc_slips(x_ksi(:,1:10));
 figure(2);
+    s=calc_slips(x_ksi(:,1:10));
     subplot(2, 2, 1);
     plot(t, s(:,1));
     subplot(2, 2, 2);
@@ -66,4 +64,6 @@ figure(2);
     subplot(2, 2, 4);
     plot(t, s(:,4));
 figure(3);
+    plot(t, x_ksi(:,3)*180/pi/a);
+figure(4);
     plot(e_tab);    
