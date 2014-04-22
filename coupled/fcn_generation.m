@@ -1,5 +1,5 @@
 %% variables
-n=5; %dim q
+n=5; %dim x
 x=sym('x', [2*n 1]);
 m=2;
 %u=sym('u', [m 1]);
@@ -7,6 +7,9 @@ s=m*(2*3+1);
 
 lam=sym('lam', [s 1]);
 syms t;
+
+r=5;
+q=sym('q', [r 1]);
 
 %%parameters
 a=0.730;
@@ -102,11 +105,13 @@ g=[zeros(5,2); inv(P)*B./R];
 B_lin=g;
 
 %% output function
-k=[x(1); x(2); x(3)./a];
+k=[x(1); x(2); x(3)./a; q(5)+pi/2; q(2)+q(4); q(1)-pi/2];
 C_lin=jacobian(k, x);
-matlabFunction(k, 'file', 'sfun_k', 'vars', {x});
+D_lin=jacobian(k, q);
+matlabFunction(k, 'file', 'sfun_k', 'vars', {x, q});
 matlabFunction(B_lin, 'file', 'sfun_B', 'vars', {x});
 matlabFunction(C_lin, 'file', 'sfun_C', 'vars', {x});
+matlabFunction(D_lin, 'file', 'sfun_D', 'vars', {q});
 matlabFunction(g, 'file', 'sfun_g', 'vars', {x});
 matlabFunction(P_s, 'file', 'sfun_P', 'vars', {t});
 

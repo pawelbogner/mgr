@@ -3,17 +3,18 @@ emax=0.01;
 kmax=200;
 e=emax+1;
 k=1; %iterator
-r=3;
+r=5;
 global n;
 n=10;
 a=0.730; %platform geometric parameter
-q0=[0, 0, a*pi/2, zeros(1,2), 0, 0, 0, 0, 0]';
+q=[pi/3 pi/2 pi/6 pi -pi/4]';
 %lambda=repmat([5, 1, 1]', [2 1]);
 %lambda=[5 10 1 1 1 -5 10 -1 -1 -1]';
 lambda=repmat([0.5, 0.01, 0.01, 0.001, 0.001, 0.0001, 0.0001]', [2 1]);
+s=14;
 %lambda=[1, 0.1, 0.1, 0.01, 0.01, 1, 0.1, 0.1, 0.01, 0.01]';
 T=20;
-y_d = [10 0 pi/2 ]';
+y_d = [10 0 pi/2 pi/2 pi/3 -pi/4]';
 
 gamma=0.05;
 e_tab=zeros(1, kmax);
@@ -25,14 +26,18 @@ while norm(e)>emax && k<kmax
     x=x_ksi(end, 1:n);
     x=x';
     Ksi=reshape(x_ksi(end, n+1:end), n, []);
-    y=sfun_k(x);
+    y=sfun_k(x, q);
     e=y-y_d
     C=sfun_C(x);
-    J=[C*Ksi];
+    D=sfun_D(q);
+    J=[C*Ksi D];
+    lambda_q = [lambda; q ];
     JP = mp_inverse(J);
     delta=JP*e;
-    lambda= lambda - gamma*delta;
-    [delta lambda]
+    lambda_q= lambda_q - gamma*delta;
+    lambda=lambda_q(1:s);
+    q=lambda_q(s+1:end);
+    [delta lambda_q]
     enorm=norm(e)
     e_tab(k)=enorm;
     k=k+1
