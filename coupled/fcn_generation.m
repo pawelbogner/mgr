@@ -105,7 +105,7 @@ g=[zeros(5,2); inv(P)*B./R];
 B_lin=g;
 
 %% output function
-k=[x(1); x(2); x(3)./a; q(5)+pi/2; q(2)+q(4); q(1)-pi/2];
+k=[x(1); x(2); x(3)./a; q(5)+pi/2; q(2)+q(4); x(3)./a+q(1)-pi/2];
 C_lin=jacobian(k, x);
 D_lin=jacobian(k, q);
 matlabFunction(k, 'file', 'sfun_k', 'vars', {x, q});
