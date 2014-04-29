@@ -17,7 +17,7 @@ e_tab=zeros(1, kmax);
 while norm(e)>emax && k<kmax
     % tutaj trzeba pocalkowac rownanie z x i ksi
     %[t, x_ksi]=ode23(@ode_main_fun, [0, T], x_ksi);
-    [t, x_ksi]=ode_run(lambda);
+    [t, x_ksi, teout, ieout]=ode_run(lambda);
     %wyciagamy x i ksi
     x=x_ksi(end, 1:n);
     x=x';

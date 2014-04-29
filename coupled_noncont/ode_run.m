@@ -1,4 +1,4 @@
-function [tout, xout] = ode_run(lambdas)
+function [tout, xout, teout, ieout] = ode_run(lambdas)
 
 opt = odeset('Events', @event);
 
@@ -14,7 +14,7 @@ xeout=[];
 ieout=[];
 
 counter=0;
-epstau=[30 30 30 30 30 30]';
+epstau=[3 3 3 3]';
 while tout(end) < tfinal
     % ode_fun = [f+g Ps lam; A ksi+ BP]
 
@@ -35,9 +35,9 @@ while tout(end) < tfinal
     %tutaj sprawdzamy gdzie zmienialy sie poslizgi
     for k=1:length(ie)
         if ie(k)<=4 %skid start
-            epstau(ie(k))=30;
+            epstau(ie(k))=0.3;
         else %skid end
-            epstau(ie(k)-4)=0.1;
+            epstau(ie(k)-4)=3;
         end
     end
     %tutaj robimy przelaczanie
