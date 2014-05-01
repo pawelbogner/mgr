@@ -8,8 +8,8 @@ s=m*(2*3+1);
 lam=sym('lam', [s 1]);
 syms t;
 
-r=5;
-q=sym('q', [r 1]);
+ r=4;
+ q=sym('q', [r 1]);
 
 %%parameters
 a=0.730;
@@ -105,7 +105,32 @@ g=[zeros(5,2); inv(P)*B./R];
 B_lin=g;
 
 %% output function
-k=[x(1); x(2); x(3)./a; q(5)+pi/2; q(2)+q(4); x(3)./a+q(1)-pi/2];
+
+a2=0.1276;
+a3=0.041;
+a4=0.2615;
+a5=0.0195;
+
+c1=cos(q(1));
+s1=sin(q(1));
+c2=cos(q(2));
+s2=sin(q(2));
+c24=cos(q(2)+q(3));
+s24=sin(q(2)+q(3));
+c5=cos(q(4));
+s5=sin(q(4));
+
+x_m=c1*((a2+a3)*c2 + c24*(a4+a5*c5)) - a5*s1*s5;
+y_m=s1*((a2+a3)*c2 + c24*(a4+a5*c5)) + a5*c1*s5;
+z_m=    (a2+a3)*s2 + s24*(a4+a5*c5);
+
+phi=q(4)+pi/2;
+theta=q24;
+psi=q(1)-pi/2;
+
+k=[x(1); x(2); x(3)./a; y_m; z_m; phi; theta; psi];
+
+%%
 C_lin=jacobian(k, x);
 D_lin=jacobian(k, q);
 matlabFunction(k, 'file', 'sfun_k', 'vars', {x, q});
