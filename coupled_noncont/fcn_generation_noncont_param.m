@@ -5,7 +5,7 @@ x_two=sym('x_two', [n 1]);
 x=[x_one; x_two];
 m=2;
 %u=sym('u', [m 1]);
-s=m*(2*3+1);
+s=m*(2*1+1);
 lam=sym('lam', [s 1]);
 syms t;
 taueps=sym('taueps', [4 1]);
@@ -49,16 +49,17 @@ P = [Q11   0     Q13/a   0       0;
  D = x(8)^2/a^2*([-Q23; Q13; 0; 0; 0]);
  
  %% H matrix
- H = [-sin(x_one(3)/a) cos(x_one(3)/a)    0  0   0;
-      -sin(x_one(3)/a) cos(x_one(3)/a)    1  0   0;
-       cos(x_one(3)/a) sin(x_one(3)/a) -b/a -1   0;
-       cos(x_one(3)/a) sin(x_one(3)/a)  b/a  0  -1];
  
+   H1=[-sin(x(3)./a) cos(x(3)./a)    0  0   0];
+   H2=[-sin(x(3)./a) cos(x(3)./a)    1  0   0];
+   H3=[ cos(x(3)./a) sin(x(3)./a) -b/a -1   0];
+   H4=[ cos(x(3)./a) sin(x(3)./a)  b/a  0  -1];
+   
   %slips
-  s14=H(1,:)*x_two;
-  s23=H(2,:)*x_two;
-  s12=H(3,:)*x_two;
-  s34=H(4,:)*x_two;
+  s14=H1*x(6:10);
+  s23=H2*x(6:10);
+  s12=H3*x(6:10);
+  s34=H4*x(6:10);
   
  %% F vector
 % N forces
@@ -81,16 +82,26 @@ P = [Q11   0     Q13/a   0       0;
  R12=-(tau1*N1 + tau1*N2)*s12;
  R34=-(tau2*N3 + tau2*N4)*s34;
  
- F14=R14*H(1,:)'/norm(H(1,:));
- F23=R23*H(2,:)'/norm(H(2,:));
- F12=R12*H(3,:)'/norm(H(3,:));
- F34=R34*H(4,:)'/norm(H(4,:)); 
+ H1T=[-sin(x(3)./a); cos(x(3)./a);    0;  0;   0];
+   H2T=[-sin(x(3)./a); cos(x(3)./a);    1;  0;   0];
+   H3T=[ cos(x(3)./a); sin(x(3)./a); -b/a; -1;   0];
+   H4T=[ cos(x(3)./a); sin(x(3)./a);  b/a;  0;  -1];
+ 
+ norm1=1;
+ norm2=sqrt(2);
+ norm3=sqrt(2+(b/a).^2);
+ norm4=norm3;
+ 
+ F14=R14*H1T./norm1;
+ F23=R23*H2T./norm2;
+ F12=R12*H3T./norm3;
+ F34=R34*H4T./norm4; 
  
  F=F14+F23+F12+F34;
  
  %% Ps matrix --- control function base matrix
 omega=2*pi/T;
-P_vec=[1 sin(omega*t) cos(omega*t) sin(2*omega*t) cos(2*omega*t) sin(3*omega*t) cos(3*omega*t)];
+P_vec=[1 sin(omega*t) cos(omega*t)];
 P_s=blkdiag(P_vec, P_vec);
 
  %% control system
