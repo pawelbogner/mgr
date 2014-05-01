@@ -15,7 +15,7 @@ b=0.350;
   s=[s14; s23; s12; s34];
 % Locate the time when height passes through zero in a 
 % decreasing direction and stop integration.
-l=0.5;
+l=0.2;
 value = [abs(s)-l; abs(s)-l];
 isterminal = ones(2*length(s), 1);   % Stop the integration
 direction = [ones(length(s), 1); -ones(length(s), 1)];   % Negative direction only

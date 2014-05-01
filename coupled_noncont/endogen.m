@@ -1,14 +1,14 @@
 
 emax=0.01;
-kmax=100;
+kmax=500;
 e=emax+1;
 k=1; %iterator
 r=3;
 global n;
 n=10;
 a=0.730; %platform geometric parameter
-%lambda=repmat([1, 0, 0]', [2 1]);
-lambda=repmat([0.5, 0.01, 0.01, 0.001, 0.001, 0.0001, 0.0001]', [2 1]);
+lambda=[1, 0, 0, 0.8, 0, 0]';
+%lambda=repmat([0.5, 0.01, 0.01, 0.001, 0.001, 0.0001, 0.0001]', [2 1]);
 T=4;
 y_d = [10 0 pi/2 ]';
 
