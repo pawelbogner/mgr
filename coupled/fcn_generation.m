@@ -92,8 +92,8 @@ P = [Q11    0      Q13./a      0           0;
  
  %% Ps matrix --- control function base matrix
 omega=2*3.141592653589793/T_h;
-P_s=[1 sin(omega*t) cos(omega*t) sin(omega*2*t) cos(omega*2*t) sin(omega*3*t) cos(omega*3*t) 0 0 0 0 0 0 0;
-     0 0 0 0 0 0 0 1 sin(omega*t) cos(omega*t) sin(omega*2*t) cos(omega*2*t) sin(omega*3*t) cos(omega*3*t)];
+P_s=[1 sin(omega*t) cos(omega*t) sin(2*omega*t) cos(2*omega*t) sin(3*omega*t) cos(3*omega*t) 0 0 0 0 0 0 0;
+     0 0 0 0 0 0 0 1 sin(omega*t) cos(omega*t) sin(2*omega*t) cos(2*omega*t) sin(3*omega*t) cos(3*omega*t)];
 
  %% control system
  B=[0 0;
@@ -125,10 +125,10 @@ y_m=s1*((a2+a3)*c2 + c24*(a4+a5*c5)) + a5*c1*s5;
 z_m=    (a2+a3)*s2 + s24*(a4+a5*c5);
 
 phi=q(4)+pi/2;
-theta=q24;
+theta=q(2)+q(3);
 psi=q(1)-pi/2;
 
-k=[x(1); x(2); x(3)./a; y_m; z_m; phi; theta; psi];
+k=[x(1); x(2); x(3)./a; z_m; phi; theta; psi];
 
 %%
 C_lin=jacobian(k, x);

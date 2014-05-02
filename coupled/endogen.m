@@ -4,17 +4,17 @@ kmax=200;
 e=emax+1;
 k=1; %iterator
 r=4;
-q=[pi/4 pi/5 -pi/6 -pi/3]';
+q=[pi/4 pi/5 pi/6 -pi/3]';
 global n;
 n=10;
 a=0.730; %platform geometric parameter
 %lambda=repmat([5, 1, 1]', [2 1]);
 %lambda=[5 10 1 1 1 -5 10 -1 -1 -1]';
-lambda=repmat([0.5, 0.01, 0.01, 0.001, 0.001, 0.0001, 0.0001]', [2 1]);
+lambda=repmat([1, 0, 0, 0, 0, 0, 0]', [2 1]);
 s=14;
 %lambda=[1, 0.1, 0.1, 0.01, 0.01, 1, 0.1, 0.1, 0.01, 0.01]';
 T=4;
-y_d = [10 0 pi/2 0 0.2 pi/2 pi/4 -pi/2]';
+y_d = [10 0 pi/2 0.2 pi/2 pi/4 -pi/2]';
 
 gamma=0.05;
 e_tab=zeros(1, kmax);
