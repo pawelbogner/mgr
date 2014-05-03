@@ -1,6 +1,5 @@
 \documentclass[twoside]{mgr}
 
-\usepackage{polski}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 
@@ -21,7 +20,6 @@
 \usepackage{array}
 \usepackage{tabularx}
 \usepackage{hhline}
-\usepackage{indentfirst} %sam to~dodałem
 
 %\usepackage{showlabels} %dodaje z~boku etykiety
 
@@ -30,6 +28,8 @@
 \newtheorem{definition}{Definicja}[section]
 
 \newcommand{\ud}{\mathrm{d}}
+\newcommand{\rot}{\mathrm{Rot}}
+\newcommand{\tr}{\mathrm{Tr}}
 
 \title{Control algorithms of a skid-steering mobile robot}
 \engtitle{Algorytmy sterowania robota mobilnego poruszającego się z poślizgami}
@@ -51,6 +51,9 @@
 \input{endogen.tex}
 
 \input{simul.tex}
+
+\bibliography{library}
+\bibliographystyle{unsrt}
 
 \end{document}
 %  LocalWords:  RTT
