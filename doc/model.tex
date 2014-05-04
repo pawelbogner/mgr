@@ -1,7 +1,7 @@
 T\chapter{Model}
 In this thesis two different models will be taken into consideration: the unicycle model with system dynamics and RobRex mobile manipulator with platform dynamics and arm kinematics.
 \section{Unicycle}
-
+This is the model of the simplest robotic system --- a unicycle. The object is modelled as a solid 
 
 \section{RobRex mobile manipulator}
 The model consists of two parts: a mobile platform and a manipulator. The cart has got four fixed-axis wheels, which are actuated with two motors --- the wheels on both sides are coupled. The schematic structure of the vehicle is shown in . %TODO
@@ -49,7 +49,8 @@ The meanings of used symbols are:
 \end{itemize}
 
 Motion limitations of the platform may be written in Pfaffian form which is 
-\begin{equation*}
+\begin{equation}
+\label{eq:pfaff}
 H(w)=\begin{bmatrix}
 -\sin\frac{w_3}{a} & \cos\frac{w_3}{a} & 0 & 0 & 0\\
 -\sin\frac{w_3}{a} & \cos\frac{w_3}{a} & 1 & 0 & 0\\
@@ -61,11 +62,34 @@ H^2(w)\\
 H^3(w)\\
 H^4(w)
 \end{bmatrix},
-\end{equation*}
+\end{equation}
 where $H^1$ corresponds to the lateral slip of front wheels, $H^2$ to the lateral slip of rear wheel, $H^3$ and $H^4$ depict the longitudinal slips of left and right wheels respectively.
 
+Basing on the above matrix slips can be defined quantitatively in the following way: 
+\begin{align*}
+s_{14} &= H_1(w)\dot w,\\
+s_{23} &= H_2(w)\dot w,\\
+s_{12} &= H_3(w)\dot w,\\
+s_{34} &= H_4(w)\dot w;\\
+\end{align*}
+which leads to friction forces values:
+\begin{align}
+\label{eq:force_r}
+R_{14}&=-(\epsilon_1 N_1 + \epsilon_4 N_4)s_{14},\\
+R_{23}&=-(\epsilon_2 N_2 + \epsilon_3 N_3)s_{23},\\
+R_{12}&=-(\epsilon_1 N_1 + \epsilon_2 N_2)s_{12},\\
+R_{34}&=-(\epsilon_3 N_3 + \epsilon_4 N_4)s_{34},
+\end{align}
+where $N_i$ are the normal forces applied by the wheels on the ground.
+Combining \eqref{eq:pfaff} and \eqref{eq:force_r} we obtain
+\begin{equation*}
+F(w, \dot{w}) = R_{14}\frac{H^{1T}(w)}{||H^{1T}(w)||} + R_{23}\frac{H^{2T}(w)}{||H^{2T}(w)||} + R_{12}\frac{H^{3T}(w)}{||H^{3T}(w)||} + R_{34}\frac{H^{4T}(w)}{||H^{4T}(w)||}.
+\end{equation*}
+That means that slips reaction forces are in the direction of transposed $H$ matrix's rows.
 
-
+Due to the fact that inputs have direct impact on the angular acceleration of the side wheels the input matrix $B$ is equal to $\begin{bmatrix}
+0_{2 \times 3} & I_2^T
+\end{bmatrix}$
 \subsection{Manipulator arm}
 The manipulator has got five rotational joints. Its structure is shown in. %TODO
 Let $q\in \mathbb{R}^5$ denote the configuration of the arm and $a_2, \dots, a_5$ the lengths of the links. The individual transformation matrices in Denavit-Hartenberg convention are as follows:
