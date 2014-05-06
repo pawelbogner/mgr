@@ -3,7 +3,7 @@ In this thesis two different models will be taken into consideration: the unicyc
 \section{Unicycle}
 This is the model of the simplest robotic system --- a unicycle. The object is modelled as a solid cylinder with two control inputs: linear acceleration and angular acceleration with respect to the vertical axis. The configuration vector $q\in \mathbb{R}^4$ consists of two position coordinates $x$ and $y$, orientation $\phi$ and the angle of rotation $\theta$. The equation of motion can be presented in form $M(q)\ddot q =F(q, \dot q)+Bu$. This can be easily acquired with usage of Euler-Lagrange equations. The inertia matrix is $M(q)=\mathrm{diag}\{m, m, I_\phi, I_\theta\}$ and the input matrix is $B=\begin{bmatrix}
 0_{2 \times 2} & I_2^T
-\end{bmatrix}$, where $R$ is the radius of the wheel and $I_\phi=\frac{1}{4}mR^2$, $I_\theta=\frac{1}{2}mR^2$.
+\end{bmatrix}$, where $m$ is wheel mass, $R$ is the radius of the wheel and $I_\phi=\frac{1}{4}mR^2$, $I_\theta=\frac{1}{2}mR^2$.
 
 When it comes to slips reaction forces, Pfaffian matrix needs to be defined.
 \begin{equation*}
@@ -20,7 +20,7 @@ The slips can be calculated as follows: the lateral slip $s_\perp=H^1(q)\dot q$ 
 F(q, \dot q)=mgs_\perp\frac{H^{1T}(w)}{||H^{1T}(w)||} + mgs_\parallel\frac{H^{2T}(w)}{||H^{2T}(w)||}
 \end{equation*}
 \section{RobRex mobile manipulator}
-The model consists of two parts: a mobile platform and a manipulator. The cart has got four fixed-axis wheels, which are actuated with two motors --- the wheels on both sides are coupled. The schematic structure of the vehicle is shown in . %TODO
+The model consists of two parts: a mobile platform and a manipulator. The cart has got four fixed-axis wheels, which are actuated with two motors --- the wheels on both sides are coupled. The schematic structure of the vehicle is shown in figure ... %TODO
 The manipulator is mounted on the platform above the middle of the front wheel axis.
 \subsection{Mobile platform}
 Let $w\in \mathbb{R}^5$ be the configuration of the platform, where
@@ -44,7 +44,7 @@ D(w, \dot w) &= \frac{\dot w_3^2}{a^2}\begin{pmatrix}
 -Q_{23} & Q_{13} & 0 & 0 & 0
 \end{pmatrix}^T
 \end{align*}
-The components in the above equations are
+The components of the above equations are
 \begin{align*}
 Q_{11} = Q_{22} &= m_p+4m_w,\\
 Q_{44} = Q_{55} &= 2I_{w33},\\
@@ -56,7 +56,7 @@ Q_{33} &= I_{p33}+m_p(a_{p1}^2+a_{p2}^2)+4(I_{w11}+m_wb^2)+2m_wa^2.
 The meanings of used symbols are:
 \begin{itemize}
 \item $m_p$ ---platform mass;
-\item $m_w$ ---one wheel mass;
+\item $m_w$ --- mass of one wheel;
 \item $a_{p1}$, $a_{p2}$ --- coordinates of the platform's centre of mass with respect to the platform's coordinate system;
 \item $I_{w11}$ --- wheel's moment of inertia with respect to X axis;
 \item $I_{w33}$ --- wheel's moment of inertia with respect to Z axis;
@@ -116,7 +116,7 @@ A_2^3 &= \rot(Z, q_3)\tr (X, a_3)\rot(X, \frac{\pi}{2}),\\
 A_3^4 &= \rot(Z, q_4)\tr (X, a_4)\rot(X, -\frac{\pi}{2}),\\
 A_4^5 &= \rot(Z, q_5)\tr (X, a_5).
 \end{align*}
-In order to reduce kinematics complexity and ease obtaining output function in Euler angles form it has been assumed that third joint is fixed to $0$. This results in the transformation matrix $
+In order to reduce kinematics complexity and ease obtaining output function in Euler angles form it has been assumed that the third joint is fixed to $0$. This results in the transformation matrix $
 A_0^5=\begin{bmatrix}
 R_0^5 & T_0^5\\
 0 & 1
