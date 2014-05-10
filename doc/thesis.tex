@@ -1,0 +1,59 @@
+\documentclass[twoside]{mgr}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+\usepackage{graphicx}
+%\usepackage{subfigure}
+\usepackage{subcaption}
+\usepackage{caption}
+\usepackage{psfrag}
+\usepackage{rotating}
+
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{breqn}
+
+\usepackage{supertabular}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{hhline}
+
+%\usepackage{showlabels} %dodaje z~boku etykiety
+
+\newtheorem{theorem}{Twierdzenie}[section]
+\theoremstyle{definition}
+\newtheorem{definition}{Definicja}[section]
+
+\newcommand{\ud}{\mathrm{d}}
+\newcommand{\rot}{\mathrm{Rot}}
+\newcommand{\tr}{\mathrm{Tr}}
+
+\title{Control algorithms of a skid-steering mobile robot}
+\engtitle{Algorytmy sterowania robota mobilnego poruszającego się z poślizgami}
+\author{Paweł Bogner}
+\supervisor{prof. dr hab. inż. Krzysztof Tchoń, I-6}
+
+\field{Automatyka~i~Robotyka~(AIR)}
+\specialisation{Robotyka~(ARR)}
+
+\begin{document}
+\maketitle
+
+\tableofcontents
+
+\input{intro.tex}
+
+\input{model.tex}
+
+\input{endogen.tex}
+
+\input{simul.tex}
+
+\bibliography{library}
+\bibliographystyle{unsrt}
+
+\end{document}
+%  LocalWords:  RTT

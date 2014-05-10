@@ -30,8 +30,8 @@ M=diag([m, m, Iph, Ith]);
 B=[zeros(2,2); eye(2)];
 
 %% pfaffian matrix
-H=[sin(q(3)) -cos(q(3)) 0  0;
-   cos(q(3))  sin(q(3)) 0 -R];
+H=[-sin(q(3))  cos(q(3)) 0  0;
+    cos(q(3))  sin(q(3)) 0 -R];
 
 %% slips
 s1=H(1,:)*qd;
@@ -77,12 +77,12 @@ matlabFunction(f0, 'file', 'sfun_f0', 'vars', {x});
 matlabFunction(f1, 'file', 'sfun_f1', 'vars', {x});
 matlabFunction(f2, 'file', 'sfun_f2', 'vars', {x});
 matlabFunction(f3, 'file', 'sfun_f3', 'vars', {x});
-%matlabFunction(g, 'file', 'sfun_g', 'vars', {x});
+matlabFunction(g, 'file', 'sfun_g');
 matlabFunction(P_s, 'file', 'sfun_P', 'vars', t);
 
 matlabFunction(A_lin0, 'file', 'sfun_A0', 'vars', {x, lam});
 matlabFunction(A_lin1, 'file', 'sfun_A1', 'vars', {x, lam});
 matlabFunction(A_lin2, 'file', 'sfun_A2', 'vars', {x, lam});
 matlabFunction(A_lin3, 'file', 'sfun_A3', 'vars', {x, lam});
-%matlabFunction(B_lin, 'file', 'sfun_B', 'vars', {x});
+matlabFunction(B_lin, 'file', 'sfun_B');
 matlabFunction(C_lin, 'file', 'sfun_C', 'vars', {x});

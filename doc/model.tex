@@ -1,0 +1,138 @@
+\chapter{Model}
+In this thesis two different models will be taken into consideration: the unicycle model with system dynamics and RobRex mobile manipulator with platform dynamics and arm kinematics.
+\section{Unicycle}
+This is the model of the simplest robotic system --- a unicycle. The object is modelled as a solid cylinder with two control inputs: linear acceleration and angular acceleration with respect to the vertical axis. The configuration vector $q\in \mathbb{R}^4$ consists of two position coordinates $x$ and $y$, orientation $\phi$ and the angle of rotation $\theta$. The equation of motion can be presented in form $M(q)\ddot q =F(q, \dot q)+Bu$. This can be easily acquired with usage of Euler-Lagrange equations. The inertia matrix is $M(q)=\mathrm{diag}\{m, m, I_\phi, I_\theta\}$ and the input matrix is $B=\begin{bmatrix}
+0_{2 \times 2} & I_2^T
+\end{bmatrix}$, where $m$ is wheel mass, $R$ is the radius of the wheel and $I_\phi=\frac{1}{4}mR^2$, $I_\theta=\frac{1}{2}mR^2$.
+
+When it comes to slips reaction forces, Pfaffian matrix needs to be defined.
+\begin{equation*}
+H(q)=\begin{bmatrix}
+-\sin\phi & \cos\phi & 0 & 0\\
+\cos\phi & \sin\phi & 0 & -R
+\end{bmatrix}=\begin{bmatrix}
+H^1(q)\\
+H^2(q)
+\end{bmatrix}.
+\end{equation*}
+The slips can be calculated as follows: the lateral slip $s_\perp=H^1(q)\dot q$ and the longitudinal slip $s_\parallel=H^2(q)\dot q$. With this quantities the slip reaction forces may be defined as 
+\begin{equation*}
+F(q, \dot q)=mgs_\perp\frac{H^{1T}(w)}{||H^{1T}(w)||} + mgs_\parallel\frac{H^{2T}(w)}{||H^{2T}(w)||}
+\end{equation*}
+\section{RobRex mobile manipulator}
+The model consists of two parts: a mobile platform and a manipulator. The cart has got four fixed-axis wheels, which are actuated with two motors --- the wheels on both sides are coupled. The schematic structure of the vehicle is shown in figure ... %TODO
+The manipulator is mounted on the platform above the middle of the front wheel axis.
+\subsection{Mobile platform}
+Let $w\in \mathbb{R}^5$ be the configuration of the platform, where
+$w=(x, y, a\phi, R\theta_1, R\theta_2)$.  
+The dynamics model of the cart is analysed in the standard form used in robotics:
+\begin{equation}
+\label{eq:std_mdl}
+P(w)\ddot w + D(w, \dot w) = F(w, \dot w) + Bu.
+\end{equation}
+The elaborate model derivation can be found in \cite{coupled}. 
+The elements of \eqref{eq:std_mdl} are equal to
+\begin{align*}
+P(w) &= \begin{bmatrix}
+Q_{11} & 0 & \frac{Q_{13}}{a} & 0 & 0\\
+0 & Q_{22} & \frac{Q_{23}}{a} & 0 & 0\\
+\frac{Q_{13}}{a} & \frac{Q_{23}}{a} & \frac{Q_{33}}{a} & 0 & 0\\
+0 & 0 & 0 & \frac{Q_{44}}{R^2} & 0 \\
+0 & 0 & 0 & 0 & \frac{Q_{55}}{R^2}
+\end{bmatrix}, & 
+D(w, \dot w) &= \frac{\dot w_3^2}{a^2}\begin{pmatrix}
+-Q_{23} & Q_{13} & 0 & 0 & 0
+\end{pmatrix}^T
+\end{align*}
+The components of the above equations are
+\begin{align*}
+Q_{11} = Q_{22} &= m_p+4m_w,\\
+Q_{44} = Q_{55} &= 2I_{w33},\\
+Q_{13} &= -m_p(a_{p1}\sin\frac{w_3}{a}+a_{p2}\cos\frac{w_3}{a})- 2m_wa\sin\frac{w_3}{a},\\
+Q_{23} &=  m_p(a_{p1}\cos\frac{w_3}{a}-a_{p2}\sin\frac{w_3}{a})+ 2m_wa\cos\frac{w_3}{a},\\
+Q_{33} &= I_{p33}+m_p(a_{p1}^2+a_{p2}^2)+4(I_{w11}+m_wb^2)+2m_wa^2.
+\end{align*}
+
+The meanings of used symbols are:
+\begin{itemize}
+\item $m_p$ ---platform mass;
+\item $m_w$ --- mass of one wheel;
+\item $a_{p1}$, $a_{p2}$ --- coordinates of the platform's centre of mass with respect to the platform's coordinate system;
+\item $I_{w11}$ --- wheel's moment of inertia with respect to X axis;
+\item $I_{w33}$ --- wheel's moment of inertia with respect to Z axis;
+\item $I_{p33}$ --- platform's moment of inertia with respect to Z axis.
+
+\end{itemize}
+
+Motion limitations of the platform may be written in Pfaffian form which is 
+\begin{equation}
+\label{eq:pfaff}
+H(w)=\begin{bmatrix}
+-\sin\frac{w_3}{a} & \cos\frac{w_3}{a} & 0 & 0 & 0\\
+-\sin\frac{w_3}{a} & \cos\frac{w_3}{a} & 1 & 0 & 0\\
+ \cos\frac{w_3}{a} & \sin\frac{w_3}{a} & -\frac{b}{a} & -1 & 0\\
+ \cos\frac{w_3}{a} & \sin\frac{w_3}{a} &  \frac{b}{a} &  0 & 1
+\end{bmatrix} = \begin{bmatrix}
+H^1(w)\\
+H^2(w)\\
+H^3(w)\\
+H^4(w)
+\end{bmatrix},
+\end{equation}
+where $H^1$ corresponds to the lateral slip of front wheels, $H^2$ to the lateral slip of rear wheel, $H^3$ and $H^4$ depict the longitudinal slips of left and right wheels respectively.
+
+Basing on the above matrix slips can be defined quantitatively in the following way: 
+\begin{align*}
+s_{14} &= H_1(w)\dot w,\\
+s_{23} &= H_2(w)\dot w,\\
+s_{12} &= H_3(w)\dot w,\\
+s_{34} &= H_4(w)\dot w;\\
+\end{align*}
+which leads to friction forces values:
+\begin{align}
+\label{eq:force_r}
+R_{14}&=-(\epsilon_1 N_1 + \epsilon_4 N_4)s_{14},\\
+R_{23}&=-(\epsilon_2 N_2 + \epsilon_3 N_3)s_{23},\\
+R_{12}&=-(\epsilon_1 N_1 + \epsilon_2 N_2)s_{12},\\
+R_{34}&=-(\epsilon_3 N_3 + \epsilon_4 N_4)s_{34},
+\end{align}
+where $N_i$ are the normal forces applied by the wheels on the ground.
+Combining \eqref{eq:pfaff} and \eqref{eq:force_r} we obtain
+\begin{equation*}
+F(w, \dot{w}) = R_{14}\frac{H^{1T}(w)}{||H^{1T}(w)||} + R_{23}\frac{H^{2T}(w)}{||H^{2T}(w)||} + R_{12}\frac{H^{3T}(w)}{||H^{3T}(w)||} + R_{34}\frac{H^{4T}(w)}{||H^{4T}(w)||}.
+\end{equation*}
+That means that slips reaction forces are in the direction of transposed $H$ matrix's rows.
+
+Due to the fact that inputs have direct impact on the angular acceleration of the side wheels the input matrix $B$ is equal to $\begin{bmatrix}
+0_{2 \times 3} & I_2^T
+\end{bmatrix}$ 
+\subsection{Manipulator arm}
+The manipulator has got five rotational joints. Its structure is shown in. %TODO
+Let $q\in \mathbb{R}^5$ denote the configuration of the arm and $a_2, \dots, a_5$ the lengths of the links. The individual transformation matrices in Denavit-Hartenberg convention are as follows:
+\begin{align*}
+A_0^1 &= \rot(Z, q_1)\rot(X, \frac{\pi}{2}),\\
+A_1^2 &= \rot(Z, q_2)\tr (X, a_2)\rot(X, -\frac{\pi}{2}),\\
+A_2^3 &= \rot(Z, q_3)\tr (X, a_3)\rot(X, \frac{\pi}{2}),\\
+A_3^4 &= \rot(Z, q_4)\tr (X, a_4)\rot(X, -\frac{\pi}{2}),\\
+A_4^5 &= \rot(Z, q_5)\tr (X, a_5).
+\end{align*}
+In order to reduce kinematics complexity and ease obtaining output function in Euler angles form it has been assumed that the third joint is fixed to $0$. This results in the transformation matrix $
+A_0^5=\begin{bmatrix}
+R_0^5 & T_0^5\\
+0 & 1
+\end{bmatrix}$, 
+where
+\begin{align*}
+T_0^5 &= \begin{pmatrix}
+c_1\left((a_2+a_3)c_2 + c_{24}(a_4+a_5c_5)\right) - a_5s_1s_5\\
+s_1\left((a_2+a_3)c_2 + c_{24}(a_4+a_5c_5)\right) + a_5c_1s_5\\
+    (a_2+a_3)s_2 + s_{24}(a_4+a_5c_5)
+\end{pmatrix},\\
+R_0^5 &= \begin{bmatrix}
+c_1c_{24}c_5-s_1s_5 & -s_1c_5-c_1c_{24}s_5 & -c_1s_{24}\\
+s_1c_{24}c_5-c_1s_5 &  c_1c_5-s_1c_{24}s_5 & -s_1s_{24}\\
+s_{24}c_5           & -s_{24}s_5           &  c_{24}
+\end{bmatrix}.
+\end{align*}
+End effector orientation Euler angles (using $\rot(Z,\phi)\rot(X, \theta)\rot(Z, \psi)$) are: $\phi=q_1-\frac{\pi}{2}$, $\theta=q_2+q_4$, $\psi=q_5+\frac{\pi}{2}$.
+
