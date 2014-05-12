@@ -62,13 +62,13 @@ f0=[qd; M\F0];
 f1=[qd; M\F1];
 f2=[qd; M\F2];
 f3=[qd; M\F3];
-g=[zeros(4, 2); M\B];
+g=[zeros(4, 2); inv(M)*B];
 
 A_lin0=jacobian(f0+ g*P_s*lam, x);
 A_lin1=jacobian(f1+ g*P_s*lam, x);
 A_lin2=jacobian(f2+ g*P_s*lam, x);
 A_lin3=jacobian(f3+ g*P_s*lam, x);
-B_lin=g;
+%B_lin=g;
 C_lin=jacobian(k, x);
 
 %% generating m-files
@@ -77,12 +77,12 @@ matlabFunction(f0, 'file', 'sfun_f0', 'vars', {x});
 matlabFunction(f1, 'file', 'sfun_f1', 'vars', {x});
 matlabFunction(f2, 'file', 'sfun_f2', 'vars', {x});
 matlabFunction(f3, 'file', 'sfun_f3', 'vars', {x});
-matlabFunction(g, 'file', 'sfun_g');
+%matlabFunction(g, 'file', 'sfun_g');
 matlabFunction(P_s, 'file', 'sfun_P', 'vars', t);
 
 matlabFunction(A_lin0, 'file', 'sfun_A0', 'vars', {x, lam});
 matlabFunction(A_lin1, 'file', 'sfun_A1', 'vars', {x, lam});
 matlabFunction(A_lin2, 'file', 'sfun_A2', 'vars', {x, lam});
 matlabFunction(A_lin3, 'file', 'sfun_A3', 'vars', {x, lam});
-matlabFunction(B_lin, 'file', 'sfun_B');
+%matlabFunction(B_lin, 'file', 'sfun_B');
 matlabFunction(C_lin, 'file', 'sfun_C', 'vars', {x});
