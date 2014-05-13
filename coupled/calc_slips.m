@@ -9,8 +9,8 @@ b=0.350;
 for i=1:N
  H = [-sin(x(i,3)/a) cos(x(i,3)/a)    0  0   0 ;
       -sin(x(i,3)/a) cos(x(i,3)/a)    1  0   0 ;
-      -sin(x(i,3)/a) cos(x(i,3)/a) -b/a -1   0 ;
-      -sin(x(i,3)/a) cos(x(i,3)/a) -b/a  0  -1 ];
+      cos(x(i,3)/a) sin(x(i,3)/a) -b/a -1   0 ;
+      cos(x(i,3)/a) sin(x(i,3)/a) b/a  0  -1 ];
  
   %slips
   s14(i)=H(1,:)*x(i,6:10)';

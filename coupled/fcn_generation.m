@@ -3,8 +3,8 @@ n=5; %dim x
 x=sym('x', [2*n 1]);
 m=2;
 %u=sym('u', [m 1]);
-%s=m*(2*3+1);
-s=m*4;
+s=m*(2*2+1);
+%s=m*4;
 
 lam=sym('lam', [s 1]);
 syms t;
@@ -76,8 +76,8 @@ P = [Q11    0      Q13./a      0           0;
 % R coefficients
  R14=-(1*N1 + 1*N4)*s14;
  R23=-(1*N2 + 1*N3)*s23;
- R12=-(3*N1 + 3*N2)*s12;
- R34=-(3*N3 + 3*N4)*s34;
+ R12=-(100*N1 + 100*N2)*s12;
+ R34=-(100*N3 + 100*N4)*s34;
  
  norm1=1;
  norm2=sqrt(2);
@@ -92,18 +92,18 @@ P = [Q11    0      Q13./a      0           0;
  F=F14+F23+F12+F34;
  
  %% Ps matrix --- control function base matrix
-% omega=2*3.141592653589793/T_h;
-% P_s=[1 sin(omega*t) cos(omega*t) sin(2*omega*t) cos(2*omega*t) sin(3*omega*t) cos(3*omega*t) 0 0 0 0 0 0 0;
-%      0 0 0 0 0 0 0 1 sin(omega*t) cos(omega*t) sin(2*omega*t) cos(2*omega*t) sin(3*omega*t) cos(3*omega*t)];
+omega=2*3.141592653589793/T_h;
+P_s=[1 sin(omega*t) cos(omega*t) sin(2*omega*t) cos(2*omega*t) 0 0 0 0 0;
+     0 0 0 0 0 1 sin(omega*t) cos(omega*t) sin(2*omega*t) cos(2*omega*t)];
  
   %% Legendre
- l0=1;
- l1=2/T_h^2*(2*t - T_h);
- l2=4/T_h^4*(6*t^2 - 6*t*T_h + T^2);
- l3=8/T_h^6*(2*t - T_h)*(10*t^2 - 10*t*T_h + T_h^2);
- 
- P_s=[l0 l1 l2 l3 0 0 0 0;
-      0 0 0 0 l0 l1 l2 l3];
+%  l0=1;
+%  l1=2/T_h^2*(2*t - T_h);
+%  l2=4/T_h^4*(6*t^2 - 6*t*T_h + T^2);
+%  l3=8/T_h^6*(2*t - T_h)*(10*t^2 - 10*t*T_h + T_h^2);
+%  
+%  P_s=[l0 l1 l2 l3 0 0 0 0;
+%       0 0 0 0 l0 l1 l2 l3];
 
  %% control system
  B=[0 0;
