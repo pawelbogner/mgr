@@ -3,7 +3,7 @@ n=5; %dim x
 x=sym('x', [2*n 1]);
 m=2;
 %u=sym('u', [m 1]);
-s=m*(2*4+1);
+s=m*(2*3+1);
 %s=m*4;
 
 lam=sym('lam', [s 1]);
@@ -76,8 +76,8 @@ P = [Q11    0      Q13./a      0           0;
 % R coefficients
  R14=-(1*N1 + 1*N4)*s14;
  R23=-(1*N2 + 1*N3)*s23;
- R12=-(3*N1 + 3*N2)*s12;
- R34=-(3*N3 + 3*N4)*s34;
+ R12=-(30*N1 + 30*N2)*s12;
+ R34=-(30*N3 + 30*N4)*s34;
  
  norm1=1;
  norm2=sqrt(2);
@@ -93,8 +93,8 @@ P = [Q11    0      Q13./a      0           0;
  
  %% Ps matrix --- control function base matrix
 omega=2*3.141592653589793/T_h;
-P_s=[1 sin(omega*t) cos(omega*t) sin(2*omega*t) cos(2*omega*t) sin(3*omega*t) cos(3*omega*t) sin(4*omega*t) cos(4*omega*t) 0 0 0 0 0 0 0 0 0;
-     0 0 0 0 0 0 0 0 0 1 sin(omega*t) cos(omega*t) sin(2*omega*t) cos(2*omega*t) sin(3*omega*t) cos(3*omega*t) sin(4*omega*t) cos(4*omega*t)];
+P_s=[1 sin(omega*t) cos(omega*t) sin(2*omega*t) cos(2*omega*t) sin(3*omega*t) cos(3*omega*t) 0 0 0 0 0 0 0;
+     0 0 0 0 0 0 0 1 sin(omega*t) cos(omega*t) sin(2*omega*t) cos(2*omega*t) sin(3*omega*t) cos(3*omega*t)];
  
   %% Legendre
 %  l0=1;
@@ -138,7 +138,7 @@ phi=q(4)+pi/2;
 theta=q(2)+q(3);
 psi=q(1)-pi/2;
 
-k=[x(1); x(2); x(3)./a; x(6); x(7); x(8)./a; z_m; phi; theta; psi];
+k=[x(1); x(2); x(3)./a; x(6); x(7); x(8)./a; x(9); x(10); z_m; phi; theta; psi];
 
 %%
 C_lin=jacobian(k, x);
