@@ -1,1 +1,19 @@
-\chapter{Endogenous configurational space}
+\chapter{Endogenous configuration space}
+Let us consider a mobile robot --- a mobile platform with a manipulator. Let $q \in \mathbb{R}^n$ denote the state of the platform and $x \in \mathbb{R}^p$ denote the configuration of the manipulator. Now we can define a vector $y \in \mathbb{R}^r$ which is the result of the output function $k: \mathbb{R}^n \times \mathbb{R}^p \rightarrow \mathbb{R}^r$. The whole system may be described by the following set of equations:
+\begin{align}
+\label{eq:control_sys}
+\dot q &= f(q) + G(q)u,\\
+y &= k(q, x).
+\end{align}
+This leads to an affine control system with control inputs $u \in \mathbb{R}^m$, $x \in \mathbb{R}^p$ and output function $k$. 
+
+Define a pair $(u(\cdot), x)$, which consists of control inputs mentioned above. Such elements belong to the endogenous configuration space $\mathcal{X} = L_m^2[0, T] \times \mathbb{R}^p$ of the mobile manipulator. The inner product in $\mathcal{X}$ is as follows \cite{ecs_ijc}:
+\begin{equation}
+\langle (u_1(\cdot), x_1), (u_2(\cdot), x_2) \rangle = \int_0^T u_1^T(t) u_2(t) \ud t + x_1^T x_2.
+\end{equation}
+
+This concept can be used in motion planning. The kinematics $K_{q_0, T}: \mathcal{X} \rightarrow \mathbb{R}^r$ allow to determine the state of the mobile manipulator at time $T$ given endogenous configuration $(u(\cdot), x)$ and initial state $q_0$:
+\begin{equation}
+K_{q_0, T}((u(\cdot), x)) = y(T) = k(\phi_{q_0, T}(u(\cdot)), x),
+\end{equation}
+where $\phi_{q_0, T}(u(\cdot))$ denotes the flow of the system \eqref{eq:control_sys} caused by input $u(\cdot)$.
