@@ -17,3 +17,46 @@ This concept can be used in motion planning. The kinematics $K_{q_0, T}: \mathca
 K_{q_0, T}((u(\cdot), x)) = y(T) = k(\phi_{q_0, T}(u(\cdot)), x),
 \end{equation}
 where $\phi_{q_0, T}(u(\cdot))$ denotes the flow of the system \eqref{eq:control_sys} caused by input $u(\cdot)$.
+
+With the above definitions the analytic Jacobian can be defined at $(u(\cdot), x) \in \mathcal{X}$:
+\begin{align}
+J_{q_0, T}(u(\cdot), x)(v(\cdot), w) &= \left.\frac{\ud}{\ud \alpha}\right|_{\alpha=0} K_{q_0, T}((u(\cdot)+\alpha v(\cdot), x+\alpha w))\\
+ &= C(T,x)\int_0^T \Phi(T,s)B(s)v(s)\ud s + D(T,x)w,
+\end{align}
+where $(v(\cdot), w)\in \mathcal{X}$ and $\Phi(T,s)$ is the fundamental matrix of the following system:
+\begin{equation}
+\begin{aligned}
+\label{eq:abxi}
+\dot \xi &= A(t)\xi + B(t) v \\
+\eta &= C(t)\xi + D(t).
+\end{aligned}
+\end{equation}
+The matrices in \eqref{eq:abxi} are as follows:
+\begin{equation}
+\begin{aligned}
+A(t) &= \frac{\partial (f(q)+G(q)u}{\partial q}, & B(t) &= G(q(t)),\\
+C(t) &= \frac{\partial k(q, x)}{\partial q}, & D(t) &= \frac{\partial k(q, x)}{\partial x}.
+\end{aligned}
+\end{equation}
+
+\section{Computations}
+The dimension of $L^2[0,T]$ space is infinite. Therefore we need an infinite number of parameters to define an element from this space. This is impossible to achieve in calculations made on a computer. The solution is to limit the bandwidth of considered functions. 
+
+It is possible to choose a finite-dimensional base $\Phi = [ \phi_1, \phi_2, \dots, \phi_s ]$ spanning the limited-band control functions space. 
+With such approach a function $u_i$ is represented by a vector 
+$\lambda_i = [\lambda_{i1}, \lambda_{i2}, \dots, \lambda_{is}]^T$ 
+which satisfies the formula $u_i = \sum_{k=1}^s \phi_k \lambda_{ik}$.
+
+In order to define a vector $u=[u_1, u_2, \dots, u_m]^T$ a matrix $P(t)$ should be defined, such that $u(t)=P(t)\lambda$. This means $P(t)$ is a block diagonal matrix 
+\begin{equation}
+P(t)=\begin{bmatrix}
+\Phi & 0 & \cdots & 0\\
+0 & \Phi & \ddots & \vdots\\
+\vdots & \ddots & \ddots & 0 \\
+0 &  \cdots & 0 & \Phi
+\end{bmatrix}
+\end{equation}
+
+Assuming the above the Jacobian $J_{q_0, T}(u(\cdot), x)$ may be computed as $\begin{bmatrix}
+C\cdot\Xi(T)& D
+\end{bmatrix}$, where $\Xi$ is defined by an ODE $\dot \Xi = A(t)\Xi +B(t)P(t)$ with the initial condition $\Xi(0)=0$ [TODO: citation needed]. This allows easily calculate the Jacobian during the simulation of the system by extending the ODE function.
