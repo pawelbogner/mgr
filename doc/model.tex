@@ -1,4 +1,5 @@
-\chapter{Model}
+\chapter{Models}
+\label{ch:model}
 In this thesis two different models will be taken into consideration: the unicycle model with system dynamics and RobRex mobile manipulator with platform dynamics and arm kinematics.
 \section{Unicycle}
 This is the model of the simplest robotic system --- a unicycle. The object is modelled as a solid cylinder with two control inputs: linear acceleration and angular acceleration with respect to the vertical axis. The configuration vector $q\in \mathbb{R}^4$ consists of two position coordinates $x$ and $y$, orientation $\phi$ and the angle of rotation $\theta$. The equation of motion can be presented in form $M(q)\ddot q =F(q, \dot q)+Bu$. This can be easily acquired with usage of Euler-Lagrange equations. The inertia matrix is $M(q)=\mathrm{diag}\{m, m, I_\phi, I_\theta\}$ and the input matrix is $B=\begin{bmatrix}

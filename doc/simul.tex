@@ -1,1 +1,30 @@
 \chapter{Simulations}
+This chapter presents the results obtained by simulations. The research has been made for two models
+described in chapter \ref{ch:model}. The motion planning problem has been solved using endogenous
+configuration space approach presented in chapter \ref{ch:endogen}.
+\section{RobRex}
+\subsection{Problem formulation}
+The problem to be solved is to move the platform from the initial state
+$q_0 = [w_0; \dot{w_0}] = (0, 0, a\frac{\pi}{2}, 0_7)^T$ to the desired state
+$q_d = [w_d; \dot{w_d}] = (0, 0, a\frac{\pi}{2}, 0_7)^T$
+within given amount of time $T$. When it comes to the manipulator,
+its coordinates in task space $(\phi, \theta, \psi, y, z) $ should be equal to
+$(-\frac{\pi}{2}, -\frac{\pi}{4}, \frac{\pi}{2}, 0, 0.2)$.
+This corresponds to a parking manoeuvre with the manipulator
+looking straight forward, observing the floor right in front of it.
+
+Now two types of friction models will be discussed --- linear
+and discontinuous. These models will be employed in simulations
+regarding solving the above problem.
+
+\subsection{Linear friction model}
+\subsubsection{High high}
+
+\subsubsection{High low}
+
+\subsubsection{Low High}
+
+\subsubsection{Low Low}
+
+\subsection{Discontinuous friction model}
+\section{Unicycle}
