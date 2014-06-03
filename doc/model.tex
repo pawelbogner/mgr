@@ -2,9 +2,9 @@
 \label{ch:model}
 In this thesis two different models will be taken into consideration: the unicycle model with system dynamics and RobRex mobile manipulator with platform dynamics and arm kinematics.
 \section{Unicycle}
-This is the model of the simplest robotic system --- a unicycle. The object is modelled as a solid cylinder with two control inputs: linear acceleration and angular acceleration with respect to the vertical axis. The configuration vector $q\in \mathbb{R}^4$ consists of two position coordinates $x$ and $y$, orientation $\phi$ and the angle of rotation $\theta$. The equation of motion can be presented in form $M(q)\ddot q =F(q, \dot q)+Bu$. This can be easily acquired with usage of Euler-Lagrange equations. The inertia matrix is $M(q)=\mathrm{diag}\{m, m, I_\phi, I_\theta\}$ and the input matrix is $B=\begin{bmatrix}
-0_{2 \times 2} & I_2^T
-\end{bmatrix}$, where $m$ is wheel mass, $R$ is the radius of the wheel and $I_\phi=\frac{1}{4}mR^2$, $I_\theta=\frac{1}{2}mR^2$.
+This is the model of the simplest robotic system --- a unicycle. The object is modelled as a solid disc with two control inputs: linear acceleration and angular acceleration with respect to the vertical axis. The configuration vector $q\in \mathbb{R}^4$ consists of two position coordinates $x$ and $y$, orientation $\phi$ and the angle of rotation $\theta$. The equation of motion can be presented in form $M(q)\ddot q =F(q, \dot q)+Bu$. This can be easily acquired with usage of Euler-Lagrange equations. The inertia matrix is $M(q)=\mathrm{diag}\{m, m, I_\phi, I_\theta\}$ and the input matrix is $B=\begin{bmatrix}
+0_{2 \times 2} & I_2
+\end{bmatrix}^T$, where $m$ is wheel mass, $R$ is the radius of the wheel and $I_\phi=\frac{1}{4}mR^2$, $I_\theta=\frac{1}{2}mR^2$.
 
 When it comes to slips reaction forces, Pfaffian matrix needs to be defined.
 \begin{equation}
@@ -18,11 +18,12 @@ H^2(q)
 \end{equation}
 The slips can be calculated as follows: the lateral slip $s_\perp=H^1(q)\dot q$ and the longitudinal slip $s_\parallel=H^2(q)\dot q$. With this quantities the slip reaction forces may be defined as 
 \begin{equation}
-F(q, \dot q)=mgs_\perp\frac{H^{1T}(w)}{||H^{1T}(w)||} + mgs_\parallel\frac{H^{2T}(w)}{||H^{2T}(w)||}
+F(q, \dot q)=mg\epsilon s_\perp\frac{H^{1T}(w)}{||H^{1T}(w)||} + mg\tau s_\parallel\frac{H^{2T}(w)}{||H^{2T}(w)||},
 \end{equation}
+where $g$ is gravitational acceleration, $\epsilon$ and $\tau$ are lateral and longitudinal frictions, respectively.
 \section{RobRex mobile manipulator}
-The model consists of two parts: a mobile platform and a manipulator. The cart has got four fixed-axis wheels, which are actuated with two motors --- the wheels on both sides are coupled. The schematic structure of the vehicle is shown in figure ... %TODO
-The manipulator is mounted on the platform above the middle of the front wheel axis.
+The model consists of two parts: a mobile platform and a manipulator. The platform has got four fixed-axis wheels, which are actuated with two motors --- the wheels on both sides are coupled. The schematic structure of the vehicle is shown in figure ... %TODO
+The manipulator is mounted on the platform above the centre of the front wheel axis.
 \subsection{Mobile platform}
 Let $w\in \mathbb{R}^5$ be the configuration of the platform, where
 $w=(x, y, a\phi, R\theta_1, R\theta_2)$.  
@@ -84,18 +85,14 @@ where $H^1$ corresponds to the lateral slip of front wheels, $H^2$ to the latera
 
 Basing on the above matrix slips can be defined quantitatively in the following way: 
 \begin{align}
-s_{14} &= H_1(w)\dot w,\\
-s_{23} &= H_2(w)\dot w,\\
-s_{12} &= H_3(w)\dot w,\\
-s_{34} &= H_4(w)\dot w;\\
+s_{14} &= H_1(w)\dot w, & s_{12} &= H_3(w)\dot w,\\
+s_{23} &= H_2(w)\dot w, & s_{34} &= H_4(w)\dot w,
 \end{align}
 which leads to friction forces values:
 \begin{align}
 \label{eq:force_r}
-R_{14}&=-(\epsilon_1 N_1 + \epsilon_4 N_4)s_{14},\\
-R_{23}&=-(\epsilon_2 N_2 + \epsilon_3 N_3)s_{23},\\
-R_{12}&=-(\epsilon_1 N_1 + \epsilon_2 N_2)s_{12},\\
-R_{34}&=-(\epsilon_3 N_3 + \epsilon_4 N_4)s_{34},
+R_{14}&=-(\epsilon_1 N_1 + \epsilon_4 N_4)s_{14}, & R_{12}&=-(\tau_1 N_1 + \tau_2 N_2)s_{12},\\
+R_{23}&=-(\epsilon_2 N_2 + \epsilon_3 N_3)s_{23}, & R_{34}&=-(\tau_3 N_3 + \tau_4 N_4)s_{34},
 \end{align}
 where $N_i$ are the normal forces applied by the wheels on the ground.
 Combining \eqref{eq:pfaff} and \eqref{eq:force_r} we obtain
@@ -105,8 +102,8 @@ F(w, \dot{w}) = R_{14}\frac{H^{1T}(w)}{||H^{1T}(w)||} + R_{23}\frac{H^{2T}(w)}{|
 That means that slips reaction forces are in the direction of transposed $H$ matrix's rows.
 
 Due to the fact that inputs have direct impact on the angular acceleration of the side wheels the input matrix $B$ is equal to $\begin{bmatrix}
-0_{2 \times 3} & I_2^T
-\end{bmatrix}$ 
+0_{2 \times 3} & I_2
+\end{bmatrix}^T$ 
 \subsection{Manipulator arm}
 The manipulator has got five rotational joints. Its structure is shown in. %TODO
 Let $q\in \mathbb{R}^5$ denote the configuration of the arm and $a_2, \dots, a_5$ the lengths of the links. The individual transformation matrices in Denavit-Hartenberg convention are as follows:
