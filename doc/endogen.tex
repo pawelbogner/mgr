@@ -46,32 +46,33 @@ The inner product in $\mathcal{X}$ is as follows \cite{ecs_ijc}:
 
 The function
 $K_{q_0, T}: \mathcal{X} \rightarrow \mathbb{R}^r$
-allow to determine the state of the mobile manipulator at time $T$ given
+allow to determine the state of the mobile manipulator at time $T>0$ given
 endogenous configuration $(u(\cdot), x)$ and initial state $q_0$:
 \begin{equation}
-K_{q_0, T}((u(\cdot), x)) = y(T) = k(\phi_{q_0, T}(u(\cdot)), x),
+K_{q_0, T}((u(\cdot), x)) = k(\phi_{q_0, T}(u(\cdot)), x),
 \end{equation}
 where $\phi_{q_0, T}(u(\cdot))$ denotes the flow of the system \eqref{eq:control_sys}
-caused by input $u(\cdot)$.
+caused by input $u(\cdot)$. The above will be called the end-point map.
 
-With the above definitions the analytic Jacobian can be defined at $(u(\cdot), x) \in \mathcal{X}$:
+With the above definitions the analytic Jacobian of $K_{q_0, T}$ can be defined at $(u(\cdot), x) \in \mathcal{X}$:
 \begin{align}
 J_{q_0, T}(u(\cdot), x)(v(\cdot), w) &= \left.\frac{\ud}{\ud \alpha}\right|_{\alpha=0} K_{q_0, T}((u(\cdot)+\alpha v(\cdot), x+\alpha w))\\
- &= C(T,x)\int_0^T \Phi(T,s)B(s)v(s)\ud s + D(T,x)w,
+ &= \begin{bmatrix}
+ C(T,x)\int_0^T \Phi(T,s)B(s)v(s)\ud s & D(T,x)w \end{bmatrix} ,
 \end{align}
 where $(v(\cdot), w)\in \mathcal{X}$ and $\Phi(T,s)$ is the fundamental matrix of the following system:
 \begin{equation}
 \begin{aligned}
 \label{eq:abxi}
 \dot \xi &= A(t)\xi + B(t) v \\
-\eta &= C(t)\xi + D(t).
+\eta &= C(t, x)\xi + D(t, x).
 \end{aligned}
 \end{equation}
 The matrices in \eqref{eq:abxi} are as follows:
 \begin{equation}
 \begin{aligned}
-A(t) &= \frac{\partial (f(q)+G(q)u}{\partial q}, & B(t) &= G(q(t)),\\
-C(t) &= \frac{\partial k(q, x)}{\partial q}, & D(t) &= \frac{\partial k(q, x)}{\partial x}.
+A(t) &= \frac{\partial (f(q(t))+G(q(t))u(t)}{\partial q}, & B(t) &= G(q(t)),\\
+C(t, x) &= \frac{\partial k(q(t), x)}{\partial q}, & D(t(t), x) &= \frac{\partial k(q(t), x)}{\partial x}.
 \end{aligned}
 \end{equation}
 
