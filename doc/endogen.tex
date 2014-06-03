@@ -1,23 +1,58 @@
 \chapter{Endogenous configuration space}
 \label{ch:endogen}
-Let us consider a mobile robot --- a mobile platform with a manipulator. Let $q \in \mathbb{R}^n$ denote the state of the platform and $x \in \mathbb{R}^p$ denote the configuration of the manipulator. Now we can define a vector $y \in \mathbb{R}^r$ which is the result of the output function $k: \mathbb{R}^n \times \mathbb{R}^p \rightarrow \mathbb{R}^r$. The whole system may be described by the following set of equations:
-\begin{align}
+\section{Basic concepts}
+Let us consider a mobile robot --- a mobile platform with a manipulator. Let $q = (w, \dot w)^T \in \mathbb{R}^{2n}$ denote the state of the platform and $x \in \mathbb{R}^p$ denote the configuration of the manipulator. The platform is actuated by vector $u \in \mathbb{R}^m$. We can define a vector $y \in \mathbb{R}^r$ which is the result of the output function $k: \mathbb{R}^{2n} \times \mathbb{R}^p \rightarrow \mathbb{R}^r$. 
+
+Suppose the dynamics of the platform are defined by the equation obtained using Euler-Lagrange formalism:
+\begin{equation}
+Q(w)\ddot w + C(w, \dot{w})\dot{w}+D(w)=F(w, \dot w)+B(w)u,
+\end{equation}
+where $Q(w)$ is the inertia matrix, $C(w, \dot w)$ is the centripetal and Coriolis forces matrix,
+$D(w)$ is the potential forces vector, $F(w, \dot w)$ is the vector of traction forces and $u$ is the
+control forces vector applied to the system having been transformed by matrix $B(w)$.
+This system may be transformed into the form $\dot q = f(q) + G(q)u$ using
+\begin{equation}
+\begin{aligned}
+f(q)&=\begin{bmatrix}
+\dot{w}\\
+Q^{-1}(w)\left(F(w, \dot w)-C(w, \dot{w})\dot{w}-D(w)\right)
+\end{bmatrix}, & G(q)&=\begin{bmatrix}
+0_{n\times m}\\
+Q^{-1}B
+\end{bmatrix}
+\end{aligned}
+\end{equation}
+
+Adding to the above the output function depending on the platform state and the configuration of the manipulator gives the following affine control system with inputs
+$u \in \mathbb{R}^m$, $x \in \mathbb{R}^p$ and output function $k$.
+\begin{equation}
+\begin{cases}
+\begin{aligned}
 \label{eq:control_sys}
 \dot q &= f(q) + G(q)u,\\
 y &= k(q, x).
-\end{align}
-This leads to an affine control system with control inputs $u \in \mathbb{R}^m$, $x \in \mathbb{R}^p$ and output function $k$. 
+\end{aligned}
+\end{cases}
+\end{equation}
 
-Define a pair $(u(\cdot), x)$, which consists of control inputs mentioned above. Such elements belong to the endogenous configuration space $\mathcal{X} = L_m^2[0, T] \times \mathbb{R}^p$ of the mobile manipulator. The inner product in $\mathcal{X}$ is as follows \cite{ecs_ijc}:
+\subsection{Endogenous configuration}
+Define a pair $(u(\cdot), x)$, which consists of control inputs mentioned above.
+Such elements belong to the endogenous configuration space
+$\mathcal{X} = L_m^2[0, T] \times \mathbb{R}^p$ of the mobile manipulator.
+The inner product in $\mathcal{X}$ is as follows \cite{ecs_ijc}:
 \begin{equation}
 \langle (u_1(\cdot), x_1), (u_2(\cdot), x_2) \rangle = \int_0^T u_1^T(t) u_2(t) \ud t + x_1^T x_2.
 \end{equation}
 
-This concept can be used in motion planning. The kinematics $K_{q_0, T}: \mathcal{X} \rightarrow \mathbb{R}^r$ allow to determine the state of the mobile manipulator at time $T$ given endogenous configuration $(u(\cdot), x)$ and initial state $q_0$:
+The function
+$K_{q_0, T}: \mathcal{X} \rightarrow \mathbb{R}^r$
+allow to determine the state of the mobile manipulator at time $T$ given
+endogenous configuration $(u(\cdot), x)$ and initial state $q_0$:
 \begin{equation}
 K_{q_0, T}((u(\cdot), x)) = y(T) = k(\phi_{q_0, T}(u(\cdot)), x),
 \end{equation}
-where $\phi_{q_0, T}(u(\cdot))$ denotes the flow of the system \eqref{eq:control_sys} caused by input $u(\cdot)$.
+where $\phi_{q_0, T}(u(\cdot))$ denotes the flow of the system \eqref{eq:control_sys}
+caused by input $u(\cdot)$.
 
 With the above definitions the analytic Jacobian can be defined at $(u(\cdot), x) \in \mathcal{X}$:
 \begin{align}
@@ -39,6 +74,8 @@ A(t) &= \frac{\partial (f(q)+G(q)u}{\partial q}, & B(t) &= G(q(t)),\\
 C(t) &= \frac{\partial k(q, x)}{\partial q}, & D(t) &= \frac{\partial k(q, x)}{\partial x}.
 \end{aligned}
 \end{equation}
+
+\section{Motion planning algorithm}
 
 \section{Computations}
 The dimension of $L^2[0,T]$ space is infinite. Therefore we need an infinite number of parameters to define an element from this space. This is impossible to achieve in calculations made on a computer. The solution is to limit the bandwidth of considered functions. 
