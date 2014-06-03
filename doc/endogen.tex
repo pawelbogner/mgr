@@ -77,6 +77,17 @@ C(t, x) &= \frac{\partial k(q(t), x)}{\partial q}, & D(t(t), x) &= \frac{\partia
 \end{equation}
 
 \section{Motion planning algorithm}
+Given the end-point map $K_{q_0, T}$, the motion planning problem is equivalent to finding an endogenous
+configuration $(u_d(\cdot), x_d)$, such that $K_{q_0, T}((u(\cdot), x))=y_d$. In order to find the
+solution a Jacobian algorithm may be employed, analogically to the algorithms
+for inverse kinematics problem for manipulators. 
+
+Let us choose the initial configuration $(u_0(\cdot), x_0)$ and
+define a curve in $\mathcal{X}$ $(u_\theta(\cdot), x_\theta)$, $\theta \in \mathbb{R}$.
+Computing the error along $(u_\theta(\cdot), x_\theta)$ we obtain
+\begin{equation}
+e(\theta)=K_{q_0, T}(u_\theta(\cdot), x_\theta)-y_d.
+\end{equation}
 
 \section{Computations}
 The dimension of $L^2[0,T]$ space is infinite. Therefore we need an infinite number of parameters to define an element from this space. This is impossible to achieve in calculations made on a computer. The solution is to limit the bandwidth of considered functions. 
