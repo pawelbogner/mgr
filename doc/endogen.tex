@@ -106,6 +106,7 @@ u_\theta(\cdot)\\ x_\theta
 Let $J^\#_{q_0, T}(u_\theta(\cdot), x)$ denote the right Moore-Penrose inverse
 of the Jacobian \eqref{eq:jacobian}. Applying it to the above equation we get a dynamic system
 \begin{equation}
+\label{eq:endogen_alg}
 \dfrac{\ud}{\ud \theta}\begin{pmatrix}
 u_\theta(\cdot)\\ x_\theta
 \end{pmatrix}=-\gamma J^\#_{q_0, T}(u_\theta(\cdot), x) e(\theta),
@@ -122,21 +123,53 @@ u_\theta(\cdot)\\ x_\theta
 \section{Numerical computations}
 The dimension of $L^2[0,T]$ space is infinite. Therefore we need an infinite number of parameters to define an element from this space. This is impossible to achieve in calculations made on a computer. The solution is to limit the bandwidth of considered functions. 
 
-It is possible to choose a finite-dimensional base $\Phi = [ \phi_1, \phi_2, \dots, \phi_s ]$ spanning the limited-band control functions space. 
-With such approach a function $u_i$ is represented by a vector 
+It is possible to choose a finite-dimensional orthogonal base $\Psi = [ \psi_1, \psi_2, \dots, \psi_s ]$ spanning the limited-band control functions space. 
+Using such approach a function $u_i$ is represented by a vector 
 $\lambda_i = [\lambda_{i1}, \lambda_{i2}, \dots, \lambda_{is}]^T$ 
-which satisfies the formula $u_i = \sum_{k=1}^s \phi_k \lambda_{ik}$.
+which satisfies the formula $u_i = \sum_{k=1}^s \psi_k \lambda_{ik}$.
 
-In order to define a vector $u=[u_1, u_2, \dots, u_m]^T$ a matrix $P(t)$ should be defined, such that $u(t)=P(t)\lambda$. This means $P(t)$ is a block diagonal matrix 
+In order to define a vector $u=[u_1, u_2, \dots, u_m]^T$ a matrix $P(t)$ should be defined, such that $u_\lambda(t)=P(t)\lambda$. This means $P(t)$ is a block diagonal matrix 
 \begin{equation}
 P(t)=\begin{bmatrix}
-\Phi & 0 & \cdots & 0\\
-0 & \Phi & \ddots & \vdots\\
-\vdots & \ddots & \ddots & 0 \\
-0 &  \cdots & 0 & \Phi
+\Psi & 0 & \cdots & 0\\
+0 & \Psi &  & \vdots\\
+\vdots &  & \ddots & 0 \\
+0 &  \cdots & 0 & \Psi
 \end{bmatrix}
 \end{equation}
 
-Assuming the above the Jacobian $J_{q_0, T}(u(\cdot), x)$ may be computed as $\begin{bmatrix}
+The above formulae let us define a new band-limited Jacobian as
+\begin{equation}
+\hat J_{q_0, T}(\lambda, x)=\begin{bmatrix}C_\lambda(T)\int_0^T \Phi_\lambda(T,s)B(s)_\lambda P(s)\ud s & D_\lambda(T,x)\end{bmatrix}
+\end{equation}
+
+Assuming the above the Jacobian $\hat J_{q_0, T}(\lambda, x)$
+may be computed alternatively as\\ $\begin{bmatrix}
 C\cdot\Xi(T)& D
-\end{bmatrix}$, where $\Xi$ is defined by an ODE $\dot \Xi = A(t)\Xi +B(t)P(t)$ with the initial condition $\Xi(0)=0$ [TODO: citation needed]. This allows easily calculate the Jacobian during the simulation of the system by extending the ODE function.
+\end{bmatrix}$, where $\Xi$ is defined by  $\dot \Xi = A_\lambda(t)\Xi +B_\lambda(t)P(t)$
+with the initial condition $\Xi(0)=0$ %TODO citation needed.
+This allows to easily calculate the Jacobian simultaneously with the simulation
+of the system by extending the ODE function.
+
+In order to acquire the Moore-Penrose inverse of the Jacobian we can simply use the formula
+\begin{equation}
+\hat J^\#_{q_0, T}(\lambda, x)=\hat J^T_{q_0, T}(\lambda, x)\left(\hat J_{q_0, T}(\lambda, x)\hat J^T_{q_0, T}(\lambda, x)\right)^{-1}.
+\end{equation}
+
+The problem which may occur here is the singularity of the dexterity matrix\\
+$\hat J_{q_0, T}(\lambda, x)\hat J^T_{q_0, T}(\lambda, x)$. The inverse can be regularised by adding a small value to the diagonal of the matrix being inverted in the following way:
+\begin{equation}
+\hat J^\#_{q_0, T}(\lambda, x)=\hat J^T_{q_0, T}(\lambda, x)\left(\hat J_{q_0, T}(\lambda, x)\hat J^T_{q_0, T}(\lambda, x)+\eta I\right)^{-1}
+\end{equation}
+The regularised version of the inverse Jacobian should be used only if the determinant of the dexterity matrix is below the assumed threshold.
+
+Another limitation met in numerical approach to the problem is the necessity to discretise the variable $\theta$ in \eqref{eq:endogen_alg}.
+This may be resolved by applying the first-order Euler method:
+\begin{equation}
+\begin{pmatrix}
+\lambda_{k+1}\\
+x_{k+1}
+\end{pmatrix}  =\begin{pmatrix}\lambda_{k}\\
+x_{k}
+\end{pmatrix} - \gamma \hat J^\#_{q_0, T}(\lambda_k, x_k)e(k).
+\end{equation}
