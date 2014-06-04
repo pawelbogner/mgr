@@ -56,9 +56,10 @@ caused by input $u(\cdot)$. The above will be called the end-point map.
 
 With the above definitions the analytic Jacobian of $K_{q_0, T}$ can be defined at $(u(\cdot), x) \in \mathcal{X}$:
 \begin{align}
+\label{eq:jacobian}
 J_{q_0, T}(u(\cdot), x)(v(\cdot), w) &= \left.\frac{\ud}{\ud \alpha}\right|_{\alpha=0} K_{q_0, T}((u(\cdot)+\alpha v(\cdot), x+\alpha w))\\
- &= \begin{bmatrix}
- C(T,x)\int_0^T \Phi(T,s)B(s)v(s)\ud s & D(T,x)w \end{bmatrix} ,
+ &= 
+ C(T,x)\int_0^T \Phi(T,s)B(s)v(s)\ud s + D(T,x)w  ,
 \end{align}
 where $(v(\cdot), w)\in \mathcal{X}$ and $\Phi(T,s)$ is the fundamental matrix of the following system:
 \begin{equation}
@@ -71,8 +72,8 @@ where $(v(\cdot), w)\in \mathcal{X}$ and $\Phi(T,s)$ is the fundamental matrix o
 The matrices in \eqref{eq:abxi} are as follows:
 \begin{equation}
 \begin{aligned}
-A(t) &= \frac{\partial (f(q(t))+G(q(t))u(t)}{\partial q}, & B(t) &= G(q(t)),\\
-C(t, x) &= \frac{\partial k(q(t), x)}{\partial q}, & D(t(t), x) &= \frac{\partial k(q(t), x)}{\partial x}.
+A(t) &= \frac{\partial (f(q(t))+G(q(t))u(t)}{\partial q}, & C(t, x) &= \frac{\partial k(q(t), x)}{\partial q},\\
+B(t) &= G(q(t)), & D(t, x) &= \frac{\partial k(q(t), x)}{\partial x}.
 \end{aligned}
 \end{equation}
 
@@ -86,10 +87,39 @@ Let us choose the initial configuration $(u_0(\cdot), x_0)$ and
 define a curve in $\mathcal{X}$ $(u_\theta(\cdot), x_\theta)$, $\theta \in \mathbb{R}$.
 Computing the error along $(u_\theta(\cdot), x_\theta)$ we obtain
 \begin{equation}
+\label{eq:endogen_err}
 e(\theta)=K_{q_0, T}(u_\theta(\cdot), x_\theta)-y_d.
 \end{equation}
+Since we expect the error to stabilize at $0$ exponentially fast with decay rate
+$\gamma$ we get the formula
+\begin{equation}
+\label{eq:endogen_decay}
+\frac{\ud e(\theta)}{\ud \theta}=-\gamma e(\theta)
+\end{equation}.
+Combining \eqref{eq:endogen_err} and \eqref{eq:endogen_decay} we acquire the Ważewski-Davidenko equation
+\begin{equation}
+J_{q_0, T}(u_\theta(\cdot), x)\dfrac{\ud}{\ud \theta}\begin{pmatrix}
+u_\theta(\cdot)\\ x_\theta
+\end{pmatrix}=-\gamma e(\theta).
+\end{equation}
 
-\section{Computations}
+Let $J^\#_{q_0, T}(u_\theta(\cdot), x)$ denote the right Moore-Penrose inverse
+of the Jacobian \eqref{eq:jacobian}. Applying it to the above equation we get a dynamic system
+\begin{equation}
+\dfrac{\ud}{\ud \theta}\begin{pmatrix}
+u_\theta(\cdot)\\ x_\theta
+\end{pmatrix}=-\gamma J^\#_{q_0, T}(u_\theta(\cdot), x) e(\theta),
+\end{equation}
+which defines the solution of the formulated motion planning task in the following way:
+\begin{equation}
+\begin{pmatrix}
+u_d(\cdot)\\ x_d
+\end{pmatrix}=\lim_{\theta\rightarrow\infty}\begin{pmatrix}
+u_\theta(\cdot)\\ x_\theta
+\end{pmatrix}.
+\end{equation}
+
+\section{Numerical computations}
 The dimension of $L^2[0,T]$ space is infinite. Therefore we need an infinite number of parameters to define an element from this space. This is impossible to achieve in calculations made on a computer. The solution is to limit the bandwidth of considered functions. 
 
 It is possible to choose a finite-dimensional base $\Phi = [ \phi_1, \phi_2, \dots, \phi_s ]$ spanning the limited-band control functions space. 
