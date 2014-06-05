@@ -146,7 +146,10 @@ The above formulae let us define a new band-limited Jacobian as
 Assuming the above the Jacobian $\hat J_{q_0, T}(\lambda, x)$
 may be computed alternatively as\\ $\begin{bmatrix}
 C\cdot\Xi(T)& D
-\end{bmatrix}$, where $\Xi$ is defined by  $\dot \Xi = A_\lambda(t)\Xi +B_\lambda(t)P(t)$
+\end{bmatrix}$, where $\Xi$ is defined by  
+\begin{equation}
+\dot \Xi = A_\lambda(t)\Xi +B_\lambda(t)P(t)
+\end{equation}
 with the initial condition $\Xi(0)=0$ %TODO citation needed.
 This allows to easily calculate the Jacobian simultaneously with the simulation
 of the system by extending the ODE function.
