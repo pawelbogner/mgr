@@ -54,12 +54,12 @@ K_{q_0, T}((u(\cdot), x)) = k(\phi_{q_0, T}(u(\cdot)), x),
 where $\phi_{q_0, T}(u(\cdot))$ denotes the flow of the system \eqref{eq:control_sys}
 caused by input $u(\cdot)$. The above will be called the end-point map.
 
-With the above definitions the analytic Jacobian of $K_{q_0, T}$ can be defined at $(u(\cdot), x) \in \mathcal{X}$:
+With the above definitions the analytic Jacobian of $K_{q_0, T}$ can be defined at $(u(\cdot), x) \in \mathcal{X}$ \cite{ratajczak2013multiple}:
 \begin{align}
 \label{eq:jacobian}
 J_{q_0, T}(u(\cdot), x)(v(\cdot), w) &= \left.\frac{\ud}{\ud \alpha}\right|_{\alpha=0} K_{q_0, T}((u(\cdot)+\alpha v(\cdot), x+\alpha w))\\
  &= 
- C(T,x)\int_0^T \Phi(T,s)B(s)v(s)\ud s + D(T,x)w  ,
+ C(T,x)\int_0^T \Phi(T,s)B(s)v(s)\ud s + D(T,x)w,
 \end{align}
 where $(v(\cdot), w)\in \mathcal{X}$ and $\Phi(T,s)$ is the fundamental matrix of the following system:
 \begin{equation}
@@ -69,7 +69,7 @@ where $(v(\cdot), w)\in \mathcal{X}$ and $\Phi(T,s)$ is the fundamental matrix o
 \eta &= C(t, x)\xi + D(t, x).
 \end{aligned}
 \end{equation}
-The matrices in \eqref{eq:abxi} are as follows:
+The matrices in \eqref{eq:abxi} are as follows \cite{tchon2004acceleration}
 \begin{equation}
 \begin{aligned}
 A(t) &= \frac{\partial (f(q(t))+G(q(t))u(t)}{\partial q}, & C(t, x) &= \frac{\partial k(q(t), x)}{\partial q},\\
