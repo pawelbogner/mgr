@@ -2,15 +2,24 @@
 \label{ch:model}
 In this thesis two different models will be taken into consideration: the unicycle model with system dynamics and RobRex mobile manipulator with platform dynamics and arm kinematics.
 \section{Unicycle}
-This is the model of the simplest robotic system --- a unicycle. The object is modelled as a solid disc with two control inputs: linear acceleration and angular acceleration with respect to the vertical axis. The configuration vector $w\in \mathbb{R}^4$ consists of two position coordinates $x$ and $y$, orientation $\phi$ and the angle of rotation $\theta$. The equation of motion can be presented in form $M(w)\ddot w =F(w, \dot w)+Bu$. This can be easily acquired with usage of Euler-Lagrange equations. The inertia matrix is $M(w)=\mathrm{diag}\{m, m, I_\phi, I_\theta\}$ and the input matrix is $B=\begin{bmatrix}
+This is the model of the simplest robotic system --- a unicycle.
+The object is modelled as a solid disc with two control inputs:
+linear acceleration and angular acceleration with respect to the vertical axis.
+Let $x$ and $y$ denote two position coordinates, $\phi$ --- the orientation
+and $\theta$ --- the angle of rotation. 
+In order to preserve dimensional consistency define the configuration vector in the following way:
+$w = (x, y, \phi R, \theta R)^T$, where $R$ is the radius of the wheel.
+
+The equation of motion can be presented
+in form $M(w)\ddot w =F(w, \dot w)+Bu$. This can be easily acquired with usage of Euler-Lagrange equations. The inertia matrix is $M(w)=\mathrm{diag}\left\{m, m, \frac{I_\phi}{R}, \frac{I_\theta}{R^2}\right\}$ and the input matrix is $B=\begin{bmatrix}
 0_{2 \times 2} & I_2
-\end{bmatrix}^T$, where $m$ is wheel mass, $R$ is the radius of the wheel and $I_\phi=\frac{1}{4}mR^2$, $I_\theta=\frac{1}{2}mR^2$.
+\end{bmatrix}^T$, where $m$ is wheel mass and $I_\phi=\frac{1}{4}mR^2$, $I_\theta=\frac{1}{2}mR^2$.
 
 When it comes to slips reaction forces, Pfaffian matrix needs to be defined.
 \begin{equation}
 H(w)=\begin{bmatrix}
 -\sin\phi & \cos\phi & 0 & 0\\
-\cos\phi & \sin\phi & 0 & -R
+\cos\phi & \sin\phi & 0 & -1
 \end{bmatrix}=\begin{bmatrix}
 H^1(w)\\
 H^2(w)
