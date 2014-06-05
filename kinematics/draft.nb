@@ -109,6 +109,19 @@ Cell[BoxData[
 
 Cell[BoxData[{
  RowBox[{
+  RowBox[{"a00", "[", 
+   RowBox[{"x_", ",", " ", "y_", ",", " ", "phi_"}], "]"}], " ", ":=", " ", 
+  RowBox[{
+   RowBox[{"trX", "[", "x", "]"}], ".", 
+   RowBox[{"rotZ", "[", 
+    RowBox[{"Pi", "/", "2"}], "]"}], ".", 
+   RowBox[{"trX", "[", "y", "]"}], ".", 
+   RowBox[{"rotZ", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"-", "Pi"}], "/", "2"}], "+", "phi"}], "]"}], ".", 
+   RowBox[{"trX", "[", "a", "]"}]}]}], "\[IndentingNewLine]", 
+ RowBox[{
   RowBox[{"a01", "[", "q1_", "]"}], ":=", " ", 
   RowBox[{
    RowBox[{"rotZ", "[", "q1", "]"}], ".", 
@@ -147,7 +160,10 @@ Cell[BoxData[{
    3.605091596782119*^9}, {3.605091631690116*^9, 3.605091645704917*^9}, {
    3.605091715605915*^9, 3.6050917557212095`*^9}, 3.6050917919842834`*^9, {
    3.6050918348167334`*^9, 3.605091874595009*^9}, {3.605091905355768*^9, 
-   3.605091959620872*^9}, {3.605093140712427*^9, 3.605093426384766*^9}}],
+   3.605091959620872*^9}, {3.605093140712427*^9, 3.605093426384766*^9}, {
+   3.6109781737166424`*^9, 3.6109782802838917`*^9}, {3.6109784654298754`*^9, 
+   3.6109784688774815`*^9}, {3.61097850790875*^9, 3.610978512978759*^9}, {
+   3.610978657983013*^9, 3.6109786580922127`*^9}, 3.610978797463657*^9}],
 
 Cell[CellGroupData[{
 
@@ -490,6 +506,56 @@ Cell[BoxData[
 Cell[CellGroupData[{
 
 Cell[BoxData[
+ RowBox[{
+  RowBox[{"a00", "[", 
+   RowBox[{"xp", ",", " ", "yp", ",", " ", "phip"}], "]"}], "//", 
+  "MatrixForm"}]], "Input",
+ CellChangeTimes->{{3.6109783040115337`*^9, 3.6109783070067387`*^9}, {
+  3.61097844538384*^9, 3.610978448285445*^9}, {3.610978518922369*^9, 
+  3.6109785218863745`*^9}, {3.6109786643166237`*^9, 3.6109787142211113`*^9}, {
+  3.610978753595581*^9, 3.61097875893079*^9}, {3.6109788044212694`*^9, 
+  3.6109788147796874`*^9}}],
+
+Cell[BoxData[
+ TagBox[
+  RowBox[{"(", "\[NoBreak]", GridBox[{
+     {
+      RowBox[{"Cos", "[", "phip", "]"}], 
+      RowBox[{"-", 
+       RowBox[{"Sin", "[", "phip", "]"}]}], "0", 
+      RowBox[{"xp", "+", 
+       RowBox[{"a", " ", 
+        RowBox[{"Cos", "[", "phip", "]"}]}]}]},
+     {
+      RowBox[{"Sin", "[", "phip", "]"}], 
+      RowBox[{"Cos", "[", "phip", "]"}], "0", 
+      RowBox[{"yp", "+", 
+       RowBox[{"a", " ", 
+        RowBox[{"Sin", "[", "phip", "]"}]}]}]},
+     {"0", "0", "1", "0"},
+     {"0", "0", "0", "1"}
+    },
+    GridBoxAlignment->{
+     "Columns" -> {{Center}}, "ColumnsIndexed" -> {}, "Rows" -> {{Baseline}}, 
+      "RowsIndexed" -> {}},
+    GridBoxSpacings->{"Columns" -> {
+        Offset[0.27999999999999997`], {
+         Offset[0.7]}, 
+        Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {
+        Offset[0.2], {
+         Offset[0.4]}, 
+        Offset[0.2]}, "RowsIndexed" -> {}}], "\[NoBreak]", ")"}],
+  Function[BoxForm`e$, 
+   MatrixForm[BoxForm`e$]]]], "Output",
+ CellChangeTimes->{
+  3.610978310407545*^9, {3.6109784364294243`*^9, 3.6109785223855753`*^9}, {
+   3.610978682194255*^9, 3.610978714564312*^9}, 3.610978761582795*^9, {
+   3.610978801519664*^9, 3.6109788152944884`*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
  RowBox[{"a05", "[", 
   RowBox[{"{", 
    RowBox[{"0", ",", " ", "0", ",", " ", "0", ",", " ", "0", ",", " ", "0"}], 
@@ -610,10 +676,11 @@ Cell[BoxData[
    3.605101897760988*^9}]
 }, Open  ]]
 },
-WindowSize->{684, 722},
-WindowMargins->{{Automatic, -225}, {-16, Automatic}},
+WindowSize->{1264, 665},
+WindowMargins->{{0, Automatic}, {Automatic, 0}},
 PrivateNotebookOptions->{"FileOutlineCache"->False},
 CellContext->Notebook,
 FrontEndVersion->"8.0 for Microsoft Windows (64-bit) (February 23, 2011)",
 StyleDefinitions->"Default.nb"
 ]
+
