@@ -136,17 +136,24 @@ z_m=    (a2+a3)*s2 + s24*(a4+a5*c5);
 
 phi=q(4)+pi/2;
 theta=q(2)+q(3);
-psi=q(1)-pi/2;
+psi=q(1)-pi/2+x(3)./a;
 
-k=[x(1); x(2); x(3)./a; x(6); x(7); x(8)./a; x(9); x(10); z_m; phi; theta; psi];
+man2glob=[cos(x(3)./a) -sin(x(3)./a) 0 x(1)+a*cos(x(3)./a);
+          sin(x(3)./a)  cos(x(3)./a) 0 x(2)+a*sin(x(3)./a);
+          0             0            1 0;
+          0             0            0 1];
+ 
+glob_eff=man2glob*[x_m, y_m, z_m, 1]';
+
+k=[x(6); x(7); x(8)./a; x(9); x(10); glob_eff(1:3); phi; theta; psi];
 
 %%
 C_lin=jacobian(k, x);
 D_lin=jacobian(k, q);
 matlabFunction(k, 'file', 'sfun_k', 'vars', {x, q});
 matlabFunction(B_lin, 'file', 'sfun_B', 'vars', {x});
-matlabFunction(C_lin, 'file', 'sfun_C', 'vars', {x});
-matlabFunction(D_lin, 'file', 'sfun_D', 'vars', {q});
+matlabFunction(C_lin, 'file', 'sfun_C', 'vars', {x, q});
+matlabFunction(D_lin, 'file', 'sfun_D', 'vars', {x, q});
 matlabFunction(g, 'file', 'sfun_g', 'vars', {x});
 matlabFunction(P_s, 'file', 'sfun_P', 'vars', {t});
 

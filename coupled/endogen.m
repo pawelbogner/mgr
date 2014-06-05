@@ -15,7 +15,7 @@ s=14;
 %lambda=[1, 0.1, 0.1, 0.01, 0.01, 0.001, 0.001, 0.0001, 0.0001, 1, 0.1, 0.1, 0.01, 0.01, 0.001, 0.001, 0.0001, 0.0001]';
 lambda=[0 0.1 0 0 0 0 0 0 0.1 0 0 0 0 0]';
 T=20;
-y_d = [10 0 pi/2 0 0 0 0 0 0.2 pi/2 pi/4 -pi/2]';
+y_d = [0 0 0 0 0 10 0 0.2 pi/2 pi/4 -pi/2]';
 
 gamma=0.05;
 e_tab=zeros(1, kmax);
@@ -29,8 +29,8 @@ while norm(e)>emax && k<kmax
     Ksi=reshape(x_ksi(end, n+1:end), n, []);
     y=sfun_k(x, q);
     e=y-y_d
-    C=sfun_C(x);
-    D=sfun_D(q);
+    C=sfun_C(x, q);
+    D=sfun_D(x, q);
     J=[C*Ksi D];
     %J=[C*Ksi];
     lambda_q = [lambda; q ];
