@@ -9,8 +9,8 @@ Q(w)\ddot w + C(w, \dot{w})\dot{w}+D(w)=F(w, \dot w)+B(w)u,
 \end{equation}
 where $Q(w)$ is the inertia matrix, $C(w, \dot w)$ is the centripetal and Coriolis forces matrix,
 $D(w)$ is the potential forces vector, $F(w, \dot w)$ is the vector of traction forces and $u$ is the
-control forces vector applied to the system having been transformed by matrix $B(w)$.
-This system may be transformed into the form $\dot q = f(q) + G(q)u$ using
+control forces vector applied to the system through the matrix $B(w)$.
+Such system may be transformed into the form $\dot q = f(q) + G(q)u$ using
 \begin{equation}
 \begin{aligned}
 f(q)&=\begin{bmatrix}
@@ -19,7 +19,7 @@ Q^{-1}(w)\left(F(w, \dot w)-C(w, \dot{w})\dot{w}-D(w)\right)
 \end{bmatrix}, & G(q)&=\begin{bmatrix}
 0_{n\times m}\\
 Q^{-1}B
-\end{bmatrix}
+\end{bmatrix}.
 \end{aligned}
 \end{equation}
 
@@ -61,15 +61,15 @@ J_{q_0, T}(u(\cdot), x)(v(\cdot), w) &= \left.\frac{\ud}{\ud \alpha}\right|_{\al
  &= 
  C(T,x)\int_0^T \Phi(T,s)B(s)v(s)\ud s + D(T,x)w,
 \end{align}
-where $(v(\cdot), w)\in \mathcal{X}$ and $\Phi(T,s)$ is the fundamental matrix of the following system:
+where $(v(\cdot), w)\in \mathcal{X}$ and $\Phi(T,s)$ is the fundamental matrix of the following system \cite{tchon2004acceleration}:
 \begin{equation}
 \begin{aligned}
 \label{eq:abxi}
-\dot \xi &= A(t)\xi + B(t) v \\
+\dot \xi &= A(t)\xi + B(t) v, \\
 \eta &= C(t, x)\xi + D(t, x).
 \end{aligned}
 \end{equation}
-The matrices in \eqref{eq:abxi} are as follows \cite{tchon2004acceleration}
+The matrices in \eqref{eq:abxi} are as follows
 \begin{equation}
 \begin{aligned}
 A(t) &= \frac{\partial (f(q(t))+G(q(t))u(t)}{\partial q}, & C(t, x) &= \frac{\partial k(q(t), x)}{\partial q},\\
@@ -79,7 +79,7 @@ B(t) &= G(q(t)), & D(t, x) &= \frac{\partial k(q(t), x)}{\partial x}.
 
 \section{Motion planning algorithm}
 Given the end-point map $K_{q_0, T}$, the motion planning problem is equivalent to finding an endogenous
-configuration $(u_d(\cdot), x_d)$, such that $K_{q_0, T}((u(\cdot), x))=y_d$. In order to find the
+configuration $(u_d(\cdot), x_d)$, such that $K_{q_0, T}((u_d(\cdot), x_d))=y_d$. In order to find the
 solution a Jacobian algorithm may be employed, analogically to the algorithms
 for inverse kinematics problem for manipulators. 
 
@@ -94,8 +94,8 @@ Since we expect the error to stabilize at $0$ exponentially fast with decay rate
 $\gamma$ we get the formula
 \begin{equation}
 \label{eq:endogen_decay}
-\frac{\ud e(\theta)}{\ud \theta}=-\gamma e(\theta)
-\end{equation}.
+\frac{\ud e(\theta)}{\ud \theta}=-\gamma e(\theta).
+\end{equation}
 Combining \eqref{eq:endogen_err} and \eqref{eq:endogen_decay} we acquire the Ważewski-Davidenko equation
 \begin{equation}
 J_{q_0, T}(u_\theta(\cdot), x)\dfrac{\ud}{\ud \theta}\begin{pmatrix}
@@ -103,7 +103,7 @@ u_\theta(\cdot)\\ x_\theta
 \end{pmatrix}=-\gamma e(\theta).
 \end{equation}
 
-Let $J^\#_{q_0, T}(u_\theta(\cdot), x)$ denote the right Moore-Penrose inverse
+Let $J^\#_{q_0, T}(u_\theta(\cdot), x)$ denote the right Moore-Penrose inverse \cite{ecs_ijc}
 of the Jacobian \eqref{eq:jacobian}. Applying it to the above equation we get a dynamic system
 \begin{equation}
 \label{eq:endogen_alg}
@@ -138,14 +138,14 @@ P(t)=\begin{bmatrix}
 \end{bmatrix}
 \end{equation}
 
-The above formulae let us define a new band-limited Jacobian as
+The above formulae let us define a new band-limited Jacobian as \cite{ecs_ijc}
 \begin{equation}
-\hat J_{q_0, T}(\lambda, x)=\begin{bmatrix}C_\lambda(T)\int_0^T \Phi_\lambda(T,s)B(s)_\lambda P(s)\ud s & D_\lambda(T,x)\end{bmatrix}
+\hat J_{q_0, T}(\lambda, x)=\begin{bmatrix}C_\lambda(T,x)\int_0^T \Phi_\lambda(T,s)B(s)_\lambda P(s)\ud s & D_\lambda(T,x)\end{bmatrix}
 \end{equation}
 
 Assuming the above the Jacobian $\hat J_{q_0, T}(\lambda, x)$
 may be computed alternatively as\\ $\begin{bmatrix}
-C\cdot\Xi(T)& D
+C_\lambda(T,x)\cdot\Xi(T)& D_\lambda(T,x)
 \end{bmatrix}$, where $\Xi$ is defined by  
 \begin{equation}
 \dot \Xi = A_\lambda(t)\Xi +B_\lambda(t)P(t)
@@ -162,7 +162,7 @@ In order to acquire the Moore-Penrose inverse of the Jacobian we can simply use 
 The problem which may occur here is the singularity of the dexterity matrix\\
 $\hat J_{q_0, T}(\lambda, x)\hat J^T_{q_0, T}(\lambda, x)$. The inverse can be regularised by adding a small value to the diagonal of the matrix being inverted in the following way:
 \begin{equation}
-\hat J^\#_{q_0, T}(\lambda, x)=\hat J^T_{q_0, T}(\lambda, x)\left(\hat J_{q_0, T}(\lambda, x)\hat J^T_{q_0, T}(\lambda, x)+\eta I\right)^{-1}
+\hat J^\#_{q_0, T}(\lambda, x)=\hat J^T_{q_0, T}(\lambda, x)\left(\hat J_{q_0, T}(\lambda, x)\hat J^T_{q_0, T}(\lambda, x)+\eta I\right)^{-1}.
 \end{equation}
 The regularised version of the inverse Jacobian should be used only if the determinant of the dexterity matrix is below the assumed threshold.
 
