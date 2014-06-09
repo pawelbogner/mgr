@@ -1,6 +1,6 @@
 function A = mp_inverse(P)
     PP=P*P.';
-     deter=det(PP)
+%      deter=det(PP)
 %       if(deter<10e-6)
 %           PP=PP+0.005*eye(size(PP));
 %           deter2=det(PP)
