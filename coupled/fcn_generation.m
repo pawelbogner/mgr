@@ -74,8 +74,8 @@ P = [Q11    0      Q13./a      0           0;
  N4=((mp/4)+mw)*gr;
  
 % R coefficients
- R14=-(1*N1 + 1*N4)*s14;
- R23=-(1*N2 + 1*N3)*s23;
+ R14=-(3*N1 + 3*N4)*s14;
+ R23=-(3*N2 + 3*N3)*s23;
  R12=-(30*N1 + 30*N2)*s12;
  R34=-(30*N3 + 30*N4)*s34;
  
@@ -93,7 +93,7 @@ P = [Q11    0      Q13./a      0           0;
  
  %% Ps matrix --- control function base matrix
 omega=2*3.141592653589793/T_h;
-P_s=[1 sin(omega*t) cos(omega*t) sin(2*omega*t) cos(2*omega*t) sin(3*omega*t) cos(3*omega*t) 0 0 0 0 0 0 0;
+P_s=[1 sin(omega*t) cos(omega*t) sin(2*omega*t) cos(2*omega*t) sin(3*omega*t) cos(3*omega*t) -1 0 0 0 0 0 0;
      0 0 0 0 0 0 0 1 sin(omega*t) cos(omega*t) sin(2*omega*t) cos(2*omega*t) sin(3*omega*t) cos(3*omega*t)];
  
   %% Legendre
@@ -115,38 +115,15 @@ g=[zeros(5,2); inv(P)*B./R];
 B_lin=g;
 
 %% output function
-
-a2=0.1276;
-a3=0.041;
-a4=0.2615;
-a5=0.0195;
-
-c1=cos(q(1));
-s1=sin(q(1));
-c2=cos(q(2));
-s2=sin(q(2));
-c24=cos(q(2)+q(3));
-s24=sin(q(2)+q(3));
-c5=cos(q(4));
-s5=sin(q(4));
-
-x_m=c1*((a2+a3)*c2 + c24*(a4+a5*c5)) - a5*s1*s5;
-y_m=s1*((a2+a3)*c2 + c24*(a4+a5*c5)) + a5*c1*s5;
-z_m=    (a2+a3)*s2 + s24*(a4+a5*c5);
-
-phi=q(4)+pi/2;
-theta=q(2)+q(3);
-psi=q(1)-pi/2;
-
-k=[x(1); x(2); x(3)./a; x(6); x(7); x(8)./a; x(9); x(10); z_m; phi; theta; psi];
+k=[x(1); x(2); x(3)./a; x(6); x(7); x(8)./a; x(9); x(10)];
 
 %%
 C_lin=jacobian(k, x);
-D_lin=jacobian(k, q);
-matlabFunction(k, 'file', 'sfun_k', 'vars', {x, q});
+%D_lin=jacobian(k, q);
+matlabFunction(k, 'file', 'sfun_k', 'vars', {x});
 matlabFunction(B_lin, 'file', 'sfun_B', 'vars', {x});
 matlabFunction(C_lin, 'file', 'sfun_C', 'vars', {x});
-matlabFunction(D_lin, 'file', 'sfun_D', 'vars', {q});
+%matlabFunction(D_lin, 'file', 'sfun_D', 'vars', {q});
 matlabFunction(g, 'file', 'sfun_g', 'vars', {x});
 matlabFunction(P_s, 'file', 'sfun_P', 'vars', {t});
 
