@@ -1,7 +1,7 @@
 function [tout, xout] = ode_run(lambdas)
 
 tstart=0;
-tfinal=5;
+tfinal=20;
 %x0=[0; 0; 0.730*pi/2; zeros(7,1)]; %% dim Ksi= n*m*s
 x0=[0; 0; 0.730*pi/2; zeros(7,1); zeros(10*2*7,1)];
 opt=odeset('MaxStep', 1e-2);
