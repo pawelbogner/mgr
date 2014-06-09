@@ -1,13 +1,13 @@
 \chapter{Endogenous configuration space}
 \label{ch:endogen}
 \section{Basic concepts}
-Let us consider a mobile robot --- a mobile platform with a manipulator. Let $q = (w, \dot w)^T \in \mathbb{R}^{2n}$ denote the state of the platform and $x \in \mathbb{R}^p$ denote the configuration of the manipulator. The platform is actuated by vector $u \in \mathbb{R}^m$. We can define a vector $y \in \mathbb{R}^r$ which is the result of the output function $k: \mathbb{R}^{2n} \times \mathbb{R}^p \rightarrow \mathbb{R}^r$. 
+Let us consider a mobile manipulator --- a mobile platform equipped with a manipulator. Let $q = (w, \dot w)^T \in \mathbb{R}^{2n}$ denote the state of the platform, and $x \in \mathbb{R}^p$ denote the configuration of the manipulator. The platform is actuated by a control force vector $u \in \mathbb{R}^m$. We can define a vector $y \in \mathbb{R}^r$ which is the result of the output function $k: \mathbb{R}^{2n} \times \mathbb{R}^p \rightarrow \mathbb{R}^r$, $y=k(q,x)$. 
 
-Suppose the dynamics of the platform are defined by the equation obtained using Euler-Lagrange formalism:
+Suppose the dynamics of the platform are defined by the equation obtained using the Euler-Lagrange formalism:
 \begin{equation}
 Q(w)\ddot w + C(w, \dot{w})\dot{w}+D(w)=F(w, \dot w)+B(w)u,
 \end{equation}
-where $Q(w)$ is the inertia matrix, $C(w, \dot w)$ is the centripetal and Coriolis forces matrix,
+where $Q(w)$ is the inertia matrix, $C(w, \dot w)$ denotes the centripetal and Coriolis forces matrix,
 $D(w)$ is the potential forces vector, $F(w, \dot w)$ is the vector of traction forces and $u$ is the
 control forces vector applied to the system through the matrix $B(w)$.
 Such system may be transformed into the form $\dot q = f(q) + G(q)u$ using
@@ -38,30 +38,31 @@ y &= k(q, x).
 \subsection{Endogenous configuration}
 Define a pair $(u(\cdot), x)$, which consists of control inputs mentioned above.
 Such elements belong to the endogenous configuration space
-$\mathcal{X} = L_m^2[0, T] \times \mathbb{R}^p$ of the mobile manipulator.
-The inner product in $\mathcal{X}$ is as follows \cite{ecs_ijc}:
+$\mathcal{X} = L_m^2[0, T] \times \mathbb{R}^p$ of the mobile manipulator, where $T$ denotes a control horizon.
+The inner product in $\mathcal{X}$ can be defined as follows \cite{ecs_ijc}
 \begin{equation}
-\langle (u_1(\cdot), x_1), (u_2(\cdot), x_2) \rangle = \int_0^T u_1^T(t) u_2(t) \ud t + x_1^T x_2.
+\langle (u_1(\cdot), x_1), (u_2(\cdot), x_2) \rangle = \int_0^T u_1^T(t) u_2(t) \ud t + x_1^T x_2
 \end{equation}
 
 The function
 $K_{q_0, T}: \mathcal{X} \rightarrow \mathbb{R}^r$
 allow to determine the state of the mobile manipulator at time $T>0$ given
-endogenous configuration $(u(\cdot), x)$ and initial state $q_0$:
+the endogenous configuration $(u(\cdot), x)$ and the initial state $q_0$:
 \begin{equation}
+\label{eq:endmap}
 K_{q_0, T}((u(\cdot), x)) = k(\phi_{q_0, T}(u(\cdot)), x),
 \end{equation}
 where $\phi_{q_0, T}(u(\cdot))$ denotes the flow of the system \eqref{eq:control_sys}
-caused by input $u(\cdot)$. The above will be called the end-point map.
+caused by the input $u(\cdot)$. The map \eqref{eq:endmap} will be called the end-point map.
 
-With the above definitions the analytic Jacobian of $K_{q_0, T}$ can be defined at $(u(\cdot), x) \in \mathcal{X}$ \cite{ratajczak2013multiple}:
+With the above definitions, the analytic Jacobian of $K_{q_0, T}$ at $(u(\cdot), x) \in \mathcal{X}$ can be defined as \cite{ratajczak2013multiple}
 \begin{align}
 \label{eq:jacobian}
 J_{q_0, T}(u(\cdot), x)(v(\cdot), w) &= \left.\frac{\ud}{\ud \alpha}\right|_{\alpha=0} K_{q_0, T}((u(\cdot)+\alpha v(\cdot), x+\alpha w))\\
  &= 
  C(T,x)\int_0^T \Phi(T,s)B(s)v(s)\ud s + D(T,x)w,
 \end{align}
-where $(v(\cdot), w)\in \mathcal{X}$ and $\Phi(T,s)$ is the fundamental matrix of the following system \cite{tchon2004acceleration}:
+where $(v(\cdot), w)\in \mathcal{X}$ and $\Phi(T,s)$ is the fundamental matrix of the following linear system \cite{tchon2004acceleration}
 \begin{equation}
 \begin{aligned}
 \label{eq:abxi}
@@ -69,7 +70,7 @@ where $(v(\cdot), w)\in \mathcal{X}$ and $\Phi(T,s)$ is the fundamental matrix o
 \eta &= C(t, x)\xi + D(t, x).
 \end{aligned}
 \end{equation}
-The matrices in \eqref{eq:abxi} are as follows
+The matrices in \eqref{eq:abxi} are defines as follows
 \begin{equation}
 \begin{aligned}
 A(t) &= \frac{\partial (f(q(t))+G(q(t))u(t)}{\partial q}, & C(t, x) &= \frac{\partial k(q(t), x)}{\partial q},\\
@@ -78,40 +79,40 @@ B(t) &= G(q(t)), & D(t, x) &= \frac{\partial k(q(t), x)}{\partial x}.
 \end{equation}
 
 \section{Motion planning algorithm}
-Given the end-point map $K_{q_0, T}$, the motion planning problem is equivalent to finding an endogenous
-configuration $(u_d(\cdot), x_d)$, such that $K_{q_0, T}((u_d(\cdot), x_d))=y_d$. In order to find the
-solution a Jacobian algorithm may be employed, analogically to the algorithms
-for inverse kinematics problem for manipulators. 
+Given the end-point map $K_{q_0, T}$ and a desired output $y_d\in\mathbb{R}$, the motion planning problem is equivalent to finding an endogenous
+configuration $(u_d(\cdot), x_d)$, such that $K_{q_0, T}(u_d(\cdot), x_d)=y_d$. In order to find the
+solution, a Jacobian algorithm may be employed, analogically to the algorithms
+for the inverse kinematics problem for manipulators. 
 
-Let us choose the initial configuration $(u_0(\cdot), x_0)$ and
-define a curve in $\mathcal{X}$ $(u_\theta(\cdot), x_\theta)$, $\theta \in \mathbb{R}$.
-Computing the error along $(u_\theta(\cdot), x_\theta)$ we obtain
+Let us choose the initial configuration $(u_0(\cdot), x_0)$, and
+define in $\mathcal{X}$ a curve $(u_\theta(\cdot), x_\theta)$, $\theta \in \mathbb{R}$.
+Computing the error along $(u_\theta(\cdot), x_\theta)$, we obtain
 \begin{equation}
 \label{eq:endogen_err}
 e(\theta)=K_{q_0, T}(u_\theta(\cdot), x_\theta)-y_d.
 \end{equation}
-Since we expect the error to stabilize at $0$ exponentially fast with decay rate
-$\gamma$ we get the formula
+Since we expect the error to stabilize at $0$ exponentially fast with a decay rate
+$\gamma>0$, we get the formula
 \begin{equation}
 \label{eq:endogen_decay}
 \frac{\ud e(\theta)}{\ud \theta}=-\gamma e(\theta).
 \end{equation}
-Combining \eqref{eq:endogen_err} and \eqref{eq:endogen_decay} we acquire the Ważewski-Davidenko equation
+Combining \eqref{eq:endogen_err} and \eqref{eq:endogen_decay} we acquire the Ważewski-Davidenko type equation
 \begin{equation}
 J_{q_0, T}(u_\theta(\cdot), x)\dfrac{\ud}{\ud \theta}\begin{pmatrix}
 u_\theta(\cdot)\\ x_\theta
 \end{pmatrix}=-\gamma e(\theta).
 \end{equation}
 
-Let $J^\#_{q_0, T}(u_\theta(\cdot), x)$ denote the right Moore-Penrose inverse \cite{ecs_ijc}
-of the Jacobian \eqref{eq:jacobian}. Applying it to the above equation we get a dynamic system
+Let $J^\#_{q_0, T}(u_\theta(\cdot), x)$ denote the Moore-Penrose inverse \cite{ecs_ijc}
+of the Jacobian \eqref{eq:jacobian}. By applying it to the above equation we get a dynamic system
 \begin{equation}
 \label{eq:endogen_alg}
 \dfrac{\ud}{\ud \theta}\begin{pmatrix}
 u_\theta(\cdot)\\ x_\theta
-\end{pmatrix}=-\gamma J^\#_{q_0, T}(u_\theta(\cdot), x) e(\theta),
+\end{pmatrix}=-\gamma J^\#_{q_0, T}(u_\theta(\cdot), x_\theta) e(\theta),
 \end{equation}
-which defines the solution of the formulated motion planning task in the following way:
+which defines the solution of the formulated motion planning problem in the following way
 \begin{equation}
 \begin{pmatrix}
 u_d(\cdot)\\ x_d
@@ -121,14 +122,14 @@ u_\theta(\cdot)\\ x_\theta
 \end{equation}
 
 \section{Numerical computations}
-The dimension of $L^2[0,T]$ space is infinite. Therefore we need an infinite number of parameters to define an element from this space. This is impossible to achieve in calculations made on a computer. The solution is to limit the bandwidth of considered functions. 
+The dimension of the $L^2[0,T]$ space is infinite. Therefore, we need an infinite number of parameters to define an element from this space. This is impossible to achieve in calculations made on a computer. The solution is to limit the bandwidth of considered control functions. 
 
-It is possible to choose a finite-dimensional orthogonal base $\Psi = [ \psi_1, \psi_2, \dots, \psi_s ]$ spanning the limited-band control functions space. 
-Using such approach a function $u_i$ is represented by a vector 
-$\lambda_i = [\lambda_{i1}, \lambda_{i2}, \dots, \lambda_{is}]^T$ 
-which satisfies the formula $u_i = \sum_{k=1}^s \psi_k \lambda_{ik}$.
+It is possible to choose a finite-dimensional orthogonal base $\Psi = [ \psi_1, \psi_2, \dots, \psi_s ]$ spanning the band-limited control functions space. 
+Using such an approach, a function $u_i$ is represented by a vector 
+$\lambda_i = (\lambda_{i1}, \lambda_{i2}, \dots, \lambda_{is})^T$ 
+which satisfies the formula $u_i(t) = \sum_{k=1}^s \psi_k(t) \lambda_{ik}$.
 
-In order to define a vector $u=[u_1, u_2, \dots, u_m]^T$ a matrix $P(t)$ should be defined, such that $u_\lambda(t)=P(t)\lambda$. This means $P(t)$ is a block diagonal matrix 
+In order to define a control vector $u=(u_1, u_2, \dots, u_m)^T$, a matrix $P(t)$ should be defined, such that $u_\lambda(t)=P(t)\lambda$. This means that $P(t)$ is a block diagonal matrix of the form
 \begin{equation}
 P(t)=\begin{bmatrix}
 \Psi & 0 & \cdots & 0\\
@@ -138,19 +139,19 @@ P(t)=\begin{bmatrix}
 \end{bmatrix}
 \end{equation}
 
-The above formulae let us define a new band-limited Jacobian as \cite{ecs_ijc}
+The above formulae allow us to define a band-limited Jacobian as \cite{ecs_ijc}
 \begin{equation}
 \hat J_{q_0, T}(\lambda, x)=\begin{bmatrix}C_\lambda(T,x)\int_0^T \Phi_\lambda(T,s)B(s)_\lambda P(s)\ud s & D_\lambda(T,x)\end{bmatrix}
 \end{equation}
 
-Assuming the above the Jacobian $\hat J_{q_0, T}(\lambda, x)$
+Assuming the above, the Jacobian $\hat J_{q_0, T}(\lambda, x)$
 may be computed alternatively as\\ $\begin{bmatrix}
-C_\lambda(T,x)\cdot\Xi(T)& D_\lambda(T,x)
-\end{bmatrix}$, where $\Xi$ is defined by  
+C_\lambda(T,x)\Xi(T)& D_\lambda(T,x)
+\end{bmatrix}$, where $\Xi$ is a matrix defined by  
 \begin{equation}
 \dot \Xi = A_\lambda(t)\Xi +B_\lambda(t)P(t)
 \end{equation}
-with the initial condition $\Xi(0)=0$ %TODO citation needed.
+with the initial condition $\Xi(0)=0$. %TODO citation needed.
 This allows to easily calculate the Jacobian simultaneously with the simulation
 of the system by extending the ODE function.
 
@@ -160,14 +161,14 @@ In order to acquire the Moore-Penrose inverse of the Jacobian we can simply use 
 \end{equation}
 
 The problem which may occur here is the singularity of the dexterity matrix\\
-$\hat J_{q_0, T}(\lambda, x)\hat J^T_{q_0, T}(\lambda, x)$. The inverse can be regularised by adding a small value to the diagonal of the matrix being inverted in the following way:
+$\mathcal{G}_{q_0,T}(\lambda,x)=\hat J_{q_0, T}(\lambda, x)\hat J^T_{q_0, T}(\lambda, x)$. The inverse can be regularised by adding a small value to the diagonal of the matrix to be inverted, in the following way:
 \begin{equation}
-\hat J^\#_{q_0, T}(\lambda, x)=\hat J^T_{q_0, T}(\lambda, x)\left(\hat J_{q_0, T}(\lambda, x)\hat J^T_{q_0, T}(\lambda, x)+\eta I\right)^{-1}.
+\hat J^\#_{q_0, T}(\lambda, x)=\hat J^T_{q_0, T}(\lambda, x)\left(\hat J_{q_0, T}(\lambda, x)\hat J^T_{q_0, T}(\lambda, x)+\eta I_r\right)^{-1}.
 \end{equation}
-The regularised version of the inverse Jacobian should be used only if the determinant of the dexterity matrix is below the assumed threshold.
+The regularised version of the inverse Jacobian should be used only if the determinant of the dexterity matrix is below a certain assumed threshold.
 
-Another limitation met in numerical approach to the problem is the necessity to discretise the variable $\theta$ in \eqref{eq:endogen_alg}.
-This may be resolved by applying the first-order Euler method:
+Another limitation met in numerical approach to the motion planning problem is the necessity to discretise the variable $\theta$ in \eqref{eq:endogen_alg}.
+This may be resolved by applying the first-order Euler method
 \begin{equation}
 \begin{pmatrix}
 \lambda_{k+1}\\
@@ -176,3 +177,4 @@ x_{k+1}
 x_{k}
 \end{pmatrix} - \gamma \hat J^\#_{q_0, T}(\lambda_k, x_k)e(k).
 \end{equation}
+In order to find the numerical solution, a vast array of numerical differential equation solving algorithms may be employed. These include those with fixed step (e.g. Runge-Kutta methods), as well as variable step ones.
