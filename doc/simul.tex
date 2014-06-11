@@ -7,11 +7,8 @@ configuration space approach presented in chapter \ref{ch:endogen}.
 The problem to be solved is to move the platform from the initial state
 $q_0 = [w_0; \dot{w_0}] = (0, 0, a\frac{\pi}{2}, 0_7)^T$ to the desired state
 $q_d = [w_d; \dot{w_d}] = (0, 0, a\frac{\pi}{2}, 0_7)^T$
-within the given amount of time $T$. When it comes to the manipulator,
-its coordinates in task space $(\phi, \theta, \psi, y, z) $ should be equal to
-$(-\frac{\pi}{2}, -\frac{\pi}{4}, \frac{\pi}{2}, 0, 0.2)$.
-This corresponds to a parking manoeuvre with the manipulator
-looking straight forward, observing the floor right in front of it.
+within the given amount of time $T$. 
+This corresponds to a parking manoeuvre.
 
 Now two types of friction models will be discussed --- linear
 and discontinuous. These models will be employed in simulations
@@ -37,8 +34,17 @@ The object parameters were set according to \cite{coupled} and are as follows:
 \subsection{Linear friction model}
 This model assumes that coefficients $\epsilon_i$ and $\tau_i$ in \eqref{eq:force_r} are constant. Four cases of friction coefficients values have been researched. Every case was studied with two different time horizons 10\,s and 20\,s. The results of the simulations are shown in figures ...
 
-It is also worth to analyse whether the input functions obtained through the algorithm are feasible on the real object. The total energy of the signal was computed as $\int_0^T u^2\ud t$ and the maximal amplitude which can be compared to the maximum torque achievable by the real actuator.
+It is also worth to analyse whether the input functions obtained through the algorithm are feasible on the real object. The total energy of the signal was computed as $\int_0^T u^2\ud t$ and the maximal amplitude which can be compared to the maximum torque achievable by the real actuator. Results for all the simulations run are presented in table ...
+
+\input{images_platform.tex}
 
 \subsection{Discontinuous friction model}
 This model assumes that coefficients $\epsilon_i$ and $\tau_i$ in \eqref{eq:force_r} depend.
+
+\subsection{Manipulator}
+When it comes to the manipulator,
+its coordinates in task space $(\phi, \theta, \psi, y, z) $ should be equal to
+$(-\frac{\pi}{2}, -\frac{\pi}{4}, \frac{\pi}{2}, 0, 0.2)$.
+This corresponds to a parking manoeuvre with the manipulator
+looking straight forward, observing the floor right in front of it.
 \section{Unicycle}
