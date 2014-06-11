@@ -121,7 +121,8 @@ R_{14}&=-(\epsilon_1 N_1 + \epsilon_4 N_4)s_{14}, & R_{12}&=-(\tau_1 N_1 + \tau_
 R_{23}&=-(\epsilon_2 N_2 + \epsilon_3 N_3)s_{23}, & R_{34}&=-(\tau_3 N_3 + \tau_4 N_4)s_{34},
 \end{aligned}
 \end{equation}
-where $N_i$ are the normal forces applied by the wheels on the ground.
+where $N_i$ are the normal forces applied by the wheels on the ground. We may assume that these
+forces are equal to the quarter of the weight of the whole object: $N_i=\frac{m_p}{4}+m_w$ for $i=1, 2, 3, 4$.
 Combining \eqref{eq:pfaff} and \eqref{eq:force_r}, we obtain
 \begin{equation}
 F(w, \dot{w}) = R_{14}\frac{H^{1T}(w)}{||H^{1T}(w)||} + R_{23}\frac{H^{2T}(w)}{||H^{2T}(w)||} + R_{12}\frac{H^{3T}(w)}{||H^{3T}(w)||} + R_{34}\frac{H^{4T}(w)}{||H^{4T}(w)||}.
