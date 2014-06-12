@@ -32,14 +32,37 @@ The object parameters were set according to \cite{coupled} and are as follows:
 \end{multicols}
 
 \subsection{Linear friction model}
-This model assumes that coefficients $\epsilon_i$ and $\tau_i$ in \eqref{eq:force_r} are constant. Four cases of friction coefficients values have been researched. Every case was studied with two different time horizons 10\,s and 20\,s. The results of the simulations are shown in figures ...
+This model assumes that coefficients $\epsilon_i$ and $\tau_i$ in \eqref{eq:force_r} are constant. Four cases of friction coefficients values have been analysed. Every case was studied with two different time horizons 10\,s and 20\,s. The results of the simulations are shown in figures ...
 
-It is also worth to analyse whether the input functions obtained through the algorithm are feasible on the real object. The total energy of the signal was computed as $\int_0^T u^2\ud t$ and the maximal amplitude which can be compared to the maximum torque achievable by the real actuator. Results for all the simulations run are presented in table ...
+It is also worth to check whether the input functions obtained through the algorithm are feasible on the real object. The total energy of the signal was computed as $\int_0^T u^2\ud t$ and the maximal amplitude which can be compared to the maximum torque achievable by the real actuator. Results for all the simulations run are presented in table ...
 
 \input{images_platform.tex}
 
 \subsection{Discontinuous friction model}
-This model assumes that coefficients $\epsilon_i$ and $\tau_i$ in \eqref{eq:force_r} depend.
+\subsubsection{Rex mobile platform}
+This model assumes that coefficients $\epsilon_i$ and $\tau_i$ in \eqref{eq:force_r} depend on the value of the slip. The point of such approach is to model the phenomenon of losing the traction. We will assume that for every friction force we have two values of the friction coefficient: high when the slip is less than the certain value (traction) and low otherwise (skid). This idea leads to the following formulae
+\begin{equation*}
+\begin{aligned}
+\epsilon_i&=\begin{cases}
+\epsilon_{high} &\mbox{if } |s| \leq d \\
+\epsilon_{low} &\mbox{if } |s| > d
+\end{cases}, &
+\tau_i&=\begin{cases}
+\tau_{high} &\mbox{if } |s| \leq d \\
+\tau_{low} &\mbox{if } |s| > d
+\end{cases},
+\end{aligned}
+\end{equation*}
+where $i=1, 2, 3, 4$. The values used in simulations are: $\epsilon_{high}=10$, $\epsilon_{low}=5$, $\tau_{high}=3$, $\tau_{low}=1$. Unfortunately, there is no guarantee for the algorithm to converge for a discontinuous model and such situation takes place in this case. The plot of the error norm with respect to the iteration number is shown in the figure \ref{fig:error_discont}. It is clearly visible that the plot of the error norm is not monotonic. The reason why the endogenous configuration approach does not perform well here is the fundamental idea of the motion planning algorithm. It assumes that a small change in endogenous configuration results in a small change in the output function value. This statement is true for continuous models. On the contrary, when a model includes some discontinuities, 
+\begin{figure}[htp]
+\centering
+\includegraphics[height=0.3\textheight]{img/final_15_1_10_path.eps} %TODO make proper image
+\caption{Error norm w.r.t iteration, discontinuous model of the platform}
+\label{fig:error_discont}
+\end{figure}
+
+
+\subsubsection{Unicycle}
 
 \subsection{Manipulator}
 When it comes to the manipulator,
