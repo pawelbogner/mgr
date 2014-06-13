@@ -22,6 +22,8 @@ P(t)=\begin{bmatrix}
 The decay rate $\gamma$ in \eqref{eq:endogen_num} has been set to $0.05$ for all
 the simulations demonstrated in this chapter.
 
+\section{Event mechanism}
+
 
 \section{Unicycle}
 The model of the unicycle has been implemented in order to examine the behaviour
@@ -34,15 +36,51 @@ and the desired end state is $q_d = [w_d; \dot{w_d}] = (10, 0, a\frac{\pi}{2}, 0
 The motion is supposed to be executed within the fixed control horizon $T$.
 
 \subsection{Simulation conditions}
+\label{sec:discont_params_uni}
 The parameters of the object used during the simulation are:
 \begin{multicols}{2}
 \begin{itemize}
 \item $m= \,\mathrm{kg}$,
 \item $R= \,\mathrm{m}$,
 \item $I_\phi =\,\mathrm{kgm^2}$,
-\item $I_\theta =\,\mathrm{kgm_2}$.
+\item $I_\theta =\,\mathrm{kgm^2}$.
 \end{itemize}
 \end{multicols}
+Initial conditions for the $\lambda$ parameters used to compute control functions
+in \eqref{eq:endogen_num} are
+\begin{equation}
+\lambda_0=
+(\underbrace{0, \ 0, \ 0, \ 0, \ 0, \ 0, \ 0,}_{u_1}\ \underbrace{0, \ 0, \ 0, \ 0, \ 0, \ 0, \ 0}_{u_2})^T.
+\end{equation}
+Such setting tries to move the object in the proper direction in the first iteration in order to
+maximise the chances for the algorithm to converge.
+
+The values of the friction coefficients were changing according to the value of the slips $s_\parallel$
+and $s_\perp$. 
+
+\begin{equation*}
+\begin{aligned}
+\epsilon&=\begin{cases}
+\epsilon_{high} &\mbox{if } |s_\perp| \leq d \\
+\epsilon_{low} &\mbox{if } |s_\perp| > d
+\end{cases}, &
+\tau&=\begin{cases}
+\tau_{high} &\mbox{if } |s_\parallel| \leq d \\
+\tau_{low} &\mbox{if } |s_\parallel| > d
+\end{cases}.
+\end{aligned}
+\end{equation*}
+Such friction coefficients definition induces discontinuities in the model.
+
+\subsection{Simulation results}
+Despite the fact that the motion planning algorithm based on the endogenous 
+configuration approach does not converge in general for discontinuous models,
+it came out to be possible to find a set of the parameters for which the algorithm produced
+a valid result. These parameters are shown in detail in section \ref{sec:discont_params_uni}.
+The behaviour of this motion planning method for discontinuous models has been thoroughly researched
+and the conclusion is that the case presented here is special. Mostly, the error rises to the infinity
+or oscillates around a certain value.
+The results --- the error, path, slips and control inputs plots --- are depicted in figure ...
 
 
 \section{Mobile platform}
