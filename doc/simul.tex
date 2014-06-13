@@ -4,6 +4,7 @@ described in chapter \ref{ch:model}. The motion planning problem has been solved
 configuration space approach presented in chapter \ref{ch:endogen}.
 \section{RobRex}
 \subsection{Problem formulation}
+\label{sec:rex_task}
 The problem to be solved is to move the platform from the initial state
 $q_0 = [w_0; \dot{w_0}] = (0, 0, a\frac{\pi}{2}, 0_7)^T$ to the desired state
 $q_d = [w_d; \dot{w_d}] = (0, 0, a\frac{\pi}{2}, 0_7)^T$
@@ -14,7 +15,7 @@ Now two types of friction models will be discussed --- linear
 and discontinuous. These models will be employed in simulations
 regarding solving the above problem.
 
-\subsection{Simulation parameters}
+\subsection{Simulation conditions}
 The object parameters were set according to \cite{coupled} and are as follows:
 \begin{multicols}{2}
 \begin{itemize}
@@ -30,16 +31,55 @@ The object parameters were set according to \cite{coupled} and are as follows:
 \item $I_{w33} = 0.009\,\mathrm{kgm^2}$.
 \end{itemize}
 \end{multicols}
+The decay rate $\gamma$ in \eqref{eq:endogen_num} has been set to $0.05$.
+The base used to represent the control functions was trigonometric, including up to the third harmonics, that means
+\begin{equation}
+\Psi=\begin{pmatrix}
+1 & \sin(\omega t) & \cos(\omega t)& \sin(2\omega t) & \cos(2\omega t)& \sin(3\omega t) & \cos(3\omega t)
+\end{pmatrix},
+\end{equation}
+where $\omega=\frac{2\pi}{T}$ and $T$ is the control horizon. Assuming the above and the fact that the model is controlled by two inputs, the matrix $P(t)$ in \eqref{eq:Pt} is of the form
+\begin{equation}
+P(t)=\begin{bmatrix}
+\Psi & 0_{1\times 7}\\
+0_{1\times 7} & \Psi
+\end{bmatrix}.
+\end{equation}
+\setcounter{MaxMatrixCols}{14}
+Initial conditions for the $\lambda$ parameters used to compute control functions in \eqref{eq:endogen_num} are $\lambda_0= \begin{pmatrix}
+0 & 0.5 & 0 & 0 & 0 & 0 & 0 & 0 & 0.5 & 0 & 0 & 0 & 0 & 0
+\end{pmatrix} ^T$, i.e. only first harmonic sines are used.
+ 	
 
 \subsection{Linear friction model}
-This model assumes that coefficients $\epsilon_i$ and $\tau_i$ in \eqref{eq:force_r} are constant. Four cases of friction coefficients values have been analysed. Every case was studied with two different time horizons 10\,s and 20\,s. The results of the simulations are shown in figures ...
+This model assumes that coefficients $\epsilon_i$ and $\tau_i$ in \eqref{eq:force_r} are constant. Four cases of friction coefficients values have been analysed:
+\begin{enumerate}
+\item $\epsilon_i=15$ and $\tau_i=15$,
+\item $\epsilon_i=15$ and $\tau_i=1$,
+\item $\epsilon_i=1$ and $\tau_i=15$,
+\item $\epsilon_i=1$ and $\tau_i=1$,
+\end{enumerate}
+for $i=1,\,2,\,3,\,4$.
+Every case was studied with two different time horizons 10\,s and 20\,s. The results of the simulations are shown in figures ...
 
-It is also worth to check whether the input functions obtained through the algorithm are feasible on the real object. The total energy of the signal was computed as $\int_0^T u^2\ud t$ and the maximal amplitude which can be compared to the maximum torque achievable by the real actuator. Results for all the simulations run are presented in table ...
-
+It is also worth to check whether the input functions obtained through the algorithm are feasible on the real object. The total energy of the signal was computed as $\int_0^T u^2\ud t$ and the maximal amplitude which can be compared to the maximum torque achievable by the real actuator. These values computed for all the simulations run are presented in table \ref{tab:control}.
+\begin{table}[h]
+\centering
+\caption{My caption}
+\label{tab:control} %TODO put proper values
+\begin{tabular}{rr|r|r|r|r|}
+\cline{3-6}
+\multicolumn{1}{c}{}                      & \multicolumn{1}{c|}{}           & \multicolumn{2}{c|}{energy}                             & \multicolumn{2}{c|}{amplitude}                          \\ \hline
+\multicolumn{1}{|c|}{$\tau$}              & \multicolumn{1}{c|}{$\epsilon$} & \multicolumn{1}{c|}{$u_1$} & \multicolumn{1}{c|}{$u_2$} & \multicolumn{1}{c|}{$u_1$} & \multicolumn{1}{c|}{$u_2$} \\ \hline
+\multicolumn{1}{|r|}{\multirow{2}{*}{15}} & 15                              &                            &                            &                            &                            \\ \cline{2-6} 
+\multicolumn{1}{|r|}{}                    & 1                               &                            &                            &                            &                            \\ \hline
+\multicolumn{1}{|r|}{\multirow{2}{*}{1}}  & 15                              &                            &                            &                            &                            \\ \cline{2-6} 
+\multicolumn{1}{|r|}{}                    & 1                               &                            &                            &                            &                            \\ \hline
+\end{tabular}
+\end{table}
 \input{images_platform.tex}
 
 \subsection{Discontinuous friction model}
-\subsubsection{Rex mobile platform}
 This model assumes that coefficients $\epsilon_i$ and $\tau_i$ in \eqref{eq:force_r} depend on the value of the slip. The point of such approach is to model the phenomenon of losing the traction. We will assume that for every friction force we have two values of the friction coefficient: high when the slip is less than the certain value (traction) and low otherwise (skid). This idea leads to the following formulae
 \begin{equation*}
 \begin{aligned}
@@ -62,13 +102,17 @@ In other words, if the platform loses the traction in a different point than in 
 \label{fig:error_discont}
 \end{figure}
 
-
-\subsubsection{Unicycle}
-
 \subsection{Manipulator}
+
 When it comes to the manipulator,
 its coordinates in task space $(\phi, \theta, \psi, y, z) $ should be equal to
 $(-\frac{\pi}{2}, -\frac{\pi}{4}, \frac{\pi}{2}, 0, 0.2)$.
 This corresponds to a parking manoeuvre with the manipulator
 looking straight forward, observing the floor right in front of it.
 \section{Unicycle}
+The model of the unicycle has been implemented in order to examine the behaviour
+of the motion planning algorithm for a very simple object. 
+
+\subsection{Problem formulation}
+The motion planning problem to be solved was analogous to the problem presented
+in section \ref{sec:rex_task}. The initial pose
