@@ -2,12 +2,23 @@
 This chapter presents the results obtained by simulations. The research has been made for two models
 described in chapter \ref{ch:model}. The motion planning problem has been solved using endogenous
 configuration space approach presented in chapter \ref{ch:endogen}.
+
+\section{Unicycle}
+The model of the unicycle has been implemented in order to examine the behaviour
+of the motion planning algorithm for a very simple object with discontinuities. 
+
+\subsection{Problem formulation}
+The motion planning problem to be solved is kind of a parking manoeuvre. The initial
+state of the manipulator is $q_0 = [w_0; \dot{w_0}] = (0, 0, R\frac{\pi}{2}, 0_5)^T$
+and the desired end state is $q_d = [w_d; \dot{w_d}] = (10, 0, a\frac{\pi}{2}, 0_5)^T$.
+The motion is supposed to be executed within the fixed control horizon $T$.
+
 \section{RobRex}
 \subsection{Problem formulation}
 \label{sec:rex_task}
 The problem to be solved is to move the platform from the initial state
 $q_0 = [w_0; \dot{w_0}] = (0, 0, a\frac{\pi}{2}, 0_7)^T$ to the desired state
-$q_d = [w_d; \dot{w_d}] = (0, 0, a\frac{\pi}{2}, 0_7)^T$
+$q_d = [w_d; \dot{w_d}] = (10, 0, a\frac{\pi}{2}, 0_7)^T$
 within the given amount of time $T$. 
 This corresponds to a parking manoeuvre.
 
@@ -109,10 +120,3 @@ its coordinates in task space $(\phi, \theta, \psi, y, z) $ should be equal to
 $(-\frac{\pi}{2}, -\frac{\pi}{4}, \frac{\pi}{2}, 0, 0.2)$.
 This corresponds to a parking manoeuvre with the manipulator
 looking straight forward, observing the floor right in front of it.
-\section{Unicycle}
-The model of the unicycle has been implemented in order to examine the behaviour
-of the motion planning algorithm for a very simple object. 
-
-\subsection{Problem formulation}
-The motion planning problem to be solved was analogous to the problem presented
-in section \ref{sec:rex_task}. The initial pose
