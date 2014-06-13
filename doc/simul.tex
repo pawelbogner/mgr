@@ -3,6 +3,26 @@ This chapter presents the results obtained by simulations. The research has been
 described in chapter \ref{ch:model}. The motion planning problem has been solved using endogenous
 configuration space approach presented in chapter \ref{ch:endogen}.
 
+There are some issues that are common regardless the studied object. Moreover,
+both RobRex mobile manipulator and unicycle have two control inputs. That is why
+the same control functions representation may be used in those two models.
+The base used to represent the control functions was trigonometric, including up to the third harmonics, that means
+\begin{equation}
+\Psi=\begin{pmatrix}
+1 & \sin(\omega t) & \cos(\omega t)& \sin(2\omega t) & \cos(2\omega t)& \sin(3\omega t) & \cos(3\omega t)
+\end{pmatrix},
+\end{equation}
+where $\omega=\frac{2\pi}{T}$ and $T$ is the control horizon. Assuming the above and the fact that the model is controlled by two inputs, the matrix $P(t)$ in \eqref{eq:Pt} is of the form
+\begin{equation}
+P(t)=\begin{bmatrix}
+\Psi & 0_{1\times 7}\\
+0_{1\times 7} & \Psi
+\end{bmatrix}.
+\end{equation}
+The decay rate $\gamma$ in \eqref{eq:endogen_num} has been set to $0.05$ for all
+the simulations demonstrated in this chapter.
+
+
 \section{Unicycle}
 The model of the unicycle has been implemented in order to examine the behaviour
 of the motion planning algorithm for a very simple object with discontinuities. 
@@ -13,7 +33,19 @@ state of the manipulator is $q_0 = [w_0; \dot{w_0}] = (0, 0, R\frac{\pi}{2}, 0_5
 and the desired end state is $q_d = [w_d; \dot{w_d}] = (10, 0, a\frac{\pi}{2}, 0_5)^T$.
 The motion is supposed to be executed within the fixed control horizon $T$.
 
-\section{RobRex}
+\subsection{Simulation conditions}
+The parameters of the object used during the simulation are:
+\begin{multicols}{2}
+\begin{itemize}
+\item $m= \,\mathrm{kg}$,
+\item $R= \,\mathrm{m}$,
+\item $I_\phi =\,\mathrm{kgm^2}$,
+\item $I_\theta =\,\mathrm{kgm_2}$.
+\end{itemize}
+\end{multicols}
+
+
+\section{Mobile platform}
 \subsection{Problem formulation}
 \label{sec:rex_task}
 The problem to be solved is to move the platform from the initial state
@@ -42,24 +74,14 @@ The object parameters were set according to \cite{coupled} and are as follows:
 \item $I_{w33} = 0.009\,\mathrm{kgm^2}$.
 \end{itemize}
 \end{multicols}
-The decay rate $\gamma$ in \eqref{eq:endogen_num} has been set to $0.05$.
-The base used to represent the control functions was trigonometric, including up to the third harmonics, that means
-\begin{equation}
-\Psi=\begin{pmatrix}
-1 & \sin(\omega t) & \cos(\omega t)& \sin(2\omega t) & \cos(2\omega t)& \sin(3\omega t) & \cos(3\omega t)
-\end{pmatrix},
-\end{equation}
-where $\omega=\frac{2\pi}{T}$ and $T$ is the control horizon. Assuming the above and the fact that the model is controlled by two inputs, the matrix $P(t)$ in \eqref{eq:Pt} is of the form
-\begin{equation}
-P(t)=\begin{bmatrix}
-\Psi & 0_{1\times 7}\\
-0_{1\times 7} & \Psi
-\end{bmatrix}.
-\end{equation}
 \setcounter{MaxMatrixCols}{14}
-Initial conditions for the $\lambda$ parameters used to compute control functions in \eqref{eq:endogen_num} are $\lambda_0= \begin{pmatrix}
-0 & 0.5 & 0 & 0 & 0 & 0 & 0 & 0 & 0.5 & 0 & 0 & 0 & 0 & 0
-\end{pmatrix} ^T$, i.e. only first harmonic sines are used.
+Initial conditions for the $\lambda$ parameters used to compute control functions
+in \eqref{eq:endogen_num} are
+\begin{equation}
+\lambda_0=
+(\underbrace{0, \ 0.5, \ 0, \ 0, \ 0, \ 0, \ 0,}_{u_1}\ \underbrace{0, \ 0.5, \ 0, \ 0, \ 0, \ 0, \ 0}_{u_2})^T,
+\end{equation}
+i.e. only first harmonic sines are used.
  	
 
 \subsection{Linear friction model}
@@ -113,7 +135,7 @@ In other words, if the platform loses the traction in a different point than in 
 \label{fig:error_discont}
 \end{figure}
 
-\subsection{Manipulator}
+\section{Mobile manipulator}
 
 When it comes to the manipulator,
 its coordinates in task space $(\phi, \theta, \psi, y, z) $ should be equal to
