@@ -48,7 +48,7 @@ The model consists of two parts: a mobile platform and a manipulator. The platfo
 The manipulator is mounted on the platform above the centre of the front wheel axis.
 \subsection{Mobile platform}
 Let $w\in \mathbb{R}^5$ be the configuration of the platform, where
-$w=(x, y, a\phi, R\theta_1, R\theta_2)$.  
+$w=(x_p, y_p, a\phi, R\theta_1, R\theta_2)$.  
 The dynamics model of the cart is represented in the standard form used in robotics
 \begin{equation}
 \label{eq:std_mdl}
@@ -147,14 +147,14 @@ w \\ \dot w
 \end{equation}
 \subsection{Manipulator arm}
 The manipulator has got five rotational joints. Its structure is shown in. %TODO
-Let $q\in \mathbb{R}^5$ denote the configuration of the arm and $a_2, \dots, a_5$ the lengths of the links. The individual transformation matrices in the Denavit-Hartenberg convention are as follows:
+Let $x\in \mathbb{R}^5$ denote the configuration of the arm and $a_2, \dots, a_5$ the lengths of the links. The individual transformation matrices in the Denavit-Hartenberg convention are as follows:
 \begin{equation}
 \begin{aligned}
-A_0^1 &= \rot(Z, q_1)\rot(X, \frac{\pi}{2}),\\
-A_1^2 &= \rot(Z, q_2)\tr (X, a_2)\rot(X, -\frac{\pi}{2}),\\
-A_2^3 &= \rot(Z, q_3)\tr (X, a_3)\rot(X, \frac{\pi}{2}),\\
-A_3^4 &= \rot(Z, q_4)\tr (X, a_4)\rot(X, -\frac{\pi}{2}),\\
-A_4^5 &= \rot(Z, q_5)\tr (X, a_5).
+A_0^1 &= \rot(Z, x_1)\rot(X, \frac{\pi}{2}),\\
+A_1^2 &= \rot(Z, x_2)\tr (X, a_2)\rot(X, -\frac{\pi}{2}),\\
+A_2^3 &= \rot(Z, x_3)\tr (X, a_3)\rot(X, \frac{\pi}{2}),\\
+A_3^4 &= \rot(Z, x_4)\tr (X, a_4)\rot(X, -\frac{\pi}{2}),\\
+A_4^5 &= \rot(Z, x_5)\tr (X, a_5).
 \end{aligned}
 \end{equation}
 In order to reduce the kinematics complexity and to facilitate obtaining the output function in the Euler angles form, it has been assumed that the rotation of joint 3 is fixed to $0$. This results in the transformation matrix $
@@ -175,7 +175,7 @@ s_1c_{24}c_5-c_1s_5 &  c_1c_5-s_1c_{24}s_5 & -s_1s_{24}\\
 s_{24}c_5           & -s_{24}s_5           &  c_{24}
 \end{bmatrix}.
 \end{align}
-The end effector orientation Euler angles (using $\rot(Z,\phi)\rot(X, \theta)\rot(Z, \psi)$) are: $\phi=q_1-\frac{\pi}{2}$, $\theta=q_2+q_4$, $\psi=q_5+\frac{\pi}{2}$.
+The end effector orientation Euler angles (using $\rot(Z,\phi)\rot(X, \theta)\rot(Z, \psi)$) are: $\phi=x_1-\frac{\pi}{2}$, $\theta=x_2+x_4$, $\psi=x_5+\frac{\pi}{2}$.
 
 \paragraph{Global coordinate system}
 In order to transform the manipulator's coordinate system into the global the transformation matrix needs to be calculated.
@@ -191,4 +191,4 @@ A_m^g&=\tr(X, w_1)\tr(Y, w_2)\rot\left(Z, \frac{w_3}{a}\right)\\
 \end{aligned}
 \end{equation}
 
-In the global coordinate system the Euler angles are: $\phi=\frac{w_3}{a}+q_1-\frac{\pi}{2}$, $\theta=q_2+q_4$, $\psi=q_5+\frac{\pi}{2}$.
+In the global coordinate system the Euler angles are: $\phi=\frac{w_3}{a}+x_1-\frac{\pi}{2}$, $\theta=x_2+x_4$, $\psi=x_5+\frac{\pi}{2}$.

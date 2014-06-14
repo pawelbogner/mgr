@@ -46,7 +46,7 @@ The parameters of the object used during the simulation are:
 \item $I_\theta =\,\mathrm{kgm^2}$.
 \end{itemize}
 \end{multicols}
-Initial conditions for the $\lambda$ parameters used to compute control functions
+Initial conditions for $\lambda$ parameters used to compute control functions
 in \eqref{eq:endogen_num} are
 \begin{equation}
 \lambda_0=
@@ -57,7 +57,10 @@ maximise the chances for the algorithm to converge.
 
 The values of the friction coefficients were changing according to the value of the slips $s_\parallel$
 and $s_\perp$. 
-
+The point of such approach is to model the phenomenon
+of losing the traction. We will assume that for every friction force we have two
+values of the friction coefficient: high when the slip is less than the certain
+value (traction) and low otherwise (skid). This idea leads to the following formulae
 \begin{equation*}
 \begin{aligned}
 \epsilon&=\begin{cases}
@@ -70,7 +73,6 @@ and $s_\perp$.
 \end{cases}.
 \end{aligned}
 \end{equation*}
-Such friction coefficients definition induces discontinuities in the model.
 
 \subsection{Simulation results}
 Despite the fact that the motion planning algorithm based on the endogenous 
@@ -148,24 +150,37 @@ It is also worth to check whether the input functions obtained through the algor
 \multicolumn{1}{|r|}{}                    & 1                               &                            &                            &                            &                            \\ \hline
 \end{tabular}
 \end{table}
-\input{images_platform.tex}
+%\input{images_platform.tex}
 
 \subsection{Discontinuous friction model}
-This model assumes that coefficients $\epsilon_i$ and $\tau_i$ in \eqref{eq:force_r} depend on the value of the slip. The point of such approach is to model the phenomenon of losing the traction. We will assume that for every friction force we have two values of the friction coefficient: high when the slip is less than the certain value (traction) and low otherwise (skid). This idea leads to the following formulae
+This model assumes that coefficients $\epsilon_i$ and $\tau_i$ in \eqref{eq:force_r} depend
+on the value of the slip. The idea of such friction model has been described
+in section \ref{sec:discont_params_uni}. With such an approach the formulae defining
+friction coefficients are of the form
 \begin{equation*}
 \begin{aligned}
-\epsilon_i&=\begin{cases}
-\epsilon_{high} &\mbox{if } |s| \leq d \\
-\epsilon_{low} &\mbox{if } |s| > d
+\epsilon_1=\epsilon_4&=\begin{cases}
+\epsilon_{high} &\mbox{if } |s_{14}| \leq d \\
+\epsilon_{low} &\mbox{if } |s_{14}| > d
 \end{cases}, &
-\tau_i&=\begin{cases}
-\tau_{high} &\mbox{if } |s| \leq d \\
-\tau_{low} &\mbox{if } |s| > d
-\end{cases},
+\tau_1=\tau_2&=\begin{cases}
+\tau_{high} &\mbox{if } |s_{12}| \leq d \\
+\tau_{low} &\mbox{if } |s_{12}| > d
+\end{cases},\\
+\epsilon_2=\epsilon_3&=\begin{cases}
+\epsilon_{high} &\mbox{if } |s_{23}| \leq d \\
+\epsilon_{low} &\mbox{if } |s_{23}| > d
+\end{cases}, &
+\tau_3=\tau_4&=\begin{cases}
+\tau_{high} &\mbox{if } |s_{34}| \leq d \\
+\tau_{low} &\mbox{if } |s_{34}| > d
+\end{cases}.
 \end{aligned}
 \end{equation*}
-where $i=1, 2, 3, 4$. The values used in simulations are: $\epsilon_{high}=10$, $\epsilon_{low}=5$, $\tau_{high}=3$, $\tau_{low}=1$. Unfortunately, there is no guarantee for the algorithm to converge for a discontinuous model and such situation takes place in this case. The plot of the error norm with respect to the iteration number is shown in the figure \ref{fig:error_discont}. It is clearly visible that the plot of the error norm is not monotonic. The reason why the endogenous configuration approach does not perform well here is the fundamental idea of the motion planning algorithm. It assumes that a small change in endogenous configuration results in a small change in the output function value. This statement is true for continuous models. On the contrary, when a model includes some discontinuities, even a small variation to the input may take the system to a distant point from the original one in the output space. Therefore, the error may increase in the next iteration of the algorithm. Note that decreasing the $\gamma$ parameter in equation \eqref{eq:endogen_num} will not solve this problem neither.
-In other words, if the platform loses the traction in a different point than in the previous iteration it ends up in a place not related to the one supposed to be according to the algorithm, because actually the model has changed in the meanwhile.
+The values used in simulations are: $\epsilon_{high}=10$, $\epsilon_{low}=5$, $\tau_{high}=3$, $\tau_{low}=1$. Unfortunately, there is no guarantee for the algorithm to converge for a discontinuous model and such situation takes place in this case. The plot of the error norm with respect to the iteration number is shown in the figure \ref{fig:error_discont}. It is clearly visible that the plot of the error norm is not monotonic. The reason why the endogenous configuration approach does not perform well here is the fundamental idea of the motion planning algorithm. It assumes that a small change in endogenous configuration results in a small change in the output function value. This statement is true for continuous models. On the contrary, when a model includes some discontinuities, even a small variation to the input may take the system to a distant point from the original one in the output space. Therefore, the error may increase in the next iteration of the algorithm. Note that decreasing the $\gamma$ parameter in equation \eqref{eq:endogen_num} will not solve this problem neither.
+In other words, if the platform loses the traction in a different point than in
+the previous iteration it ends up in a place not related to the one supposed to be
+according to the algorithm, because actually the model has changed in the meanwhile.
 \begin{figure}[htp]
 \centering
 \includegraphics[height=0.3\textheight]{img/final_15_1_10_path.eps} %TODO make proper image
@@ -174,9 +189,24 @@ In other words, if the platform loses the traction in a different point than in 
 \end{figure}
 
 \section{Mobile manipulator}
+This section covers the simulations for the whole RobRex mobile manipulator. Two types of problems will
+be discussed here: with constraints only for the end-effector configuration and with constraints for
+both mobile platform and the effector.
+\subsection{Problems formulation}
+The initial conditions for both tasks are: $q_0 = [w_0; \dot{w}_0] = (0, 0, a\frac{\pi}{2}, 0_7)^T$, 
+$x_0 = \left(
+x_1 ,\, x_2 ,\, x_4 ,\, x_5
+\right) = \left(
+\frac{\pi}{2} ,\, \frac{\pi}{6} ,\, \frac{\pi}{3} ,\, \frac{\pi}{4}
+\right).$ The control horizon for these tasks is $T=20\,\mathrm{s}$.
+\subsubsection{Problem one}
+This motion planning problem regards only the end position of the effector
+and the velocities of the platform. 
+The coordinates in global task space $(x, y, z, \phi, \theta, \psi) $ should be equal to
+$(10, 0, 0.2-\frac{\pi}{2}, -\frac{\pi}{4}, \frac{\pi}{2})$. The velocity of each platform coordinate
+should be equal to zero. Such constraint guarantees that the whole system will stand still at the end
+of the motion.
+\subsubsection{Problem two}
+This case is related to the platform position as well as to the configuration of the effector.
 
-When it comes to the manipulator,
-its coordinates in task space $(\phi, \theta, \psi, y, z) $ should be equal to
-$(-\frac{\pi}{2}, -\frac{\pi}{4}, \frac{\pi}{2}, 0, 0.2)$.
-This corresponds to a parking manoeuvre with the manipulator
-looking straight forward, observing the floor right in front of it.
+\subsection{Simulation conditions}
