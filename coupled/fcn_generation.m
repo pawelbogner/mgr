@@ -145,7 +145,7 @@ man2glob=[cos(x(3)./a) -sin(x(3)./a) 0 x(1)+a*cos(x(3)./a);
  
 glob_eff=man2glob*[x_m, y_m, z_m, 1]';
 
-k=[x(1); x(2); x(3)./a; x(6); x(7); x(8)./a; x(9); x(10); glob_eff(1:3); phi; theta; psi];
+k=[x(1); x(6); x(7); x(8)./a; x(9); x(10); glob_eff(2); phi; theta; psi];
 
 %%
 C_lin=jacobian(k, x);
