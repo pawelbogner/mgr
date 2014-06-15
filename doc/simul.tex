@@ -139,19 +139,23 @@ Every case was studied with two different time horizons 10\,s and 20\,s. The res
 It is also worth to check whether the input functions obtained through the algorithm are feasible on the real object. The total energy of the signal was computed as $\int_0^T u^2\ud t$ and the maximal amplitude which can be compared to the maximum torque achievable by the real actuator. These values computed for all the simulations run are presented in table \ref{tab:control}.
 \begin{table}[h]
 \centering
-\caption{My caption}
-\label{tab:control} %TODO put proper values
-\begin{tabular}{rr|r|r|r|r|}
-\cline{3-6}
-\multicolumn{1}{c}{}                      & \multicolumn{1}{c|}{}           & \multicolumn{2}{c|}{energy}                             & \multicolumn{2}{c|}{amplitude}                          \\ \hline
-\multicolumn{1}{|c|}{$\tau$}              & \multicolumn{1}{c|}{$\epsilon$} & \multicolumn{1}{c|}{$u_1$} & \multicolumn{1}{c|}{$u_2$} & \multicolumn{1}{c|}{$u_1$} & \multicolumn{1}{c|}{$u_2$} \\ \hline
-\multicolumn{1}{|r|}{\multirow{2}{*}{15}} & 15                              &                            &                            &                            &                            \\ \cline{2-6} 
-\multicolumn{1}{|r|}{}                    & 1                               &                            &                            &                            &                            \\ \hline
-\multicolumn{1}{|r|}{\multirow{2}{*}{1}}  & 15                              &                            &                            &                            &                            \\ \cline{2-6} 
-\multicolumn{1}{|r|}{}                    & 1                               &                            &                            &                            &                            \\ \hline
+\caption{Control input functions parameters}
+\label{tab:control}
+\begin{tabular}{rrr|r|r|r|r|}
+\cline{4-7}
+\multicolumn{1}{c}{}                      & \multicolumn{1}{c}{}                     & \multicolumn{1}{c|}{}            & \multicolumn{2}{c|}{energy}                             & \multicolumn{2}{c|}{amplitude}                          \\ \hline
+\multicolumn{1}{|c|}{$\tau$}              & \multicolumn{1}{c|}{$\epsilon$}          & \multicolumn{1}{c|}{$T$ {[}s{]}} & \multicolumn{1}{c|}{$u_1$} & \multicolumn{1}{c|}{$u_2$} & \multicolumn{1}{c|}{$u_1$} & \multicolumn{1}{c|}{$u_2$} \\ \hline
+\multicolumn{1}{|r|}{\multirow{4}{*}{1}}  & \multicolumn{1}{r|}{\multirow{2}{*}{1}}  & 20                               & 5906                       & 805                        & 3.16                       & 1.26                       \\ \cline{3-7} 
+\multicolumn{1}{|r|}{}                    & \multicolumn{1}{r|}{}                    & 10                               & 19337                      & 2036                       & 8.03                       & 3.09                       \\ \cline{2-7} 
+\multicolumn{1}{|r|}{}                    & \multicolumn{1}{r|}{\multirow{2}{*}{15}} & 20                               & 118900                     & 21301                      & 14.07                      & 6.03                       \\ \cline{3-7} 
+\multicolumn{1}{|r|}{}                    & \multicolumn{1}{r|}{}                    & 10                               & 662430                     & 309980                     & 48.38                      & 31.56                      \\ \hline
+\multicolumn{1}{|r|}{\multirow{4}{*}{15}} & \multicolumn{1}{r|}{\multirow{2}{*}{1}}  & 20                               & 5906                       & 805                        & 3.16                       & 1.26                       \\ \cline{3-7} 
+\multicolumn{1}{|r|}{}                    & \multicolumn{1}{r|}{}                    & 10                               & 19335                      & 2034                       & 8.03                       & 3.09                       \\ \cline{2-7} 
+\multicolumn{1}{|r|}{}                    & \multicolumn{1}{r|}{\multirow{2}{*}{15}} & 20                               & 118900                     & 21298                      & 14.06                      & 6.00                       \\ \cline{3-7} 
+\multicolumn{1}{|r|}{}                    & \multicolumn{1}{r|}{}                    & 10                               & 661100                     & 309080                     & 48.36                      & 31.56                      \\ \hline
 \end{tabular}
 \end{table}
-%\input{images_platform.tex}
+\input{images_platform.tex}
 
 \subsection{Discontinuous friction model}
 This model assumes that coefficients $\epsilon_i$ and $\tau_i$ in \eqref{eq:force_r} depend
@@ -233,3 +237,5 @@ The outcome of the simulations are presented in figure \ref{fig:pr1} for the pro
 iteration, the platform path, the slips values and the inputs. The angles computed for joints are
 presented in table \ref{tab:effector}. Regarding the control inputs parameters, table \ref{tab:in_eff}
 shows the total energy values of the signal and the maximum amplitudes.
+
+\input{images_effector.tex}
