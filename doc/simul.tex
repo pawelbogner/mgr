@@ -6,17 +6,26 @@ configuration space approach presented in chapter \ref{ch:endogen}.
 There are some issues that are common regardless the studied object. Moreover,
 both RobRex mobile manipulator and unicycle have two control inputs. That is why
 the same control functions representation may be used in those two models.
-The base used to represent the control functions was trigonometric, including up to the third harmonics, that means
+The base used to represent the control functions was trigonometric, including up to the third harmonics
+for the Rex platform
 \begin{equation}
 \Psi=\begin{pmatrix}
 1 & \sin(\omega t) & \cos(\omega t)& \sin(2\omega t) & \cos(2\omega t)& \sin(3\omega t) & \cos(3\omega t)
 \end{pmatrix},
 \end{equation}
-where $\omega=\frac{2\pi}{T}$ and $T$ is the control horizon. Assuming the above and the fact that the model is controlled by two inputs, the matrix $P(t)$ in \eqref{eq:Pt} is of the form
+and only with first harmonics for the unicycle
+\begin{equation}
+\Psi=\begin{pmatrix}
+1 & \sin(\omega t) & \cos(\omega t)
+\end{pmatrix},
+\end{equation}
+where $\omega=\frac{2\pi}{T}$ and $T$ is the control horizon. Assuming the above and
+the fact that the models are controlled by two inputs, the
+matrix $P(t)$ in \eqref{eq:Pt} is of the form
 \begin{equation}
 P(t)=\begin{bmatrix}
-\Psi & 0_{1\times 7}\\
-0_{1\times 7} & \Psi
+\Psi & 0\\
+0 & \Psi
 \end{bmatrix}.
 \end{equation}
 The decay rate $\gamma$ in \eqref{eq:endogen_num} has been set to $0.05$ for all
@@ -64,12 +73,12 @@ value (traction) and low otherwise (skid). This idea leads to the following form
 \begin{equation*}
 \begin{aligned}
 \epsilon&=\begin{cases}
-\epsilon_{high} &\mbox{if } |s_\perp| \leq d \\
-\epsilon_{low} &\mbox{if } |s_\perp| > d
+1 &\mbox{if } |s_\perp| \leq d \\
+0.5 &\mbox{if } |s_\perp| > d
 \end{cases}, &
 \tau&=\begin{cases}
-\tau_{high} &\mbox{if } |s_\parallel| \leq d \\
-\tau_{low} &\mbox{if } |s_\parallel| > d
+10 &\mbox{if } |s_\parallel| \leq d \\
+0.3 &\mbox{if } |s_\parallel| > d
 \end{cases}.
 \end{aligned}
 \end{equation*}
@@ -82,8 +91,10 @@ a valid result. These parameters are shown in detail in section \ref{sec:discont
 The behaviour of this motion planning method for discontinuous models has been thoroughly researched
 and the conclusion is that the case presented here is special. Mostly, the error rises to the infinity
 or oscillates around a certain value.
-The results --- the error, path, slips and control inputs plots --- are depicted in figure ...
+The results --- the error, path, slips and control inputs plots --- are depicted
+in figure \ref{fig:pr_uni}.
 
+\input{images_uni.tex}
 
 \section{Mobile platform}
 \subsection{Problem formulation}
