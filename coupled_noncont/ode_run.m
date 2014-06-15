@@ -3,9 +3,9 @@ function [tout, xout, teout, ieout] = ode_run(lambdas)
 opt = odeset('Events', @event);
 
 tstart=0;
-tfinal=4;
+tfinal=5;
 %x0=[0; 0; 0.730*pi/2; zeros(7,1)]; %% dim Ksi= n*m*s
-x0=[0; 0; 0.730*pi/2; zeros(7,1); zeros(10*2*3,1)];
+x0=[0; 0; 0.730*pi/2; zeros(7,1); zeros(10*2*7,1)];
 
 tout=tstart;
 xout=x0';
@@ -15,8 +15,8 @@ ieout=[];
 
 counter=0;
 
-fric_hi=30;
-fric_lo=3;
+fric_hi=5;
+fric_lo=0.05;
 
 epstau=ones(4,1).*fric_hi;
 

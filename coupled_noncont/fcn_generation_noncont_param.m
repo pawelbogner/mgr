@@ -5,7 +5,7 @@ x_two=sym('x_two', [n 1]);
 x=[x_one; x_two];
 m=2;
 %u=sym('u', [m 1]);
-s=m*(2*1+1);
+s=m*(2*3+1);
 lam=sym('lam', [s 1]);
 syms t;
 taueps=sym('taueps', [4 1]);
@@ -22,7 +22,7 @@ Ip33=1.991;
 ap1=0.377;
 ap2=0;
 gr=9.81;
-T=4;
+T=5;
 
 %% Q elements
 Q11=mp+4*mw;
@@ -101,7 +101,7 @@ P = [Q11   0     Q13/a   0       0;
  
  %% Ps matrix --- control function base matrix
 omega=2*pi/T;
-P_vec=[1 sin(omega*t) cos(omega*t)];
+P_vec=[1 sin(omega*t) cos(omega*t) sin(omega*2*t) cos(omega*2*t) sin(omega*3*t) cos(omega*3*t)];
 P_s=blkdiag(P_vec, P_vec);
 
  %% control system
