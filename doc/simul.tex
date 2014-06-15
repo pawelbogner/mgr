@@ -93,12 +93,13 @@ $q_0 = [w_0; \dot{w}_0] = (0, 0, a\frac{\pi}{2}, 0_7)^T$ to the desired state
 $q_d = [w_d; \dot{w}_d] = (10, 0, a\frac{\pi}{2}, 0_7)^T$
 within the given amount of time $T$. 
 This corresponds to a parking manoeuvre.
-
-Now two types of friction models will be discussed --- linear
-and discontinuous. These models will be employed in simulations
-regarding solving the above problem.
+%
+%Now two types of friction models will be discussed --- linear
+%and discontinuous. These models will be employed in simulations
+%regarding solving the above problem.
 
 \subsection{Simulation conditions}
+\label{sec:pltf_params}
 The object parameters were set according to \cite{coupled} and are as follows:
 \begin{multicols}{2}
 \begin{itemize}
@@ -197,16 +198,38 @@ The initial conditions for both tasks are: $q_0 = [w_0; \dot{w}_0] = (0, 0, a\fr
 $x_0 = \left(
 x_1 ,\, x_2 ,\, x_4 ,\, x_5
 \right) = \left(
-\frac{\pi}{2} ,\, \frac{\pi}{6} ,\, \frac{\pi}{3} ,\, \frac{\pi}{4}
+\frac{\pi}{4} ,\, \frac{\pi}{5} ,\, \frac{\pi}{6} ,\, -\frac{\pi}{3}
 \right).$ The control horizon for these tasks is $T=20\,\mathrm{s}$.
 \subsubsection{Problem one}
 This motion planning problem regards only the end position of the effector
 and the velocities of the platform. 
 The coordinates in global task space $(x, y, z, \phi, \theta, \psi) $ should be equal to
-$(10, 0, 0.2-\frac{\pi}{2}, -\frac{\pi}{4}, \frac{\pi}{2})$. The velocity of each platform coordinate
-should be equal to zero. Such constraint guarantees that the whole system will stand still at the end
+$(10, 0, 0.2, \frac{\pi}{2}, \frac{\pi}{4}, -\frac{\pi}{2})$. The velocity of each platform coordinate
+should be equal to zero. Such constraints guarantee that the whole system will stand still at the end
 of the motion.
 \subsubsection{Problem two}
-This case is related to the platform position as well as to the configuration of the effector.
+This case is related to the platform pose as well as to the configuration of the effector.
+As far as the platform is concerned, the constraints are put only on the $x$ coordinate and
+the velocities. The desired values are $(x_p, \dot{w}) = (10, 0, 0, 0, 0, 0)$. When it comes to
+the effector, the we want the following set of coordinate in global task space: $(y, \phi, \theta, \psi)
+= (0, \frac{\pi}{2}, \frac{\pi}{4}, -\frac{\pi}{2})$.
 
 \subsection{Simulation conditions}
+The platform parameter has been set as in section \ref{sec:pltf_params}. The lenghts of the links
+are equal to:
+\begin{multicols}{2}
+\begin{itemize}
+\item $a_2=0.1276 \,\mathrm{m}$,
+\item $a_3=0.041 \,\mathrm{m}$,
+\item $a_4=0.2615 \,\mathrm{m}$,
+\item $a_5=0.0195 \,\mathrm{m}$.
+\end{itemize}
+\end{multicols}
+First and second joint of the manipulator are actually in the same place, so we assume that $a_1=0$.
+
+\subsection{Simulation results}
+The outcome of the simulations are presented in figure \ref{fig:pr1} for the problem one and in figure
+\ref{fig:pr2} for the problem two. These figures include the plots of the error with respect to the
+iteration, the platform path, the slips values and the inputs. The angles computed for joints are
+presented in table \ref{tab:effector}. Regarding the control inputs parameters, table \ref{tab:in_eff}
+shows the total energy values of the signal and the maximum amplitudes.
