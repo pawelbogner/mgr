@@ -49,17 +49,17 @@ The motion is supposed to be executed within the fixed control horizon $T$.
 The parameters of the object used during the simulation are:
 \begin{multicols}{2}
 \begin{itemize}
-\item $m= \,\mathrm{kg}$,
-\item $R= \,\mathrm{m}$,
-\item $I_\phi =\,\mathrm{kgm^2}$,
-\item $I_\theta =\,\mathrm{kgm^2}$.
+\item $m=2 \,\mathrm{kg}$,
+\item $R=0.3 \,\mathrm{m}$,
+\item $I_\phi =0.045\,\mathrm{kgm^2}$,
+\item $I_\theta =0.09\,\mathrm{kgm^2}$. 
 \end{itemize}
 \end{multicols}
 Initial conditions for $\lambda$ parameters used to compute control functions
 in \eqref{eq:endogen_num} are
 \begin{equation}
 \lambda_0=
-(\underbrace{0, \ 0, \ 0, \ 0, \ 0, \ 0, \ 0,}_{u_1}\ \underbrace{0, \ 0, \ 0, \ 0, \ 0, \ 0, \ 0}_{u_2})^T.
+(\underbrace{0.01, \ 0.001, \ 0.001,}_{u_1}\ \underbrace{0.0001, \ 0, \ 0, \ 0}_{u_2})^T.
 \end{equation}
 Such setting tries to move the object in the proper direction in the first iteration in order to
 maximise the chances for the algorithm to converge.
@@ -169,7 +169,7 @@ It is also worth to check whether the input functions obtained through the algor
 \input{images_platform.tex}
 
 \subsection{Discontinuous friction model}
-This model assumes that coefficients $\epsilon_i$ and $\tau_i$ in \eqref{eq:force_r} depend
+In this model coefficients $\epsilon_i$ and $\tau_i$ in \eqref{eq:force_r} depend
 on the value of the slip. The idea of such friction model has been described
 in section \ref{sec:discont_params_uni}. With such an approach the formulae defining
 friction coefficients are of the form
