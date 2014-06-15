@@ -249,4 +249,28 @@ iteration, the platform path, the slips values and the inputs. The angles comput
 presented in table \ref{tab:effector}. Regarding the control inputs parameters, table \ref{tab:in_eff}
 shows the total energy values of the signal and the maximum amplitudes.
 
+\begin{table}[htb]
+\caption{Control input parameters, problems regarding effector}
+\label{tab:in_eff}
+\centering
+\begin{tabular}{l|l|l|l|l|}
+\cline{2-5}
+\multicolumn{1}{c|}{}             & \multicolumn{2}{c|}{energy}                             & \multicolumn{2}{c|}{amplitude}                          \\ \cline{2-5} 
+\multicolumn{1}{c|}{}             & \multicolumn{1}{c|}{$u_1$} & \multicolumn{1}{c|}{$u_2$} & \multicolumn{1}{c|}{$u_1$} & \multicolumn{1}{c|}{$u_2$} \\ \hline
+\multicolumn{1}{|l|}{Problem one} & 3165                       & 571                        & 2.35                       & 1.37                       \\ \hline
+\multicolumn{1}{|l|}{Problem two} & 3835                       & 615                        & 2.57                       & 1.43                       \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{table}[htb]
+\caption{Manipulator arm joint positions}
+\label{tab:effector}
+\centering
+\begin{tabular}{l|l|l|l|l|}
+\cline{2-5}
+                                  & $q_1$   & $q_2$  & $q_4$  & $q_5$   \\ \hline
+\multicolumn{1}{|l|}{Problem one} & -0.6238 & 0.0051 & 0.7776 & -0.0009 \\ \hline
+\multicolumn{1}{|l|}{Problem two} & -0.7454 & 0.4561 & 0.3296 & -0.0009 \\ \hline
+\end{tabular}
+\end{table}
 \input{images_effector.tex}
