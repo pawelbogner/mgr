@@ -32,6 +32,28 @@ The decay rate $\gamma$ in \eqref{eq:endogen_num} has been set to $0.05$ for all
 the simulations demonstrated in this chapter.
 
 \section{Event mechanism}
+In this chapter there are discontinuous models considered. This induces problems with ODE solving
+due to a huge step size contraction in the surroundings of the discontinuities which may
+make the computations even impossible to finish. Therefore using an ordinary ODE solving
+schema will not perform well in such case.
+
+The solution is to use the event mechanism implemented in MATLAB \cite{events}.
+This technique is designed for solving the initial value problems with unknown time of
+the end of the simulation. In order to determine when the calculations should end,
+we need to define an event function. The event occurs when the event function value
+crosses the zero. It may be distinguished if the crossing was in the positive or the negative direction.
+Occurring the event may imply calculations termination. 
+
+The event function may be a vector function, i.e. many types of event can be defined. After catching
+an event full information about it may be retrieved: the type of the event, the moment of occurrence,
+and the state of the system being simulated. This feature allows to use the event mechanism
+to simulate discontinuous models.
+
+The idea is quite simple. We define events so that they occur in discontinuities. After catching
+an event we stop simulation, save the system state, switch the model and start new
+calculations with initial state equal to the terminal one from the previous iteration.
+This way a discontinuous system can by simulated easily, avoiding any problems that would
+arise using the ordinary approach. Such concept has been used in calculations presented below.
 
 
 \section{Unicycle}
@@ -205,7 +227,7 @@ $\tau_{high}=5$, $\tau_{low}=1$.
 \end{enumerate}
 Unfortunately, there is no guarantee for the
 algorithm to converge for a discontinuous model and such situation takes place in
-this case. The plot of the error norm with respect to the iteration number is shown
+the first case. The plot of the error norm with respect to the iteration number is shown
 in the figure \ref{fig:error_discont}. It is clearly visible that the plot of the
 error norm is not monotonic. The reason why the endogenous configuration approach
 does not perform well here is the fundamental idea of the motion planning algorithm.
@@ -218,6 +240,13 @@ the $\gamma$ parameter in equation \eqref{eq:endogen_num} will not solve this pr
 In other words, if the platform loses the traction in a different point than in
 the previous iteration, it ends up in a place not related to the one supposed to be
 according to the algorithm, because actually the model has changed in the meanwhile.
+
+A contrasting situation takes place while using second set of parameters. Due to the fact
+that the friction coefficients differ not too much, the algorithm manages to converge.
+In such circumstances switching the friction coefficient does not result in a large change to the model.
+Figure \ref{fig:pr_discont_ok} demonstrates the results for this case. The characteristics
+of the obtained control inputs are shown in table \ref{tab:in_discont_ok}
+
 \begin{figure}[htp]
 \centering
 \includegraphics[height=0.3\textheight]{img/discont_err.eps}
@@ -227,7 +256,7 @@ according to the algorithm, because actually the model has changed in the meanwh
 
 \begin{table}[htb]
 \caption{Control input parameters, second problem discontinuous platform model}
-\label{tab:in_disont_ok}
+\label{tab:in_discont_ok}
 \centering
 \begin{tabular}{|l|l|l|l|}
 \hline

@@ -819,7 +819,7 @@
 \newlength\belowcaptionskip
 \setlength\abovecaptionskip{10\p@}
 \setlength\belowcaptionskip{0\p@}
-\def\fnum@table{Tabela.~\thetable} %zmiana nazwy w caption w otoczeniu table
+\def\fnum@table{Table~\thetable} %zmiana nazwy w caption w otoczeniu table
 %tutaj jest zmiana, zostały usunięte dwukropki
 \long\def\@makecaption#1#2{%
   \vskip\abovecaptionskip
