@@ -1,9 +1,21 @@
 \chapter{Introduction}
-The motion planning is an important part of robot control. Usually this is the first step
-in robot control. 
+
+The problem of control of skid-steering mobile robots 
+There has been many attempts to model the phenomenon of friciton. 
+The authors of \cite{caracciolo1999trajectory} use the Coulomb friction model limited to the low velocities.
+Apart from that, the longitudinal skid was neglected. The approach presented in this paper is different.
+The assumption is that the skids are possible in both directions, lateral and longitudinal.
+This is similar to the models used in automotive literature \cite{pacejka2005tyre}.
+All slips are allowed, but the impact of them to the model may be suppressed by tuning the
+parameters properly. 
+
+When it comes to the friction model idea, it is based on the velocity of the slip derived
+from the Pfaffian matrix. %TODO cite 
+Two types of models have been considered here: the linear and the discontinuous model.
+
 
 The layout of this paper is as follows. Chapter \ref{ch:model} presents the models of researched
-object: the unicycle and RobRex mobile manipulator. Chapter \ref{ch:endogen} introduces the endogenous
+objects: the unicycle and RobRex mobile manipulator. Chapter \ref{ch:endogen} introduces the endogenous
 configuration space approach to motion planning problem. In chapter \ref{ch:simul}, there are collected
 the results of the simulations of the objects mentioned above with application of the motion
 planning algorithm. Chapter \ref{ch:concl} summarizes the whole research made.
