@@ -1,6 +1,6 @@
 
 emax=0.01;
-kmax=100;
+kmax=300;
 e=emax+1;
 k=1; %iterator
 r=3;

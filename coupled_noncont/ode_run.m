@@ -16,7 +16,7 @@ ieout=[];
 counter=0;
 
 fric_hi=5;
-fric_lo=0.05;
+fric_lo=1;
 
 epstau=ones(4,1).*fric_hi;
 
