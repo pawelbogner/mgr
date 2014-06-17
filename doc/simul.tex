@@ -33,7 +33,7 @@ The decay rate $\gamma$ in \eqref{eq:endogen_num} has been set to $0.05$ for all
 the simulations demonstrated in this chapter.
 
 \section{Event mechanism}
-In this chapter there are discontinuous models considered. This induces problems with ODE solving
+In this chapter there are discontinuous models being considered. This induces problems with ODE solving
 due to a huge step size contraction in the surroundings of the discontinuities which may
 make the computations even impossible to finish. Therefore using an ordinary ODE solving
 schema will not perform well in such case.
@@ -46,7 +46,7 @@ crosses the zero. It may be distinguished if the crossing was in the positive or
 Occurring the event may imply calculations termination. 
 
 The event function may be a vector function, i.e. many types of event can be defined. After catching
-an event full information about it may be retrieved: the type of the event, the moment of occurrence,
+an event, full information about it may be retrieved: the type of the event, the moment of occurrence,
 and the state of the system being simulated. This feature allows to use the event mechanism
 to simulate discontinuous models.
 
@@ -91,7 +91,7 @@ The values of the friction coefficients were changing according to the value of 
 and $s_\perp$. 
 The point of such approach is to model the phenomenon
 of losing the traction. We will assume that for every friction force we have two
-values of the friction coefficient: high when the slip is less than the certain
+values of the friction coefficient possible: high when the slip is less than the certain
 value (traction) and low otherwise (skid). This idea leads to the following formulae
 \begin{equation*}
 \begin{aligned}
@@ -168,7 +168,8 @@ This model assumes that coefficients $\epsilon_i$ and $\tau_i$ in \eqref{eq:forc
 \item $\epsilon_i=1$ and $\tau_i=1$,
 \end{enumerate}
 for $i=1,\,2,\,3,\,4$.
-Every case was studied with two different time horizons 10\,s and 20\,s. The results of the simulations are shown in figures ...
+Every case was studied with two different time horizons 10\,s and 20\,s. The results of the
+simulations are shown in figures \ref{fig:pl1}--\ref{fig:pl8}.
 
 It is also worth to check whether the input functions obtained through the algorithm
 are feasible on the real object. The total energy of the signal was computed as $\int_0^T u^2\ud t$
@@ -176,7 +177,7 @@ and the maximal amplitude which can be compared to the maximum torque achievable
 These values, computed for all the simulations run, are presented in table \ref{tab:control}.
 \begin{table}[h]
 \centering
-\caption{Control input functions parameters}
+\caption{Control input parameters, continuous platform model}
 \label{tab:control}
 \begin{tabular}{rrr|r|r|r|r|}
 \cline{4-7}
@@ -251,12 +252,12 @@ of the obtained control inputs are shown in table \ref{tab:in_discont_ok}
 \begin{figure}[htp]
 \centering
 \includegraphics[height=0.3\textheight]{img/discont_err.eps}
-\caption{Error norm w.r.t iteration, first discontinuous model of the platform}
+\caption{Error norm w.r.t iteration, first discontinuous platform model}
 \label{fig:error_discont}
 \end{figure}
 
 \begin{table}[htb]
-\caption{Control input parameters, second problem discontinuous platform model}
+\caption{Control input parameters, discontinuous platform model, second problem}
 \label{tab:in_discont_ok}
 \centering
 \begin{tabular}{|l|l|l|l|}
@@ -285,7 +286,7 @@ This motion planning problem regards only the end position of the effector
 and the velocities of the platform. 
 The coordinates in global task space $(x, y, z, \phi, \theta, \psi) $ should be equal to
 $(10, 0, 0.2, \frac{\pi}{2}, \frac{\pi}{4}, -\frac{\pi}{2})$. The velocity of each platform coordinate
-should be equal to zero. Such constraints guarantee that the whole system will stand still at the end
+should equal zero. Such constraints guarantee that the whole system will stand still at the end
 of the motion.
 \subsubsection{Problem two}
 This case is related to the platform pose as well as to the configuration of the effector.
@@ -305,7 +306,7 @@ are equal to:
 \item $a_5=0.0195 \,\mathrm{m}$.
 \end{itemize}
 \end{multicols}
-First and second joint of the manipulator are actually in the same place, so we assume that $a_1=0$.
+First and second joints of the manipulator are actually one two-degree-of-freedom joint, so we assume that $a_1=0$.
 
 \subsection{Simulation results}
 The outcome of the simulations are presented in figure \ref{fig:pr1} for the problem one and in figure
@@ -315,7 +316,7 @@ presented in table \ref{tab:effector}. Regarding the control inputs parameters, 
 shows the total energy values of the signal and the maximum amplitudes.
 
 \begin{table}[htb]
-\caption{Control input parameters, problems regarding effector}
+\caption{Control input parameters, mobile manipulator}
 \label{tab:in_eff}
 \centering
 \begin{tabular}{l|l|l|l|l|}

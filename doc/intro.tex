@@ -1,24 +1,27 @@
 \chapter{Introduction}
 The problem of control of skid-steering mobile robots is a very complex issue. 
 The main difficulty is to create an adequate model the phenomenon of friciton. 
-The authors of \cite{caracciolo1999trajectory} use the Coulomb friction model limited to the low velocities.
+There has been many different attempts to describe it.
+For instance, the authors of \cite{caracciolo1999trajectory} use the Coulomb friction model limited to the low velocities.
 Apart from that, the longitudinal skid was neglected. The approach presented in this paper is different.
 The assumption is that the skids are possible in both directions, lateral and longitudinal.
 This is similar to the models used in automotive literature \cite{pacejka2005tyre}.
 All slips are allowed, but the impact of them to the model may be suppressed by tuning the
 parameters properly. 
 
-When it comes to the friction model idea, it is based on the velocity of the slip derived
+When it comes to the friction model idea used in this thesis,
+it is based on the velocity of the slip derived
 from the Pfaffian matrix. %TODO cite 
 Two types of models have been considered here: the linear and the discontinuous model.
 The linear friction force model is analogous to the mass on the spring. In that case the friciton
 force is proportional to the value of the slip, like the spring reaction force is proportional
 to the displacement from the equilibrium position. The second model idea bases on the first one
 but includes a modification in order to reflect the fact of losing the traction. Such change
-consists in switching the friction coefficient dependently on the value on the slip.
+consists in switching the friction coefficient dependently on the value of the slip.
 
-Such systems may be considered on two levels --- kinematic and dynamic. The kinematic model may be
-derived basing on the 
+Skid-steering systems may be considered on two levels --- kinematic and dynamic.
+The kinematic model may be derived basing on the motion constraints in the Pfaffian form, which may lead
+to the nonholonomic system. This can be extended to include dynamics using d'Alembert principle.
 
 Motion planning plays an important part in robot control. This is usually the first step of solving
 a certain problem. It is not enough to use a good control algorithm for path following. The fundamental
@@ -26,7 +29,9 @@ issue is determining the path or the trajectory to follow. There are many motion
 such as steering using sinusoid for chained systems \cite{murray1993nonholonomic} or rapidly-exploring random trees for nonholomic systems
 with obstacles on the scene \cite{lavalle2000rapidly}. The planning algorithm presented in this paper,
 the endogenous configuration approach, can be applied for mobile manipulators, regarding the
-mobile platform on dynamic level and the kinematics of the manipulator arm.
+mobile platform on dynamic level and the kinematics of the manipulator arm. It has been extensively
+tested using RobRex mobile manipulator as a controlled model using different
+friction coefficients configurations.
 
 The layout of this paper is as follows. Chapter \ref{ch:model} presents the models of researched
 objects: the unicycle and RobRex mobile manipulator. Chapter \ref{ch:endogen} introduces the endogenous
