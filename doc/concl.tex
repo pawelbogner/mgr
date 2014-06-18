@@ -3,18 +3,18 @@
 This work was intended to illustrate the performance of the motion planning algorithm
 basing on the endogenous configuration space approach. This method is based on Jacobian,
 similarly to the inverse kinematics algorithms, so there may occur problems with
-singularity what will be discussed below.
+singularity.
 The research has been made 
 using two models --- a unicycle and RobRex mobile manipulator. First of them was investigated
-on a dynamical level and the latter was studied as a separate mobile platform or as the whole.
+on a dynamical level and the latter was studied as a separate mobile platform and as the whole.
 
-The algorithm used in this paper behaves well for the continuous model of the mobile platform
+The algorithm used in this paper behaved well for the continuous model of the mobile platform
 as well as for the mobile manipulator and always produced a valid result.
 It has been noticed that the friction coefficients which
-define the slips configuration play the important role for the outcome of the computations.
+define the slips configuration play an important role for the outcome of the computations.
 For a mobile robot with all fixed-axis wheels it is necessary to skid in the lateral direction
 in order to turn. For this reason, the parameters of the results obtained with low lateral friction
-coefficients were better. This means a few things. First of all, the total area needed to
+coefficients were better. This has a few consequences. First of all, the total area needed to
 complete the manoeuvre was far less in these cases. Setting high lateral friction
 coefficients makes the robot harder to turn and may even lead to singular configurations.
 This phenomenon is reflected also by the value of the dexterity matrix determinant.
@@ -23,10 +23,10 @@ of the control functions, regarding their energy and amplitude. High friction ma
 the input very high that it can become unobtainable for actuators.
 
 The next aspect making the inputs large is the control horizon. It has been observed that shortening
-it two times makes the amplitude about three times greater. Similar effect is obsereved
+it two times makes the amplitude of the input about three times greater. Similar effect is obsereved
 for the total energy of the control signal.
 
-Another advantage of the algorithm is that it may be used for planning the motion with respect
+The advantage of the algorithm is that it may be used for planning the motion with respect
 to the effector position. It has been shown that the control of the platform and the configuration
 of the manipulator may be determined simultaneously what results in a desired effector configuration.
 The output function defining the desired state of the system may also include constraints
@@ -36,7 +36,7 @@ However, the important purpose of the research was to examine
 this planning method applied to a discontinuous model.
 In order to implement the simulations of the discontinuous model it is convenient to use the event
 mechanism from MATLAB. It allows to stop the simulation when a discontinuity is detected, save the state
-of the object and then start a new simulation with a new switched model assuming the initial conditions
+of the object and then start next simulation with a new switched model assuming the initial conditions
 the same as the terminal ones from the previous computations.
 
 The conclusion is that endogenous configuration approach does not work
