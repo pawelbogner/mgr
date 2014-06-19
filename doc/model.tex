@@ -1,12 +1,20 @@
 \chapter{Models}
 \label{ch:model}
-In this thesis two different models will be taken into consideration: the unicycle model with system dynamics and the RobRex mobile manipulator with platform dynamics and arm kinematics.
+In this thesis two different models will be taken into consideration: the unicycle model
+with system dynamics and the RobRex mobile manipulator with platform dynamics and arm kinematics.
 \section{Unicycle}
 This is the model of the simplest robotic system --- a unicycle.
+
 The object is modelled as a solid disc with two control inputs:
 linear acceleration and angular acceleration with respect to the vertical axis.
 Let $x$ and $y$ denote two position coordinates, $\phi$ --- the orientation
-and $\theta$ --- the angle of rotation. 
+and $\theta$ --- the angle of rotation, what has been shown in figure \ref{fig:uni_sch}.
+\begin{figure}
+\centering
+\includegraphics[width=0.5\textwidth]{img/uni.eps}
+\caption{Unicycle}
+\label{fig:uni_sch}
+\end{figure}
 In order to preserve dimensional consistency define the configuration vector in the following way:
 $w = (x, y, \phi R, \theta R)^T$, where $R$ is the radius of the wheel.
 
@@ -44,7 +52,15 @@ w \\ \dot w
  \end{bmatrix}.
 \end{equation}
 \section{RobRex mobile manipulator}
-The model consists of two parts: a mobile platform and a manipulator. The platform has got four fixed-axis wheels, which are actuated with two motors --- the wheels on both sides are coupled. The schematic structure of the vehicle is shown in figure ... %TODO
+The model consists of two parts: a mobile platform and a manipulator. The platform has got four
+fixed-axis wheels, which are actuated with two motors --- the wheels on both sides are coupled.
+The schematic structure of the vehicle is shown in figure \ref{fig:robrex_sch}
+\begin{figure}
+\centering
+\includegraphics[width=0.7\textwidth]{img/robrex.eps}
+\caption{Mobile platform Rex}
+\label{fig:robrex_sch}
+\end{figure}
 The manipulator is mounted on the platform above the centre of the front wheel axis.
 \subsection{Mobile platform}
 Let $w\in \mathbb{R}^5$ be the configuration of the platform, where
@@ -146,7 +162,7 @@ w \\ \dot w
  \end{bmatrix}.
 \end{equation}
 \subsection{Manipulator arm}
-The manipulator has got five rotational joints. Its structure is shown in. %TODO
+The manipulator has got five rotational joints.
 Let $x\in \mathbb{R}^5$ denote the configuration of the arm and $a_2, \dots, a_5$ the lengths of the links. The individual transformation matrices in the Denavit-Hartenberg convention are as follows:
 \begin{equation}
 \begin{aligned}
