@@ -18,13 +18,12 @@ f(q)&=\begin{bmatrix}
 Q^{-1}(w)\left(F(w, \dot w)-C(w, \dot{w})\dot{w}-D(w)\right)
 \end{bmatrix}, & G(q)&=\begin{bmatrix}
 0_{n\times m}\\
-Q^{-1}B
+Q^{-1}(w)B(w)
 \end{bmatrix}.
 \end{aligned}
 \end{equation}
-
 Adding to the above the output function depending on the platform state and the configuration of the manipulator gives the following affine control system with inputs
-$u \in \mathbb{R}^m$, $x \in \mathbb{R}^p$ and output function $k$.
+$u \in \mathbb{R}^m$, $x \in \mathbb{R}^p$ and output function $k$
 \begin{equation}
 \begin{cases}
 \begin{aligned}
@@ -38,16 +37,16 @@ y &= k(q, x).
 \subsection{Endogenous configuration}
 Define a pair $(u(\cdot), x)$, which consists of control inputs mentioned above.
 Such elements belong to the endogenous configuration space
-$\mathcal{X} = L_m^2[0, T] \times \mathbb{R}^p$ of the mobile manipulator, where $T$ denotes a control horizon.
+$\mathcal{X} = L_m^2[0, T] \times \mathbb{R}^p$ of the mobile manipulator, where $T$ denotes a
+control horizon.
 The inner product in $\mathcal{X}$ can be defined as follows \cite{ecs_ijc}
 \begin{equation}
 \langle (u_1(\cdot), x_1), (u_2(\cdot), x_2) \rangle = \int_0^T u_1^T(t) u_2(t) \ud t + x_1^T x_2
 \end{equation}
-
 The function
 $K_{q_0, T}: \mathcal{X} \rightarrow \mathbb{R}^r$
-allow to determine the state of the mobile manipulator at time $T>0$ given
-the endogenous configuration $(u(\cdot), x)$ and the initial state $q_0$:
+allows to determine the state of the mobile manipulator at time $T>0$, given
+the endogenous configuration $(u(\cdot), x)$ and the initial state $q_0$
 \begin{equation}
 \label{eq:endmap}
 K_{q_0, T}((u(\cdot), x)) = k(\phi_{q_0, T}(u(\cdot)), x),
@@ -62,7 +61,7 @@ J_{q_0, T}(u(\cdot), x)(v(\cdot), w) &= \left.\frac{\ud}{\ud \alpha}\right|_{\al
  &= 
  C(T,x)\int_0^T \Phi(T,s)B(s)v(s)\ud s + D(T,x)w,
 \end{align}
-where $(v(\cdot), w)\in \mathcal{X}$ and $\Phi(T,s)$ is the fundamental matrix of the following linear system \cite{tchon2004acceleration}
+where $(v(\cdot), w)\in \mathcal{X}$ and $\Phi(T,s)$ is the fundamental matrix of the linear system \cite{tchon2004acceleration}
 \begin{equation}
 \begin{aligned}
 \label{eq:abxi}
