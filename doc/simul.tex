@@ -7,14 +7,15 @@ configuration space approach presented in chapter \ref{ch:endogen}.
 There are some issues that are common regardless the studied object. Moreover,
 both RobRex mobile manipulator and unicycle have two control inputs. That is why
 the same control functions representation may be used in those two models.
-The base used to represent the control functions was trigonometric, including up to the third harmonics
+The base used to represent the control functions was trigonometric, including up to the third order
+harmonics
 for the Rex platform
 \begin{equation}
 \Psi=\begin{pmatrix}
 1 & \sin(\omega t) & \cos(\omega t)& \sin(2\omega t) & \cos(2\omega t)& \sin(3\omega t) & \cos(3\omega t)
 \end{pmatrix},
 \end{equation}
-and only with first harmonics for the unicycle
+and only with first order harmonics for the unicycle
 \begin{equation}
 \Psi=\begin{pmatrix}
 1 & \sin(\omega t) & \cos(\omega t)
@@ -33,39 +34,41 @@ The decay rate $\gamma$ in \eqref{eq:endogen_num} has been set to $0.05$ for all
 the simulations demonstrated in this chapter.
 
 \section{Event mechanism}
-In this chapter there are discontinuous models being considered. This induces problems with ODE solving
+In this chapter discontinuous models of a unicycle and mobile platform Rex will be
+considered. This induces problems with ODE solving
 due to a huge step size contraction in the surroundings of the discontinuities which may
-make the computations even impossible to finish. Therefore using an ordinary ODE solving
+make the computations even impossible to finish. Therefore, an ordinary ODE solving
 schema will not perform well in such case.
 
-The solution is to use the event mechanism implemented in MATLAB \cite{events}.
+A solution is to use the event mechanism implemented in MATLAB \cite{events}.
 This technique is designed for solving the initial value problems with unknown time of
 the end of the simulation. In order to determine when the calculations should end,
 we need to define an event function. The event occurs when the event function value
-crosses the zero. It may be distinguished if the crossing was in the positive or the negative direction.
+crosses zero. It may be distinguished, if the crossing was in the positive or the negative direction.
 Occurring the event may imply calculations termination. 
 
-The event function may be a vector function, i.e. many types of event can be defined. After catching
+The event function may be a vector function, i.e. many types of events can be defined. After catching
 an event, full information about it may be retrieved: the type of the event, the moment of occurrence,
-and the state of the system being simulated. This feature allows to use the event mechanism
+and the state of the system being simulated. This feature prompts us to use the event mechanism
 to simulate discontinuous models.
 
-The idea is quite simple. We define events so that they occur in discontinuities. After catching
-an event we stop simulation, save the system state, switch the model and start new
-calculations with initial state equal to the terminal one from the previous iteration.
-This way a discontinuous system can by simulated easily, avoiding any problems that would
-arise using the ordinary approach. Such concept has been used in calculations presented below.
+The idea is quite simple. We define events so that they occur in discontinuities of the
+functions defining the simulated model. After catching
+an event we stop simulation, save the system state, switch the model, and start new
+calculations with the initial state equal to the terminal one from the previous iteration.
+In this way a discontinuous system can by simulated easily, avoiding any problems that would
+arise using the ordinary approach. Such a concept has been used in calculations presented below.
 
 
 \section{Unicycle}
-The model of the unicycle has been implemented in order to examine the behaviour
+The model of a unicycle has been implemented in order to examine the behaviour
 of the motion planning algorithm for a very simple object with discontinuities. 
 
 \subsection{Problem formulation}
 The motion planning problem to be solved is kind of a parking manoeuvre. The initial
-state of the manipulator is $q_0 = [w_0; \dot{w_0}] = (0, 0, R\frac{\pi}{2}, 0_5)^T$
+state of the object is $q_0 = (w_0, \dot{w_0})^T = (0, 0, R\frac{\pi}{2}, 0_5)^T$
 and the desired end configuration is $(x, y, \theta) = (10, 0, a\frac{\pi}{2})$.
-The motion is supposed to be executed within the fixed control horizon $T$.
+The motion is supposed to be executed within a fixed control horizon $T$.
 
 \subsection{Simulation conditions}
 \label{sec:discont_params_uni}
@@ -84,15 +87,15 @@ in \eqref{eq:endogen_num} are
 \lambda_0=
 (\underbrace{0.01, \ 0.001, \ 0.001,}_{u_1}\ \underbrace{0.0001, \ 0, \ 0, \ 0}_{u_2})^T.
 \end{equation}
-Such setting tries to move the object in the proper direction in the first iteration in order to
+Such setting tries to move the object in the proper direction in the first iteration, in order to
 maximise the chances for the algorithm to converge.
 
 The values of the friction coefficients were changing according to the value of the slips $s_\parallel$
 and $s_\perp$. 
-The point of such approach is to model the phenomenon
+The point of such an approach is to model the phenomenon
 of losing the traction. We will assume that for every friction force we have two
 values of the friction coefficient possible: high when the slip is less than the certain
-value (traction) and low otherwise (skid). This idea leads to the following formulae
+value (traction) and low otherwise (slip). This idea leads to the following formulae
 \begin{equation*}
 \begin{aligned}
 \epsilon&=\begin{cases}
@@ -109,13 +112,14 @@ value (traction) and low otherwise (skid). This idea leads to the following form
 \subsection{Simulation results}
 Despite the fact that the motion planning algorithm based on the endogenous 
 configuration approach does not converge in general for discontinuous models,
-it came out to be possible to find a set of the parameters for which the algorithm produced
+it came out to be possible to find a set of the parameters for which the algorithm
+coupled with the event mechanism produced
 a valid result. These parameters are shown in detail in section \ref{sec:discont_params_uni}.
-The behaviour of this motion planning method for discontinuous models has been thoroughly researched
-and the conclusion is that the case presented here is special. Mostly, the error rises to the infinity
-or oscillates around a certain value.
 The results --- the error, path, slips and control inputs plots --- are depicted
 in figure \ref{fig:pr_uni}.
+The behaviour of this motion planning method for discontinuous models has been thoroughly examined,
+and the conclusion is that the case presented here is rather special. Mostly, the error rises to the infinity
+or oscillates around a certain value.
 
 \input{images_uni.tex}
 
@@ -123,9 +127,10 @@ in figure \ref{fig:pr_uni}.
 \subsection{Problem formulation}
 \label{sec:rex_task}
 The problem to be solved is to move the platform from the initial state
-$q_0 = [w_0; \dot{w}_0] = (0, 0, a\frac{\pi}{2}, 0_7)^T$ to the desired state
-$q_d = [w_d; \dot{w}_d] = (10, 0, a\frac{\pi}{2}, 0_7)^T$
-within the given amount of time $T$. 
+$q_0 = (w_0, \dot{w}_0)^T = (0, 0, a\frac{\pi}{2}, 0_7)^T$ to the state satisfying the desired
+output function value
+$y_d=(x_p, y_p, \theta, \dot w)^T = (10, 0, a\frac{\pi}{2}, 0_7)^T$, 
+within the given time $T$. 
 This corresponds to a parking manoeuvre.
 %
 %Now two types of friction models will be discussed --- linear
@@ -134,7 +139,7 @@ This corresponds to a parking manoeuvre.
 
 \subsection{Simulation conditions}
 \label{sec:pltf_params}
-The object parameters were set according to \cite{coupled} and are as follows:
+The platform parameters were set according to \cite{coupled}, and are as follows:
 \begin{multicols}{2}
 \begin{itemize}
 \item $m_p = 21.107\,\mathrm{kg}$,
@@ -149,14 +154,12 @@ The object parameters were set according to \cite{coupled} and are as follows:
 \item $I_{w33} = 0.009\,\mathrm{kgm^2}$.
 \end{itemize}
 \end{multicols}
-\setcounter{MaxMatrixCols}{14}
-Initial conditions for the $\lambda$ parameters used to compute control functions
+\hspace{-\parindent}Initial conditions for the $\lambda$ parameters used to compute control functions
 in \eqref{eq:endogen_num} are
 \begin{equation}
 \lambda_0=
-(\underbrace{0, \ 0.5, \ 0, \ 0, \ 0, \ 0, \ 0,}_{u_1}\ \underbrace{0, \ 0.5, \ 0, \ 0, \ 0, \ 0, \ 0}_{u_2})^T,
+(\underbrace{0, \ 0.5, \ 0, \ 0, \ 0, \ 0, \ 0,}_{u_1}\ \underbrace{0, \ 0.5, \ 0, \ 0, \ 0, \ 0, \ 0}_{u_2})^T.
 \end{equation}
-i.e. only first harmonic sines are used.
  	
 
 \subsection{Linear friction model}
@@ -168,10 +171,10 @@ This model assumes that coefficients $\epsilon_i$ and $\tau_i$ in \eqref{eq:forc
 \item $\epsilon_i=1$ and $\tau_i=1$,
 \end{enumerate}
 for $i=1,\,2,\,3,\,4$.
-Every case was studied with two different time horizons 10\,s and 20\,s. The results of the
+Every case was studied on two different control time horizons 10\,s and 20\,s. The results of the
 simulations are shown in figures \ref{fig:pl1}--\ref{fig:pl8}.
 
-It is also worth to check whether the input functions obtained through the algorithm
+It is also worth to check, whether the input functions obtained in simulations
 are feasible on the real object. The total energy of the signal was computed as $\int_0^T u^2\ud t$
 and the maximal amplitude which can be compared to the maximum torque achievable by the real actuator.
 These values, computed for all the simulations run, are presented in table \ref{tab:control}.
@@ -181,7 +184,7 @@ These values, computed for all the simulations run, are presented in table \ref{
 \label{tab:control}
 \begin{tabular}{rrr|r|r|r|r|}
 \cline{4-7}
-\multicolumn{1}{c}{}                      & \multicolumn{1}{c}{}                     & \multicolumn{1}{c|}{}            & \multicolumn{2}{c|}{energy}                             & \multicolumn{2}{c|}{amplitude}                          \\ \hline
+\multicolumn{1}{c}{}                      & \multicolumn{1}{c}{}                     & \multicolumn{1}{c|}{}            & \multicolumn{2}{c|}{energy [$\mathrm{N^2m^2s}$]}                             & \multicolumn{2}{c|}{amplitude [Nm]}                          \\ \hline
 \multicolumn{1}{|c|}{$\tau$}              & \multicolumn{1}{c|}{$\epsilon$}          & \multicolumn{1}{c|}{$T$ {[}s{]}} & \multicolumn{1}{c|}{$u_1$} & \multicolumn{1}{c|}{$u_2$} & \multicolumn{1}{c|}{$u_1$} & \multicolumn{1}{c|}{$u_2$} \\ \hline
 \multicolumn{1}{|r|}{\multirow{4}{*}{1}}  & \multicolumn{1}{r|}{\multirow{2}{*}{1}}  & 20                               & 5906                       & 805                        & 3.16                       & 1.26                       \\ \cline{3-7} 
 \multicolumn{1}{|r|}{}                    & \multicolumn{1}{r|}{}                    & 10                               & 19337                      & 2036                       & 8.03                       & 3.09                       \\ \cline{2-7} 
@@ -197,7 +200,7 @@ These values, computed for all the simulations run, are presented in table \ref{
 
 \subsection{Discontinuous friction model}
 In this model coefficients $\epsilon_i$ and $\tau_i$ in \eqref{eq:force_r} depend
-on the value of the slip. The idea of such friction model has been described
+on the value of the slip. The idea of such a friction model has been described
 in section \ref{sec:discont_params_uni}. With such an approach the formulae defining
 friction coefficients are of the form
 \begin{equation*}
@@ -223,28 +226,28 @@ friction coefficients are of the form
 Two sets of friction parameters has been used in the simulations:
 \begin{enumerate}
 \item $\epsilon_{high}=5$, $\epsilon_{low}=0.05$,
-$\tau_{high}=5$, $\tau_{low}=0.05$;
+$\tau_{high}=5$, $\tau_{low}=0.05$, $d=0.2$;
 \item $\epsilon_{high}=5$, $\epsilon_{low}=1$,
-$\tau_{high}=5$, $\tau_{low}=1$.
+$\tau_{high}=5$, $\tau_{low}=1$, $d=0.2$.
 \end{enumerate}
 Unfortunately, there is no guarantee for the
-algorithm to converge for a discontinuous model and such situation takes place in
-the first case. The plot of the error norm with respect to the iteration number is shown
-in the figure \ref{fig:error_discont}. It is clearly visible that the plot of the
+algorithm to converge for a discontinuous model and such a situation takes place in
+the case 1. The plot of the error norm with respect to the iteration number is shown
+in figure \ref{fig:error_discont}. It is clearly visible that the plot of the
 error norm is not monotonic. The reason why the endogenous configuration approach
-does not perform well here is the fundamental idea of the motion planning algorithm.
+does not perform well here is the fundamental idea underlying motion planning algorithm.
 It assumes that a small change in endogenous configuration results in a small change
 in the output function value. This statement is true for continuous models. On the contrary,
 when a model includes some discontinuities, even a small variation to the input may take
 the system to a distant point from the original one in the output space. Therefore, the
 error may increase in the next iteration of the algorithm. Note that decreasing
-the $\gamma$ parameter in equation \eqref{eq:endogen_num} will not solve this problem neither.
+the $\gamma$ parameter in equation \eqref{eq:endogen_num} will not solve this problem either.
 In other words, if the platform loses the traction in a different point than in
 the previous iteration, it ends up in a place not related to the one supposed to be
 according to the algorithm, because actually the model has changed in the meanwhile.
 
-A contrasting situation takes place while using second set of parameters. Due to the fact
-that the friction coefficients differ not too much, the algorithm manages to converge.
+A contrasting situation takes place while using the set of parameters No. 2. Due to the fact
+that the friction coefficients do not differ too much, the algorithm manages to converge.
 In such circumstances switching the friction coefficient does not result in a large change to the model.
 Figure \ref{fig:pr_discont_ok} demonstrates the results for this case. The characteristics
 of the obtained control inputs are shown in table \ref{tab:in_discont_ok}
@@ -252,17 +255,17 @@ of the obtained control inputs are shown in table \ref{tab:in_discont_ok}
 \begin{figure}[htp]
 \centering
 \includegraphics[height=0.3\textheight]{img/discont_err.eps}
-\caption{Error norm w.r.t iteration, first discontinuous platform model}
+\caption{Error norm w.r.t iteration, discontinuous platform model No. 1}
 \label{fig:error_discont}
 \end{figure}
 
 \begin{table}[htb]
-\caption{Control input parameters, discontinuous platform model, second problem}
+\caption{Control input parameters, discontinuous platform model, problem 2}
 \label{tab:in_discont_ok}
 \centering
-\begin{tabular}{|l|l|l|l|}
+\begin{tabular}{|r|r|r|r|}
 \hline
-\multicolumn{2}{|c|}{energy}                             & \multicolumn{2}{c|}{amplitude}                          \\ \hline
+\multicolumn{2}{|c|}{energy [$\mathrm{N^2m^2s}$]}                             & \multicolumn{2}{c|}{amplitude [$\mathrm{Nm}$]}                          \\ \hline
 \multicolumn{1}{|c|}{$u_1$} & \multicolumn{1}{c|}{$u_2$} & \multicolumn{1}{c|}{$u_1$} & \multicolumn{1}{c|}{$u_2$} \\ \hline
 1101                       & 230                        & 23.88                      & 14.16                      \\ \hline
 \end{tabular}
@@ -271,68 +274,71 @@ of the obtained control inputs are shown in table \ref{tab:in_discont_ok}
 \input{images_discont.tex}
 
 \section{Mobile manipulator}
-This section covers the simulations for the whole RobRex mobile manipulator. Two types of problems will
-be discussed here: with constraints only for the end-effector configuration and with constraints for
-both mobile platform and the effector.
-\subsection{Problems formulation}
-The initial conditions for both tasks are: $q_0 = [w_0; \dot{w}_0] = (0, 0, a\frac{\pi}{2}, 0_7)^T$, 
+This section covers the simulations of the whole RobRex mobile manipulator. Two types of problems will
+be discussed here: output function regarding only the end-effector task space coordinates
+and output function containing both mobile platform and effector coordinates.
+\subsection{Problem formulation}
+The initial conditions for both tasks are: $q_0 = (w_0, \dot{w}_0)^T = (0, 0, a\frac{\pi}{2}, 0_7)^T$, 
 $x_0 = \left(
 x_1 ,\, x_2 ,\, x_4 ,\, x_5
 \right) = \left(
 \frac{\pi}{4} ,\, \frac{\pi}{5} ,\, \frac{\pi}{6} ,\, -\frac{\pi}{3}
 \right).$ The control horizon for these tasks is $T=20\,\mathrm{s}$.
-\subsubsection{Problem one}
-This motion planning problem regards only the end position of the effector
+\subsubsection{Problem 1}
+This motion planning problem regards only the final position of the effector
 and the velocities of the platform. 
-The coordinates in global task space $(x, y, z, \phi, \theta, \psi) $ should be equal to
-$(10, 0, 0.2, \frac{\pi}{2}, \frac{\pi}{4}, -\frac{\pi}{2})$. The velocity of each platform coordinate
-should equal zero. Such constraints guarantee that the whole system will stand still at the end
+The following output function value $k(q, x) = (x_e, y_e, z_e, \phi, \theta, \psi, \dot w) $ should be equal to
+$(10, 0, 0.2, \frac{\pi}{2}, \frac{\pi}{4}, -\frac{\pi}{2}, 0_5)$, where
+$x_e$, $y_e$, $z_e$ are the task space coordinates and $\phi$, $\theta$, $\psi$
+are Euler angles of the effector (see section \ref{sec:manipul}). The zero-velocity
+requirements guarantee that the whole system will stand still at the end
 of the motion.
-\subsubsection{Problem two}
+\subsubsection{Problem 2}
 This case is related to the platform pose as well as to the configuration of the effector.
-As far as the platform is concerned, the constraints are put only on the $x$ coordinate and
-the velocities. The desired values are $(x_p, \dot{w}) = (10, 0, 0, 0, 0, 0)$. When it comes to
-the effector, the we want the following set of coordinate in global task space: $(y, \phi, \theta, \psi)
+As far as the platform is concerned, the constraints are imposed only on the $x_p$ coordinate and
+the velocities. Let us define the output function as $k(q, x) = (x_p, \dot w, y_e, \phi, \theta, \psi)$.
+As for the platform, the desired values are
+$(x_p, \dot{w}) = (10, 0, 0, 0, 0, 0)$. When it comes to
+the effector, we want to reach the following point in the task space: $(y_e, \phi, \theta, \psi)
 = (0, \frac{\pi}{2}, \frac{\pi}{4}, -\frac{\pi}{2})$.
 
 \subsection{Simulation conditions}
-The platform parameter has been set as in section \ref{sec:pltf_params}. The lenghts of the links
-are as follows:
+The platform parameters has been set as in section \ref{sec:pltf_params}. The lenghts of the links
+are as follows: $a_1=0 \,\mathrm{m}$,
 $a_2=0.1276 \,\mathrm{m}$,
 $a_3=0.041 \,\mathrm{m}$,
 $a_4=0.2615 \,\mathrm{m}$,
 $a_5=0.0195 \,\mathrm{m}$.
-First and second joints of the manipulator are actually one two-degree-of-freedom joint, so we assume that $a_1=0$.
 
 \subsection{Simulation results}
-The outcome of the simulations are presented in figure \ref{fig:pr1} for the problem one and in figure
-\ref{fig:pr2} for the problem two. These figures include the plots of the error with respect to the
-iteration, the platform path, the slips values and the inputs. The angles computed for joints are
-presented in table \ref{tab:effector}. Regarding the control inputs parameters, table \ref{tab:in_eff}
-shows the total energy values of the signal and the maximum amplitudes.
+The outcomes of the simulations are presented in figure \ref{fig:pr1} for the problem 1 and in figure
+\ref{fig:pr2} for the problem 2. These figures include the plots of the error vs. the
+iteration, the platform path, the slip values, and the inputs. The joint angles are
+presented in table \ref{tab:effector}. Regarding the control parameters, table \ref{tab:in_eff}
+shows the total energy of the signal and its maximum amplitude.
 
 \begin{table}[!htb]
-\caption{Control input parameters, mobile manipulator}
+\caption{Control parameters, mobile manipulator}
 \label{tab:in_eff}
 \centering
-\begin{tabular}{l|l|l|l|l|}
+\begin{tabular}{l|r|r|r|r|}
 \cline{2-5}
-\multicolumn{1}{c|}{}             & \multicolumn{2}{c|}{energy}                             & \multicolumn{2}{c|}{amplitude}                          \\ \cline{2-5} 
+\multicolumn{1}{c|}{}             & \multicolumn{2}{c|}{energy [$\mathrm{N^2m^2s}$]}                             & \multicolumn{2}{c|}{amplitude [$\mathrm{Nm}$]}                          \\ \cline{2-5} 
 \multicolumn{1}{c|}{}             & \multicolumn{1}{c|}{$u_1$} & \multicolumn{1}{c|}{$u_2$} & \multicolumn{1}{c|}{$u_1$} & \multicolumn{1}{c|}{$u_2$} \\ \hline
-\multicolumn{1}{|l|}{Problem one} & 3165                       & 571                        & 2.35                       & 1.37                       \\ \hline
-\multicolumn{1}{|l|}{Problem two} & 3835                       & 615                        & 2.57                       & 1.43                       \\ \hline
+\multicolumn{1}{|l|}{Problem 1} & 3165                       & 571                        & 2.35                       & 1.37                       \\ \hline
+\multicolumn{1}{|l|}{Problem 2} & 3835                       & 615                        & 2.57                       & 1.43                       \\ \hline
 \end{tabular}
 \end{table}
 
 \begin{table}[!htb]
-\caption{Manipulator arm joint positions}
+\caption{Manipulator joint positions}
 \label{tab:effector}
 \centering
 \begin{tabular}{l|l|l|l|l|}
 \cline{2-5}
                                   & $q_1$   & $q_2$  & $q_4$  & $q_5$   \\ \hline
-\multicolumn{1}{|l|}{Problem one} & -0.6238 & 0.0051 & 0.7776 & -0.0009 \\ \hline
-\multicolumn{1}{|l|}{Problem two} & -0.7454 & 0.4561 & 0.3296 & -0.0009 \\ \hline
+\multicolumn{1}{|l|}{Problem 1} & -0.6238 & 0.0051 & 0.7776 & -0.0009 \\ \hline
+\multicolumn{1}{|l|}{Problem 2} & -0.7454 & 0.4561 & 0.3296 & -0.0009 \\ \hline
 \end{tabular}
 \end{table}
 \input{images_effector.tex}

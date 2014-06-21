@@ -69,28 +69,29 @@ where $(v(\cdot), w)\in \mathcal{X}$ and $\Phi(T,s)$ is the fundamental matrix o
 \eta &= C(t, x)\xi + D(t, x).
 \end{aligned}
 \end{equation}
-The matrices in \eqref{eq:abxi} are defines as follows
+The matrices in \eqref{eq:abxi} are defined as follows
 \begin{equation}
+\label{eq:matrices}
 \begin{aligned}
 A(t) &= \frac{\partial (f(q(t))+G(q(t))u(t)}{\partial q}, & C(t, x) &= \frac{\partial k(q(t), x)}{\partial q},\\
-B(t) &= G(q(t)), & D(t, x) &= \frac{\partial k(q(t), x)}{\partial x}.
+B(t) &= G(q(t)), & D(t, x) &= \frac{\partial k(q(t), x)}{\partial x},
 \end{aligned}
 \end{equation}
-
+where $q(t)=\phi_{q_0, t}(u(\cdot))$.
 \section{Motion planning algorithm}
-Given the end-point map $K_{q_0, T}$ and a desired output $y_d\in\mathbb{R}$, the motion planning problem is equivalent to finding an endogenous
-configuration $(u_d(\cdot), x_d)$, such that $K_{q_0, T}(u_d(\cdot), x_d)=y_d$. In order to find the
+Given the end-point map $K_{q_0, T}(u(\cdot), x)$ and a desired output $y_d\in\mathbb{R}$, the motion planning problem is equivalent to finding an endogenous
+configuration $(u_d(\cdot), x_d)$, such that $K_{q_0, T}(u_d(\cdot), x_d)=y_d$. In order to find a
 solution, a Jacobian algorithm may be employed, analogically to the algorithms
 for the inverse kinematics problem for manipulators. 
 
-Let us choose the initial configuration $(u_0(\cdot), x_0)$, and
+Let us choose an initial configuration $(u_0(\cdot), x_0)$, and
 define in $\mathcal{X}$ a curve $(u_\theta(\cdot), x_\theta)$, $\theta \in \mathbb{R}$.
 Computing the error along $(u_\theta(\cdot), x_\theta)$, we obtain
 \begin{equation}
 \label{eq:endogen_err}
 e(\theta)=K_{q_0, T}(u_\theta(\cdot), x_\theta)-y_d.
 \end{equation}
-Since we expect the error to stabilize at $0$ exponentially fast with a decay rate
+Since we request the error to stabilize at $0$ exponentially fast with a decay rate
 $\gamma>0$, we get the formula
 \begin{equation}
 \label{eq:endogen_decay}
@@ -102,7 +103,6 @@ J_{q_0, T}(u_\theta(\cdot), x)\dfrac{\ud}{\ud \theta}\begin{pmatrix}
 u_\theta(\cdot)\\ x_\theta
 \end{pmatrix}=-\gamma e(\theta).
 \end{equation}
-
 Let $J^\#_{q_0, T}(u_\theta(\cdot), x)$ denote the Moore-Penrose inverse \cite{ecs_ijc}
 of the Jacobian \eqref{eq:jacobian}. By applying it to the above equation we get a dynamic system
 \begin{equation}
@@ -111,7 +111,7 @@ of the Jacobian \eqref{eq:jacobian}. By applying it to the above equation we get
 u_\theta(\cdot)\\ x_\theta
 \end{pmatrix}=-\gamma J^\#_{q_0, T}(u_\theta(\cdot), x_\theta) e(\theta),
 \end{equation}
-which defines the solution of the formulated motion planning problem in the following way
+which defines a solution of the formulated motion planning problem in the following way
 \begin{equation}
 \begin{pmatrix}
 u_d(\cdot)\\ x_d
@@ -123,8 +123,9 @@ u_\theta(\cdot)\\ x_\theta
 \section{Numerical computations}
 The dimension of the $L^2[0,T]$ space is infinite. Therefore, we need an infinite number of parameters to define an element from this space. This is impossible to achieve in calculations made on a computer. The solution is to limit the bandwidth of considered control functions. 
 
-It is possible to choose a finite-dimensional orthogonal base $\Psi = [ \psi_1, \psi_2, \dots, \psi_s ]$ spanning the band-limited control functions space. 
-Using such an approach, a function $u_i$ is represented by a vector 
+It is possible to choose a finite-dimensional orthogonal base $\Psi = ( \psi_1, \psi_2, \dots, \psi_s )$
+spanning the band-limited control function space. 
+Using such an approach, a function $u_i(t)$ is represented by a vector 
 $\lambda_i = (\lambda_{i1}, \lambda_{i2}, \dots, \lambda_{is})^T$ 
 which satisfies the formula $u_i(t) = \sum_{k=1}^s \psi_k(t) \lambda_{ik}$.
 
@@ -138,34 +139,36 @@ P(t)=\begin{bmatrix}
 0 &  \cdots & 0 & \Psi
 \end{bmatrix}
 \end{equation}
-
 The above formulae allow us to define a band-limited Jacobian as \cite{ecs_ijc}
 \begin{equation}
-\hat J_{q_0, T}(\lambda, x)=\begin{bmatrix}C_\lambda(T,x)\int_0^T \Phi_\lambda(T,s)B(s)_\lambda P(s)\ud s & D_\lambda(T,x)\end{bmatrix}
+\hat J_{q_0, T}(\lambda, x)=\begin{bmatrix}C_\lambda(T,x)\int_0^T \Phi_\lambda(T,s)B_\lambda(s) P(s)\ud s
+& D_\lambda(T,x)\end{bmatrix},
 \end{equation}
-
+where the matrices $B_\lambda(s)$, $C_\lambda(T,x)$, $D_\lambda(T,x)$ are those from \eqref{eq:matrices}
+calcutated assuming 
 Assuming the above, the Jacobian $\hat J_{q_0, T}(\lambda, x)$
-may be computed alternatively as\\ $\begin{bmatrix}
+may be computed as\\ $\begin{bmatrix}
 C_\lambda(T,x)\Xi(T)& D_\lambda(T,x)
 \end{bmatrix}$, where $\Xi$ is a matrix defined by  
 \begin{equation}
 \dot \Xi = A_\lambda(t)\Xi +B_\lambda(t)P(t)
 \end{equation}
-with the initial condition $\Xi(0)=0$. %TODO citation needed.
+with the initial condition $\Xi(0)=0$. 
 This allows to easily calculate the Jacobian simultaneously with the simulation
-of the system by extending the ODE function.
+of the system by extending the function being integrated during ODE solving.
 
 In order to acquire the Moore-Penrose inverse of the Jacobian we can simply use the formula
 \begin{equation}
 \hat J^\#_{q_0, T}(\lambda, x)=\hat J^T_{q_0, T}(\lambda, x)\left(\hat J_{q_0, T}(\lambda, x)\hat J^T_{q_0, T}(\lambda, x)\right)^{-1}.
 \end{equation}
-
 The problem which may occur here is the singularity of the dexterity matrix\\
-$\mathcal{G}_{q_0,T}(\lambda,x)=\hat J_{q_0, T}(\lambda, x)\hat J^T_{q_0, T}(\lambda, x)$. The inverse can be regularised by adding a small value to the diagonal of the matrix to be inverted, in the following way:
+$\mathcal{G}_{q_0,T}(\lambda,x)=\hat J_{q_0, T}(\lambda, x)\hat J^T_{q_0, T}(\lambda, x)$.
+The inverse can be regularised by adding a small value $\kappa$ to the diagonal of the matrix to
+be inverted, in the following way
 \begin{equation}
-\hat J^\#_{q_0, T}(\lambda, x)=\hat J^T_{q_0, T}(\lambda, x)\left(\hat J_{q_0, T}(\lambda, x)\hat J^T_{q_0, T}(\lambda, x)+\eta I_r\right)^{-1}.
+\hat J^\#_{q_0, T}(\lambda, x)=\hat J^T_{q_0, T}(\lambda, x)\left(\hat J_{q_0, T}(\lambda, x)\hat J^T_{q_0, T}(\lambda, x)+\kappa I_r\right)^{-1}.
 \end{equation}
-The regularised version of the inverse Jacobian should be used only if the determinant of the dexterity matrix is below a certain assumed threshold.
+The regularised version of the inverse Jacobian should be used, only if the determinant of the dexterity matrix is below a certain assumed threshold.
 
 Another limitation met in numerical approach to the motion planning problem is the necessity to discretise the variable $\theta$ in \eqref{eq:endogen_alg}.
 This may be resolved by applying the first-order Euler method
@@ -176,8 +179,10 @@ This may be resolved by applying the first-order Euler method
 x_{k+1}
 \end{pmatrix}  =\begin{pmatrix}\lambda_{k}\\
 x_{k}
-\end{pmatrix} - \gamma \hat J^\#_{q_0, T}(\lambda_k, x_k)e(k).
+\end{pmatrix} - \gamma \hat J^\#_{q_0, T}(\lambda_k, x_k)e(k),
 \end{equation}
+where $e(k)=K_{q_0, T}(u_{\lambda_k}(\cdot), x_k)-y_d$.
+
 In order to find the numerical solution, a vast array of numerical differential
 equation solving algorithms may be employed. These include those with fixed step
 (e.g. Runge-Kutta methods), as well as variable step ones \cite{solvers}.

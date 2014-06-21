@@ -6,7 +6,7 @@ with dynamics and the RobRex mobile manipulator with platform dynamics and arm k
 This is the model of the simplest robotic system --- a unicycle.
 
 The object is modelled as a solid disc with two control inputs:
-linear acceleration and angular acceleration with respect to the vertical axis.
+a torque causing linear acceleration and a torque applied to the vertical axis.
 Let $x$ and $y$ denote two position coordinates, $\phi$ --- the orientation
 and $\theta$ --- the angle of rotation, what has been shown in figure \ref{fig:uni_sch}.
 \begin{figure}
@@ -37,7 +37,8 @@ H^1(w)\\
 H^2(w)
 \end{bmatrix}.
 \end{equation}
-The first row of this matrix 
+The constraints put in form $H(w)\dot{w}=0$ mean lack of lateral slip ($H^1(w)\dot{w}=0$) and lack of
+longitudinal slip ($H^2(w)\dot{w}=0$).
 The slips can be calculated as follows: the lateral slip $s_\perp=H^1(w)\dot w$ and the longitudinal slip $s_\parallel=H^2(w)\dot w$. With this quantities, the slip reaction forces may be defined as 
 \begin{equation}
 F(w, \dot w)=mg\epsilon s_\perp\frac{H^{1T}(w)}{||H^{1T}(w)||} + mg\tau s_\parallel\frac{H^{2T}(w)}{||H^{2T}(w)||},
@@ -152,7 +153,8 @@ F(w, \dot{w}) = R_{14}\frac{H^{1T}(w)}{||H^{1T}(w)||} + R_{23}\frac{H^{2T}(w)}{|
 \end{equation}
 That means that the slips reaction forces are in the direction of transposed $H(w)$ matrix columns.
 
-Due to the fact that inputs have direct impact on the angular acceleration of the side wheels, the input matrix $B$ is equal to $\begin{bmatrix}
+Due to the fact that the inputs are the torques applied to the both side coupled wheels,
+the input matrix $B$ is equal to $\begin{bmatrix}
 0_{2 \times 3} & I_2
 \end{bmatrix}^T$ 
 
@@ -169,6 +171,7 @@ w \\ \dot w
  \end{bmatrix}.
 \end{equation}
 \subsection{Manipulator arm}
+\label{sec:manipul}
 The manipulator has got five rotational joints.
 Let $x\in \mathbb{R}^5$ denote the configuration of the arm and $a_2, \dots, a_5$ the lengths of the links. The individual transformation matrices in the Denavit-Hartenberg convention are as follows:
 \begin{equation}
@@ -198,6 +201,8 @@ s_1c_{24}c_5-c_1s_5 &  c_1c_5-s_1c_{24}s_5 & -s_1s_{24}\\
 s_{24}c_5           & -s_{24}s_5           &  c_{24}
 \end{bmatrix}.
 \end{align}
+The notation used in above formulae is: $s_i = \sin(x_i)$, $c_i=\cos(x_i)$, $s_{ij}=\sin(x_i+x_j)$,
+$c_{ij}=\cos(x_i+c_j)$.
 The end effector orientation Euler angles (using $\rot(Z,\phi)\rot(X, \theta)\rot(Z, \psi)$) are: $\phi=x_1-\frac{\pi}{2}$, $\theta=x_2+x_4$, $\psi=x_5+\frac{\pi}{2}$.
 
 \paragraph{Global coordinate system}
