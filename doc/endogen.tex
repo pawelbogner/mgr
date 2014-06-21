@@ -145,7 +145,8 @@ The above formulae allow us to define a band-limited Jacobian as \cite{ecs_ijc}
 & D_\lambda(T,x)\end{bmatrix},
 \end{equation}
 where the matrices $B_\lambda(s)$, $C_\lambda(T,x)$, $D_\lambda(T,x)$ are those from \eqref{eq:matrices}
-calcutated assuming 
+and $\Phi_\lambda(T,s)$ is the fundamental matrix of \eqref{eq:abxi}
+calculated assuming $q(t)=\phi_{q_0, t}(u_\lambda(\cdot))$
 Assuming the above, the Jacobian $\hat J_{q_0, T}(\lambda, x)$
 may be computed as\\ $\begin{bmatrix}
 C_\lambda(T,x)\Xi(T)& D_\lambda(T,x)
@@ -154,8 +155,7 @@ C_\lambda(T,x)\Xi(T)& D_\lambda(T,x)
 \dot \Xi = A_\lambda(t)\Xi +B_\lambda(t)P(t)
 \end{equation}
 with the initial condition $\Xi(0)=0$. 
-This allows to easily calculate the Jacobian simultaneously with the simulation
-of the system by extending the function being integrated during ODE solving.
+Such approach allows to compute the Jacobian along with simulating the system.
 
 In order to acquire the Moore-Penrose inverse of the Jacobian we can simply use the formula
 \begin{equation}

@@ -62,7 +62,9 @@ arise using the ordinary approach. Such a concept has been used in calculations 
 
 \section{Unicycle}
 The model of a unicycle has been implemented in order to examine the behaviour
-of the motion planning algorithm for a very simple object with discontinuities. 
+of the motion planning algorithm for a very simple object with discontinuities.
+The presented model is discontinuous because of the friction coefficients
+which are switched according to the slip values.
 
 \subsection{Problem formulation}
 The motion planning problem to be solved is kind of a parking manoeuvre. The initial
@@ -99,15 +101,17 @@ value (traction) and low otherwise (slip). This idea leads to the following form
 \begin{equation*}
 \begin{aligned}
 \epsilon&=\begin{cases}
-1 &\mbox{if } |s_\perp| \leq 0.15 \\
-0.5 &\mbox{if } |s_\perp| > 0.15
+\epsilon_{high} &\mbox{if } |s_\perp| \leq d \\
+\epsilon_{low} &\mbox{if } |s_\perp| > d
 \end{cases}, &
 \tau&=\begin{cases}
-10 &\mbox{if } |s_\parallel| \leq 0.15 \\
-0.3 &\mbox{if } |s_\parallel| > 0.15
+\tau_{high} &\mbox{if } |s_\parallel| \leq d \\
+\tau_{low} &\mbox{if } |s_\parallel| > d
 \end{cases}.
 \end{aligned}
 \end{equation*}
+The values in above equations were set as follows: $\epsilon_{high}=1$, $\epsilon_{low}=0.5$,
+$\tau_{high}=10$, $\tau_{low}=0.3$, $d=0.15$.
 
 \subsection{Simulation results}
 Despite the fact that the motion planning algorithm based on the endogenous 
