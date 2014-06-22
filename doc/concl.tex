@@ -1,51 +1,18 @@
 \chapter{Conclusions}
 \label{ch:concl}
-This work was intended to illustrate the performance of the motion planning algorithm
-basing on the endogenous configuration space approach. This method is based on Jacobian,
-similarly to the inverse kinematics algorithms, so there may occur problems with
-singularity.
-The research has been made 
-using two models --- a unicycle and RobRex mobile manipulator. First of them was investigated
-on a dynamical level and the latter was studied as a separate mobile platform and as the whole.
+This work was intended to examine the performance of the motion planning algorithm basing on the endogenous configuration space approach applied to the skid-steering mobile robots. The objects used in the research were the unicycle and the mobile manipulator. The latter was investigated either as a separate mobile platform or as a whole.
+The algorithm was used with continuous as well as discontinuous models. The discontinuities were introduced through switching friction coefficients dependently on the value of the slip. The unicycle and the mobile platform were considered on the dynamic level. As for the manipulator, only its kinematics were taken into account.
 
-The algorithm used in this paper behaved well for the continuous model of the mobile platform
-as well as for the mobile manipulator and always produced a valid result.
-It has been noticed that the friction coefficients which
-define the slips configuration play an important role for the outcome of the computations.
-For a mobile robot with all fixed-axis wheels it is necessary to skid in the lateral direction
-in order to turn. For this reason, the parameters of the results obtained with low lateral friction
-coefficients were better. This has a few consequences. First of all, the total area needed to
-complete the manoeuvre was far less in these cases. Setting high lateral friction
-coefficients makes the robot harder to turn and may even lead to singular configurations.
-This phenomenon is reflected also by the value of the dexterity matrix determinant.
-Apart from this issue, the lateral friction coefficients have great impact to the values
-of the control functions, regarding their energy and amplitude. High friction may cause
-the input very high that it can become unobtainable for actuators.
+The motion planning approach relies on the Jacobian, similarly to the inverse kinematics algorithms, so there may occur problems with singularities. However, the algorithm behaved well for the continuous model of the mobile platform as well as for the mobile manipulator, and always produced a valid result. It has been noticed that the friction coefficients which define the slips configuration play an important role for the outcome of the computations. For a mobile robot with all fixed-axis wheels it is necessary to slip in the lateral direction in order to turn. For this reason, the results obtained with low lateral friction coefficients were better, as far as two issues are concerned. First of all, the total area needed to complete the parking manoeuvre was far less in these cases. Setting high friction coefficients makes the robot harder to turn and may even lead to singular configurations of the Jacobian. This observation is reflected also by the value of the dexterity matrix determinant, which gets lower when lateral friction coefficients get higher. Second point are the controls parameters --- the energy and the amplitude. High lateral friction may require very high control torques, unobtainable by the control actuators.
 
-The next aspect making the inputs large is the control horizon. It has been observed that shortening
-it two times makes the amplitude of the input about three times greater. Similar effect is obsereved
-for the total energy of the control signal.
+The next aspect making the controls large is the control horizon. It has been observed that shortening it by two times results in the controls amplitude about three times greater. Similar effect occurs for the total energy of the control signal.
 
-The advantage of the algorithm is that it may be used for planning the motion with respect
-to the effector position. It has been shown that the control of the platform and the configuration
-of the manipulator may be determined simultaneously what results in a desired effector configuration.
-The output function defining the desired state of the system may also include constraints
-for the state of the platform unless it is physically feasible by the controlled object.
+The research made in this work has also pointed to the another advantage of the endogenous configuration space approach. This algorithm may be used for planning the motion not only of the platform, but also of the end-effector. It has been shown that the control of the platform and the configuration of the manipulator may be determined simultaneously, what results in a desired end-effector configuration.
 
-However, the important purpose of the research was to examine
-this planning method applied to a discontinuous model.
-In order to implement the simulations of the discontinuous model it is convenient to use the event
-mechanism from MATLAB. It allows to stop the simulation when a discontinuity is detected, save the state
-of the object and then start next simulation with a new switched model assuming the initial conditions
-the same as the terminal ones from the previous computations.
+Apart from algorithm performance assessment for continuous models, the important part of this thesis is examining this planning method applied to those models which contain discontinuities in friction forces. The friction model employed here had to reflect losing the traction. If the value of the slip was of out a certain interval, the friction coefficient was switched to a low value. The simulations of such situations were implemented with the benefit of the event mechanism from MATLAB. Such an approach allows to stop the simulation when a discontinuity is detected, save the state of the object and then start the next simulation with a new switched model assuming the same initial conditions as the terminal ones from the previous computations.
 
-The conclusion is that endogenous configuration approach does not work
-in general, but some special cases may be found that the algorithm figures out useful results.
-Broadly speaking, the result is positive when the changes at discontinuities are not
-large. Two sets of friction coefficients has been tested and the algorithm
-converged only in the case when the difference introduced by switching the model was little.
-This is happening because the fundamental idea of the endogenous configurations approach
-bases on the fact that small change to the control input induces a small change to the output function.
-Assuming that we use Jacobian method to determine the direction of the input, we modify the endogenous
-configuration in order to move the object nearer to the desired state. If the model contains
-discontinuities, such modification may lead in the wrong direction and the algorithm does not converge.
+The discontinuous models studied here were the unicycle and the mobile platform. Both of them contained the above-mentioned friction coefficients switching, and the discontinuities were induced by this mechanism. Although it was possible to find sets of parameters for which the planning algorithm converged, this approach does not work in general. When it comes to the unicycle, switching friction coefficients was done not more than by one order of magnitude. As for the mobile platform, the differences were even smaller. Friction coefficients stayed at the same order of magnitude. Using such configurations resulted in convergence of the motion planning algorithm. If the differences were greater than these described above, the algorithm did not converge.
+
+That means that the cases presented in this work were rather special. Broadly speaking, the endogenous configuration space approach does not work with discontinuous models. The reason is the fundamental idea of this algorithm. It assumes that a small change to the controls induces a small change to the value of the output function. Therefore, we use the Jacobian method to determine the direction of the change applied to the endogenous configuration in the iteration of the algorithm, in order to move the object nearer to the desired state. Using this method, if the model contains discontinuities, such a modification of the current controls may lead in a wrong direction and cause the algorithm not to converge. The example of motion planning algorithm divergence was also presented in this thesis.
+
+To summarise, motion planning with the endogenous configuration space approach may be used with a vast array of mobile robots, considering also their dynamics. These models may contain the slips of the vehicle. The considered objects can be also equipped with a manipulator. In such cases, the end configuration of the effector may be planned. When it comes to discontinuous models, the algorithm works well only in special cases and is divergent in general.
