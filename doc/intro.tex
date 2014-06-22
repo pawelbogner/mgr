@@ -1,4 +1,6 @@
+%\newgeometry{top=3cm}
 \chapter{Introduction}
+%\vspace{-0.7cm}
 The problem of control of skid-steering mobile robots is a very complex issue. 
 The main difficulty is to create an adequate model the phenomenon of friciton. 
 There has been many different attempts to describe it.
@@ -21,20 +23,24 @@ consists in switching the friction coefficient dependently on the value of the s
 
 Skid-steering systems may be considered on two levels --- kinematic and dynamic.
 The kinematic model may be derived basing on the motion constraints in the Pfaffian form, which may lead
-to a nonholonomic system. This can be extended to include dynamics using d'Alembert principle.
+to a nonholonomic system. This can be extended to include dynamics, using d'Alembert principle.
 
 Motion planning plays an important part in robot control. This is usually the first step of solving
 a certain control problem. It is not enough to use a good control algorithm for path following. The fundamental
 issue is determining the path or the trajectory to follow. There are many motion planning methods,
-such as steering using sinusoid for chained systems \cite{murray1993nonholonomic} or rapidly-exploring random trees for nonholomic systems
+such as steering using sinusoids for chained systems \cite{murray1993nonholonomic} or rapidly-exploring random trees for nonholomic systems
 with obstacles on the scene \cite{lavalle2000rapidly}. The planning algorithm presented in this paper,
 the endogenous configuration approach, can be applied for mobile manipulators, regarding the
 mobile platform on dynamic level and the kinematics of the manipulator arm. It has been extensively
 tested using RobRex mobile manipulator as a controlled model using different
 friction coefficients configurations.
 
+The thesis of this work is that endogenous configuration approach may be used for
+motion planning of skid-steering mobile manipulators, including the dynamics of the platform.
+
 The layout of this thesis is as follows. Chapter \ref{ch:model} presents the models of studied
 objects: the unicycle and RobRex mobile manipulator. Chapter \ref{ch:endogen} introduces the endogenous
 configuration space approach to motion planning problem. In chapter \ref{ch:simul}, there are collected
 the results of the simulations of the objects mentioned above, with application of the motion
 planning algorithm. Chapter \ref{ch:concl} summarizes the whole study.
+%\restoregeometry

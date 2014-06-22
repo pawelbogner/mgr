@@ -172,7 +172,7 @@ w \\ \dot w
 \end{equation}
 \subsection{Manipulator arm}
 \label{sec:manipul}
-The manipulator has got five rotational joints.
+The manipulator has got five rotational joints. Its structure is shown in figure \ref{fig:manip}.
 Let $x\in \mathbb{R}^5$ denote the configuration of the arm and $a_2, \dots, a_5$ the lengths of the links. The individual transformation matrices in the Denavit-Hartenberg convention are as follows:
 \begin{equation}
 \begin{aligned}
@@ -204,7 +204,12 @@ s_{24}c_5           & -s_{24}s_5           &  c_{24}
 The notation used in above formulae is: $s_i = \sin(x_i)$, $c_i=\cos(x_i)$, $s_{ij}=\sin(x_i+x_j)$,
 $c_{ij}=\cos(x_i+c_j)$.
 The end effector orientation Euler angles (using $\rot(Z,\phi)\rot(X, \theta)\rot(Z, \psi)$) are: $\phi=x_1-\frac{\pi}{2}$, $\theta=x_2+x_4$, $\psi=x_5+\frac{\pi}{2}$.
-
+\begin{figure}[htb]
+\centering
+\includegraphics[width=0.7\textwidth]{img/manip.eps}
+\caption{Manipulator structure}
+\label{fig:manip}
+\end{figure}
 \paragraph{Global coordinate system}
 In order to transform the manipulator's coordinate system into the global frame the transformation matrix needs to be calculated.
 \begin{equation}
