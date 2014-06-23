@@ -70,7 +70,7 @@ The schematic structure of the vehicle is shown in figure \ref{fig:robrex_sch}
 The manipulator is mounted on the platform above the centre of the front wheel axis.
 \subsection{Mobile platform}
 Let $w\in \mathbb{R}^5$ be the configuration of the platform, where
-$w=(x_p, y_p, a\phi, R\theta_1, R\theta_2)$.  
+$w=(x_p, y_p, a\phi, R\theta_{14}, R\theta_{23})$ and $\theta_1=\theta_4=\theta_{14}$, $\theta_2=\theta_3=\theta_{23}$.  
 The dynamics model of the platform is represented in the standard form
 \begin{equation}
 \label{eq:std_mdl}
@@ -101,8 +101,8 @@ Q_{33} &= I_{p33}+m_p(a_{p1}^2+a_{p2}^2)+4(I_{w11}+m_wb^2)+2m_wa^2.
 The meaning of used symbols is:
 \begin{itemize}
 \item $a$ --- the distance between the front and the rear axis,
-\item $m_p$ ---platform mass,
-\item $m_w$ --- mass of one wheel
+\item $m_p$ --- platform mass,
+\item $m_w$ --- mass of one wheel,
 \item $a_{p1}$, $a_{p2}$ --- coordinates of the platform's centre of mass with
 respect to the platform's coordinate system,
 \item $I_{w11}$ --- wheel's moment of inertia with respect to X axis,
@@ -126,8 +126,8 @@ H^3(w)\\
 H^4(w)
 \end{bmatrix},
 \end{equation}
-where $H^1(w)$ corresponds to the lateral slip of front wheels,
-$H^2(w)$ to the lateral slip of rear wheels,
+where $H^1(w)$ corresponds to the lateral slip of rear wheels,
+$H^2(w)$ to the lateral slip of front wheels,
 $H^3(w)$ and $H^4(w)$ depict the longitudinal slips of the coupled left and right wheels, respectively.
 
 Basing on the above matrix, the slips can be defined quantitatively in the following way
@@ -173,7 +173,7 @@ w \\ \dot w
 \subsection{Manipulator arm}
 \label{sec:manipul}
 The manipulator has got five rotational joints. Its structure is shown in figure \ref{fig:manip}.
-Let $x\in \mathbb{R}^5$ denote the configuration of the arm and $a_2, \dots, a_5$ the lengths of the links. The individual transformation matrices in the Denavit-Hartenberg convention are as follows:
+Let $x\in \mathbb{R}^5$ denote the configuration of the arm and $a_1, \dots, a_5$ the lengths of the links. The individual transformation matrices in the Denavit-Hartenberg convention are as follows:
 \begin{equation}
 \begin{aligned}
 A_0^1(x_1) &= \rot(Z, x_1)\rot(X, \frac{\pi}{2}),\\
