@@ -5,7 +5,7 @@
 Tezą pracy jest to, że metoda endogenicznej przestrzeni konfiguracyjnej może być stosowana do planowania ruchu manipulatorów mobilnych poruszających się z poślizgami z uwzględnieniem ich dynamiki.
 \section{Modele}
 \subsection{Monocykl}
-W zastosowanym podejściu monocykl został zamodelowany jako dysk z dwoma wejściami sterującymi. Są to momenty sił powodujące ruch postępowy oraz obrót dookoła pionowej osi. Niech $x$ i $y$ oznaczają współrzędne położenia środka dysku, $\phi$ orientację, a $\theta$ kąt obrotu. Schematyczny opis oznaczeń znajduje się na rysunku \ref{fig:uni_sch}. Aby zachować zgodność wymiarów przyjmijmy wektor współrzędnych uogólnionych $w = (x, y, \phi R, \theta R)^T$, gdzie $R$ jest promieniem koła. Równanie ruchu monocykla przedstawia się następująco: $Q(w)\ddot w =F(w, \dot w)+Bu$, gdzie $Q(w)=\mathrm{diag}\left\{m, m, \frac{I_\phi}{R^2}, \frac{I_\theta}{R^2}\right\}$, $B=\begin{bmatrix}
+\hspace{\parindent}W zastosowanym podejściu monocykl został zamodelowany jako dysk z dwoma wejściami sterującymi. Są to momenty sił powodujące ruch postępowy oraz obrót dookoła pionowej osi. Niech $x$ i $y$ oznaczają współrzędne położenia środka dysku, $\phi$ orientację, a $\theta$ kąt obrotu. Schematyczny opis oznaczeń znajduje się na rysunku \ref{fig:uni_sch}. Aby zachować zgodność wymiarów przyjmijmy wektor współrzędnych uogólnionych $w = (x, y, \phi R, \theta R)^T$, gdzie $R$ jest promieniem koła. Równanie ruchu monocykla przedstawia się następująco: $Q(w)\ddot w =F(w, \dot w)+Bu$, gdzie $Q(w)=\mathrm{diag}\left\{m, m, \frac{I_\phi}{R^2}, \frac{I_\theta}{R^2}\right\}$, $B=\begin{bmatrix}
 0_{2 \times 2} & I_2
 \end{bmatrix}^T$, gdzie $m$ oznacza masę monocykla oraz $I_\phi=\frac{1}{4}mR^2$,
 $I_\theta=\frac{1}{2}mR^2$.
@@ -26,9 +26,9 @@ F(w, \dot w)=mg\epsilon s_\perp\frac{H^{1T}(w)}{||H^{1T}(w)||} + mg\tau s_\paral
 gdzie $g$ to przyspieszenie ziemskie, a $\epsilon$ i $\tau$ to kolejno współczynniki tarcia poprzecznego i wzdłużnego.
 
 \subsection{Manipulator mobilny RobRex}
-Rozważany model składa się z dwóch części: platformy mobilnej oraz manipulatora. 
+\hspace{\parindent}Rozważany model składa się z dwóch części: platformy mobilnej oraz manipulatora. 
 \subsubsection{Platforma mobilna}
-Oznaczmy wektor współrzędnych uogólnionych $w=(x_p, y_p, a\phi, R\theta_14, R\theta_23)$. Znaczenia poszczególnych zmiennych zostały wyjaśnione na rysunku \ref{fig:robrex_sch}. Równanie ruchu jest następujące:
+\hspace{\parindent}Oznaczmy wektor współrzędnych uogólnionych $w=(x_p, y_p, a\phi, R\theta_14, R\theta_23)$. Znaczenia poszczególnych zmiennych zostały wyjaśnione na rysunku \ref{fig:robrex_sch}. Równanie ruchu jest następujące:
 \begin{equation}
 P(w)\ddot w + D(w, \dot w) = F(w, \dot w) + Bu,
 \end{equation}
@@ -97,7 +97,7 @@ Macierz wejścia $B$ jest równa $\begin{bmatrix}
 0_{2 \times 3} & I_2
 \end{bmatrix}^T$.
 \subsubsection{Manipulator}
-Manipulator posiada 5 stopni swobody. Jego struktura została przedstawiona na rysunku \ref{fig:manip}. Niech $x\in \mathbb{R}^5$ oznacza konfigurację przegubów, a $a_1, \dots, a_5$ długości ogniw. Jego kinematyka jest zdefiniowana przez następujące macierze przekształceń, zgodnie z podejściem Denavita-Hartenberga.
+\hspace{\parindent}Manipulator posiada 5 stopni swobody. Jego struktura została przedstawiona na rysunku \ref{fig:manip}. Niech $x\in \mathbb{R}^5$ oznacza konfigurację przegubów, a $a_1, \dots, a_5$ długości ogniw. Jego kinematyka jest zdefiniowana przez następujące macierze przekształceń, zgodnie z podejściem Denavita-Hartenberga.
 \begin{equation}
 \begin{aligned}
 A_0^1(x_1) &= \rot(Z, x_1)\rot(X, \frac{\pi}{2}),\\
@@ -142,8 +142,7 @@ A_m^g(w)&=\tr(X, w_1)\tr(Y, w_2)\rot\left(Z, \frac{w_3}{a}\right)\\
 \end{equation}
 
 \section{Endogeniczna przestrzeń konfiguracyjna}
-Rozważmy manipulator mobilny składający się z platformy oraz ramienia manipulatora. Niech $q = (w, \dot w)^T \in \mathbb{R}^{2n}$ oznacza wektor stanu platformy, a $x \in \mathbb{R}^p$ konfigurację manipulatora. Platforma jest sterowana przez wektor sił uogólnionych $u \in \mathbb{R}^m$. Niech $k: \mathbb{R}^{2n} \times \mathbb{R}^p \rightarrow \mathbb{R}^r$ oznacza funkcję wyjścia układu oraz $y=k(q,x)$.
-
+\hspace{\parindent}Rozważmy manipulator mobilny składający się z platformy oraz ramienia manipulatora. Niech $q = (w, \dot w)^T \in \mathbb{R}^{2n}$ oznacza wektor stanu platformy, a $x \in \mathbb{R}^p$ konfigurację manipulatora. Platforma jest sterowana przez wektor sił uogólnionych $u \in \mathbb{R}^m$. Niech $k: \mathbb{R}^{2n} \times \mathbb{R}^p \rightarrow \mathbb{R}^r$ oznacza funkcję wyjścia układu oraz $y=k(q,x)$.
 Cały układ sterowania można określić układem równań
 \begin{equation}
 \begin{cases}
@@ -179,7 +178,7 @@ u_\theta(\cdot)\\ x_\theta
 Aby obliczenia mogły być przeprowadzone na komputerze, sterowania $u(\cdot)$ przedstawia się jako elementy przestrzeni wektorowej rozpiętej przez bazę funkcji ortogonalnych o skończonym wymiarze. Przy takiej parametryzacji sterowania są reprezentowane przez wektor współczynników. 
 
 \section{Wyniki symulacji}
-W pracy zostały przedstawione wyniki symulacji dla monocykla z przełączanym modelem tarcia. W tym przypadku współczynniki tarcia $\epsilon$ i $\tau$ były określone równaniami
+\hspace{\parindent}W pracy zostały przedstawione wyniki symulacji dla monocykla z przełączanym modelem tarcia. W tym przypadku współczynniki tarcia $\epsilon$ i $\tau$ były określone równaniami
 \begin{equation*}
 \begin{aligned}
 \epsilon&=\begin{cases}
@@ -201,11 +200,11 @@ Następnie przedstawiono wyniki planowania ruchu dla manipulatora mobilnego. W~t
 
 We wszystkich zadaniach dotyczących platformy mobilnej lub manipulatora mobilnego wymagano także, aby pochodne wszystkich współrzędnych platformy były równe 0 na końcu ruchu. Dzięki takiemu ograniczeniu zapewniono, że cały układ był nieruchomy. Dla tych zadań wyniki działania algorytmu planowania ruchu były zadowalające. W~każdym przypadku uzyskano zbieżność. 
 
-Problemy wystąpiły przy nieciągłym modelu tarcia, analogicznym jak w przypadku monocykla. Tak jak i dla monocykla, udało się znaleźć szczególny przypadek, dla którego uzyskano poprawny wynik, jednak --- ogólnie rzecz biorąc --- algorytm nie zbiega się przy planowaniu ruchu obiektów zawierających nieciągłości w modelu.
+Problemy wystąpiły przy nieciągłym modelu tarcia, analogicznym jak w przypadku monocykla. Tak jak i dla monocykla, udało się znaleźć szczególny przypadek, dla którego uzyskano poprawny wynik, jednak --- w ogólności --- algorytm nie zbiega się przy planowaniu ruchu obiektów zawierających nieciągłości w modelu.
 
 Jeżeli chodzi o aspekt obliczeniowy, warto wspomnieć o sposobie implementacji nie-ciągłości modelu. W tym celu wykorzystano mechanizm zdarzeniowy dostępny w środowi-sku MATLAB. Polega on na zdefiniowaniu funkcji określającej moment wystąpienia zdarze-nia. Taka funkcja może zależeć od stanu symulowanego obiektu lub od bieżącego czasu w symulacji. Dzięki temu, przy wystąpieniu zdarzenia obliczenia mogą być przerwane, model obiektu przełączony, po czym rozpoczynana jest kolejna część symulacji z warunkami początkowymi takimi, jak końcowe poprzedniej symulacji. Przy użyciu takiego podejścia można w łatwy sposób zaimplementować modele nieciągłe.
 
 \section{Podsumowanie}
-Podczas badań zauważono, że wartości współczynników tarcia mają duży wpływ na wyniki działania algorytmu planowania ruchu. Aby platforma mogła łatwo skręcać, wartość współczynnika tarcia poprzecznego powinna być mała. Dzieje się tak ze względu na to, że czterokołowy robot mobilny z kołami zamocowanymi na sztywnych osiach bez poślizgu może jedynie poruszać się po linii prostej. Przy małym tarciu poprzecznym, całkowity obszar potrzebny do wykonania manewru parkowania był mniejszy. Dodatkowo, wartości sterowań są mniejsze w takim przypadku --- ich amplituda i całkowita energia. Kolejną obserwacją jest to, że sterowania maleją wraz ze wzrostem horyzontu czasowego. 
+\hspace{\parindent}Podczas badań zauważono, że wartości współczynników tarcia mają duży wpływ na wyniki działania algorytmu planowania ruchu. Aby platforma mogła łatwo skręcać, wartość współczynnika tarcia poprzecznego powinna być mała. Dzieje się tak ze względu na to, że czterokołowy robot mobilny z kołami zamocowanymi na sztywnych osiach bez poślizgu może jedynie poruszać się po linii prostej. Przy małym tarciu poprzecznym, całkowity obszar potrzebny do wykonania manewru parkowania był mniejszy. Dodatkowo, wartości sterowań są mniejsze w takim przypadku. Kolejną obserwacją jest to, że sterowania maleją wraz ze wzrostem horyzontu czasowego. 
 
-Jeżeli chodzi o modele nieciągłe, to zastosowana metoda planowania ruchu nie daje dobrych wyników. W ogólnym przypadku, dla monocykla oraz platformy mobilnej, nie uzyskano zbieżności algorytmu. Dzieje się tak, ponieważ metoda endogenicznej przestrzeni konfiguracyjnej opiera się na fakcie, że mała zmiana sterowania obiektu powoduje mała zmianę wartości funkcji wyjścia. Dzięki temu, stosując podejście jakobianowe, uzyskujemy wartości zmian sterowania w kolejnych iteracjach algorytmu. Jeżeli jednak mamy do czynienia z modelem nieciągłym, taki przyrost funkcji sterujących może skierować obiekt w zupełnie innym kierunku, co w rezultacie daje brak zbieżności algorytmu.
+Jeżeli chodzi o modele nieciągłe, to zastosowana metoda planowania ruchu nie daje dobrych wyników. W ogólnym przypadku dla monocykla oraz platformy mobilnej nie uzyskano zbieżności algorytmu. Dzieje się tak, ponieważ metoda endogenicznej przestrzeni konfiguracyjnej opiera się na fakcie, że mała zmiana sterowania obiektu powoduje mała zmianę wartości funkcji wyjścia. Dzięki temu, stosując podejście jakobianowe, uzyskujemy wartości zmian sterowania w kolejnych iteracjach algorytmu. Jeżeli jednak mamy do czynienia z modelem nieciągłym, taki przyrost funkcji sterujących może skierować obiekt w zupełnie innym kierunku, co w rezultacie daje brak zbieżności algorytmu.
