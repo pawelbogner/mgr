@@ -75,7 +75,7 @@ H^3(w)\\
 H^4(w)
 \end{bmatrix}.
 \end{equation}
-Wiersze macierzy odpowiadają kolejno za brak poślizgu poprzecznego kół tylnych, poprzecznego kół przednich, wzdłużnego kół lewych oraz wzdłużnego kół prawych. Poślizgi można określić jako
+Wiersze macierzy odpowiadają kolejno za brak poślizgu poprzecznego kół tylnych, poprze-cznego kół przednich, wzdłużnego kół lewych oraz wzdłużnego kół prawych. Poślizgi można określić jako
 \begin{equation}
 \begin{aligned}
 s_{14} &= H_1(w)\dot w, & s_{12} &= H_3(w)\dot w,\\
@@ -148,7 +148,6 @@ Cały układ sterowania można określić układem równań
 \begin{equation}
 \begin{cases}
 \begin{aligned}
-\label{eq:control_sys}
 \dot q &= f(q) + G(q)u,\\
 y &= k(q, x).
 \end{aligned}
@@ -160,12 +159,10 @@ Zdefiniujmy parę $(u(\cdot), x)$ składającą się ze sterowań platformy mobi
 K_{q_0, T}((u(\cdot), x)) = k(\phi_{q_0, T}(u(\cdot)), x),
 \end{equation} dla stanu początkowego $q_0$, gdzie $\phi_{q_0, T}(u(\cdot))$ jest strumieniem układu platformy zastosowawszy sterowanie $u(\cdot)$. Obliczając jakobian przekształcenia $K_{q_0, T}$
 \begin{align}
-\label{eq:jacobian}
 J_{q_0, T}(u(\cdot), x)(v(\cdot), w) &= \left.\frac{\ud}{\ud \alpha}\right|_{\alpha=0} K_{q_0, T}((u(\cdot)+\alpha v(\cdot), x+\alpha w)),
 \end{align}
-oraz stosując równanie Ważewskiego-Dawidenki otrzymujemy następujący algorytm planowania ruchu
+oraz stosując równanie Ważewskiego-Dawidenki otrzymujemy następujący algorytm plano-wania ruchu
 \begin{equation}
-\label{eq:endogen_alg}
 \dfrac{\ud}{\ud \theta}\begin{pmatrix}
 u_\theta(\cdot)\\ x_\theta
 \end{pmatrix}=-\gamma J^\#_{q_0, T}(u_\theta(\cdot), x_\theta)\left( K_{q_0, T}(u_\theta(\cdot), x_\theta)-y_d\right),
@@ -198,11 +195,11 @@ W pracy zostały przedstawione wyniki symulacji dla monocykla z przełączanym m
 Zadanie dotyczyło zaplanowania manewru parkowania równoległego.
 Udało się znaleźć taki zestaw parametrów modelu oraz algorytmu, że zastosowana metoda planowania ruchu była zbieżna. Wyniki zostały przedstawione między innymi na rysunku \ref{fig:pr_uni}. Zaprezentowany przypadek był jednak szczególny --- w ogólności przy zastosowaniu nieciągłego modelu tarcia algorytm był rozbieżny.
 
-Kolejnym badanym obiektem była platforma mobilna Rex. Dla niej również rozważano planowanie manewru parkowania równoległego. Przetestowano 4 różne konfiguracje współ-czynników tarcia --- kombinacje małych i dużych wartości dla tarcia poprzecznego i wzdłużnego. Każdą konfigurację przebadano dla dwóch horyzontów czasowych. W obli-czeniach tych przyjęto liniowy model tarcia --- współczynniki $\epsilon$ i $\tau$ były stałe. 
+Kolejnym badanym obiektem była platforma mobilna Rex. Dla niej również rozważano planowanie manewru parkowania równoległego. Przetestowano 4 różne konfiguracje współ-czynników tarcia --- kombinacje małych i dużych wartości dla tarcia poprzecznego i~wzdłu-żnego. Każdą konfigurację przebadano dla dwóch horyzontów czasowych. W obliczeniach tych przyjęto liniowy model tarcia --- współczynniki $\epsilon$ i $\tau$ były stałe. 
 
-Następnie przedstawiono wyniki planowania ruchu dla manipulatora mobilnego. W tym przypadku zadanie dotyczyło końcowej pozycji i orientacji efektora. Model tarcia był taki sam jak w poprzednim zadaniu. Dodatkowo, wykonano symulacje dla zadania dotyczącego zarówno konfiguracji efektora, jak i położenia platformy.
+Następnie przedstawiono wyniki planowania ruchu dla manipulatora mobilnego. W~tym przypadku zadanie dotyczyło końcowej pozycji i orientacji efektora. Model tarcia był taki sam jak w poprzednim zadaniu. Dodatkowo, wykonano symulacje dla zadania dotyczącego zarówno konfiguracji efektora, jak i położenia platformy.
 
-We wszystkich zadaniach dotyczących platformy mobilnej lub manipulatora mobilnego wymagano także, aby pochodne wszystkich współrzędnych platformy były równe 0 na końcu ruchu. Dzięki takiemu ograniczeniu zapewniono, że cały układ był nieruchomy. Dla tych zadań wyniki działania algorytmu planowania ruchu były zadowalające. W każdym przypadku uzyskano zbieżność. 
+We wszystkich zadaniach dotyczących platformy mobilnej lub manipulatora mobilnego wymagano także, aby pochodne wszystkich współrzędnych platformy były równe 0 na końcu ruchu. Dzięki takiemu ograniczeniu zapewniono, że cały układ był nieruchomy. Dla tych zadań wyniki działania algorytmu planowania ruchu były zadowalające. W~każdym przypadku uzyskano zbieżność. 
 
 Problemy wystąpiły przy nieciągłym modelu tarcia, analogicznym jak w przypadku monocykla. Tak jak i dla monocykla, udało się znaleźć szczególny przypadek, dla którego uzyskano poprawny wynik, jednak --- ogólnie rzecz biorąc --- algorytm nie zbiega się przy planowaniu ruchu obiektów zawierających nieciągłości w modelu.
 
